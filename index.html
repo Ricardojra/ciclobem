@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CicloBem — Infraestrutura Financeira da Economia Circular</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gd:#0a3d1a;--gm:#1a7a32;--gi:#2ea84a;--gl:#4ecb6a;
+  --lime:#aaff00;--ld:rgba(170,255,0,0.1);--lb:rgba(170,255,0,0.25);
+  --nv:#0a1628;--nm:#0d2040;--nl:#1a2f50;
+  --wh:#fff;--of:#f4f7f4;--gr:#6b7c6b;--lg:#e8eee8;
+  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--fb);background:var(--wh);color:var(--nv);overflow-x:hidden;padding-bottom:68px}
+
+/* NAV */
+.nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(170,255,0,0.08);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.nav-logo img{height:34px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))}
+.nav-links{display:none;gap:2px;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.65);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.4px;padding:6px 10px;border-radius:20px;transition:all 0.2s;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--lime);background:var(--ld)}
+.nav-cta-btn{background:var(--lime)!important;color:var(--nv)!important;font-weight:700!important;border-radius:8px!important}
+
+/* UTILS */
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--ld);border:1px solid var(--lb);color:var(--lime);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:20px}
+.pill.live::before{content:"●";font-size:7px;color:var(--gl)}
+.pill.wh{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.8)}
+.stag{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gi);margin-bottom:8px;display:block}
+.stag.lt{color:var(--lime)}
+.h1{font-family:var(--fd);font-size:clamp(28px,7vw,52px);font-weight:800;line-height:1.08;letter-spacing:-1px}
+.h2{font-family:var(--fd);font-size:clamp(22px,5vw,34px);font-weight:800;line-height:1.15;letter-spacing:-0.5px}
+.accent{color:var(--lime)}.accent-g{color:var(--gi)}
+.sub{font-size:clamp(13px,3.5vw,15px);line-height:1.75;color:rgba(255,255,255,0.65)}
+.subdk{font-size:clamp(13px,3.5vw,15px);line-height:1.75;color:var(--gr)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease}
+.reveal.vis{opacity:1;transform:none}
+.reveal.lft{transform:translateX(-20px)}.reveal.rgt{transform:translateX(20px)}.reveal.sc{transform:scale(0.93)}
+section{padding:64px 20px;scroll-margin-top:58px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fd);font-weight:700;font-size:14px;padding:14px 22px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;white-space:nowrap}
+.btn-lime{background:var(--lime);color:var(--nv);box-shadow:0 4px 20px rgba(170,255,0,0.25)}
+.btn-ghost{background:transparent;color:var(--wh);border:1.5px solid rgba(255,255,255,0.3)}
+.btn-green{background:var(--gm);color:var(--wh)}
+.btn-outline{background:transparent;color:var(--gm);border:1.5px solid var(--gm)}
+.btn-full{width:100%;display:flex}
+
+/* ─── HERO ─── */
+#hero{min-height:100svh;background:linear-gradient(150deg,var(--nv) 0%,#0f3520 55%,#0a2a10 100%);padding:78px 20px 56px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.hgrid{position:absolute;inset:0;opacity:0.035;pointer-events:none;background-image:linear-gradient(rgba(170,255,0,1) 1px,transparent 1px),linear-gradient(90deg,rgba(170,255,0,1) 1px,transparent 1px);background-size:44px 44px}
+.hglow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(20,100,40,0.5) 0%,transparent 70%);top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+
+.hero-pills{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.hero-title{color:var(--wh);margin-bottom:18px}
+.hero-sub{max-width:500px;margin-bottom:10px}
+.hero-anchor{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:28px;line-height:1.5;max-width:500px}
+.hero-anchor strong{color:rgba(255,255,255,0.65)}
+
+/* SEGMENTED CTAs */
+.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:500px;margin-bottom:36px}
+.cta-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;gap:4px;-webkit-tap-highlight-color:transparent}
+.cta-card:hover{border-color:var(--lime);background:rgba(170,255,0,0.07)}
+.cta-card.prime{background:var(--lime);border-color:var(--lime);grid-column:1/-1}
+.cta-icon{font-size:18px}
+.cta-role{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--wh)}
+.cta-card.prime .cta-role{color:var(--nv)}
+.cta-hint{font-size:10px;color:rgba(255,255,255,0.45);line-height:1.3}
+.cta-card.prime .cta-hint{color:rgba(10,22,40,0.55)}
+
+/* PROOF */
+.hero-proof{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:500px}
+.pitem{background:rgba(255,255,255,0.05);border:1px solid rgba(170,255,0,0.12);border-radius:10px;padding:12px 10px;text-align:center}
+.pnum{font-family:var(--fm);font-size:clamp(17px,4.5vw,22px);font-weight:600;color:var(--lime);line-height:1}
+.plbl{font-size:9px;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:0.4px;line-height:1.3}
+
+/* MARQUEE */
+.mwrap{background:rgba(10,22,40,0.95);border-top:1px solid rgba(170,255,0,0.08);border-bottom:1px solid rgba(170,255,0,0.08);padding:13px 0;overflow:hidden}
+.mtrack{display:flex;gap:22px;animation:mq 28s linear infinite;white-space:nowrap}
+.mpill{display:inline-flex;align-items:center;gap:7px;background:rgba(170,255,0,0.06);border:1px solid rgba(170,255,0,0.18);color:rgba(255,255,255,0.7);font-size:10px;font-weight:600;letter-spacing:0.5px;padding:5px 13px;border-radius:20px;text-transform:uppercase;flex-shrink:0}
+.mpill em{color:var(--lime);font-style:normal}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─── 3 STEPS ─── */
+#como{background:var(--of)}
+.steps3{display:flex;flex-direction:column;gap:14px;margin-top:28px}
+.step3{display:flex;gap:16px;align-items:flex-start;background:var(--wh);border-radius:14px;padding:20px;border:1.5px solid var(--lg);transition:border-color 0.4s}
+.step3.vis{border-color:#a8d8a8}
+.s3n{width:44px;height:44px;min-width:44px;background:var(--gm);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:16px;font-weight:600;color:var(--lime)}
+.step3 h4{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--nv);margin-bottom:4px}
+.step3 p{font-size:13px;color:var(--gr);line-height:1.55}
+.stag2{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;padding:3px 8px;border-radius:6px;margin-top:6px}
+.tb{background:rgba(20,80,200,0.1);color:#1450c8}
+.to{background:rgba(220,100,20,0.1);color:#c86414}
+.tg{background:rgba(26,122,50,0.12);color:var(--gm)}
+
+/* ─── PILOTO / PROVA ─── */
+#prova{background:var(--nv)}
+.pilot-badge{display:flex;align-items:center;gap:10px;background:rgba(170,255,0,0.07);border:1px solid rgba(170,255,0,0.2);border-radius:14px;padding:16px 18px;margin-bottom:20px}
+.pdot{width:10px;height:10px;min-width:10px;border-radius:50%;background:var(--gl);box-shadow:0 0 8px var(--gl);animation:blink 1.8s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.pilot-badge-text h4{font-family:var(--fd);font-size:14px;font-weight:700;color:var(--wh);margin-bottom:3px}
+.pilot-badge-text p{font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5}
+.pilot-badge-text strong{color:var(--lime)}
+
+.pstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.pstat{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px 12px;text-align:center}
+.psn{font-family:var(--fm);font-size:clamp(18px,5vw,24px);font-weight:600;color:var(--lime);line-height:1}
+.psl{font-size:10px;color:rgba(255,255,255,0.4);margin-top:5px;text-transform:uppercase;letter-spacing:0.4px;line-height:1.35}
+
+.testis{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.testi{background:rgba(255,255,255,0.04);border-left:3px solid var(--gi);border-radius:0 10px 10px 0;padding:14px 16px}
+.ttext{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-style:italic;margin-bottom:8px}
+.tauthor{font-size:11px;color:var(--lime);font-weight:600}
+.trole{font-size:10px;color:rgba(255,255,255,0.35);margin-left:6px}
+
+/* ─── BENEFÍCIOS POR PERFIL ─── */
+#beneficios{background:var(--wh)}
+.eco-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--of);padding:4px;border-radius:12px;flex-wrap:wrap}
+.eco-tab{flex:1;min-width:70px;padding:9px 6px;text-align:center;border-radius:9px;font-family:var(--fd);font-size:11px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--gr);transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.eco-tab.active{background:var(--wh);color:var(--nv);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.eco-panel{display:none}.eco-panel.active{display:block;animation:fiu 0.35s ease both}
+@keyframes fiu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.kpi{background:var(--of);border-radius:12px;padding:16px 14px;border-left:3px solid var(--gi)}
+.kpi-n{font-family:var(--fm);font-size:clamp(18px,5vw,24px);font-weight:600;color:var(--gm);line-height:1}
+.kpi-l{font-size:10px;color:var(--gr);margin-top:4px;line-height:1.35}
+
+/* BENEFIT CARDS */
+.bcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.bcard{background:var(--of);border-radius:12px;padding:16px 14px;border:1px solid transparent;transition:border-color 0.3s}
+.bcard:hover{border-color:#b0d8b0}
+.bcard-icon{font-size:22px;margin-bottom:8px}
+.bcard h5{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px}
+.bcard p{font-size:11px;color:var(--gr);line-height:1.5}
+.bcard.wide{grid-column:1/-1}
+
+.eco-list{display:flex;flex-direction:column;gap:7px}
+.eitem{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;background:var(--of);border-radius:10px;font-size:13px;color:var(--nv);line-height:1.5}
+.eitem::before{content:"✓";color:var(--gi);font-weight:700;font-size:13px;flex-shrink:0;margin-top:1px}
+
+/* ─── FLUXO ─── */
+#fluxo{background:var(--nm)}
+.flow{display:flex;flex-direction:column;gap:6px;margin-top:28px}
+.fn{border-radius:14px;padding:18px 16px;border:1px solid transparent}
+.fn-co{background:rgba(30,80,200,0.15);border-color:rgba(30,80,200,0.25)}
+.fn-pl{background:rgba(170,255,0,0.08);border-color:var(--lb)}
+.fn-us{background:rgba(46,168,74,0.12);border-color:rgba(46,168,74,0.25)}
+.fn-cp{background:rgba(200,140,20,0.12);border-color:rgba(200,140,20,0.25)}
+.fn-head{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.fn-icon{font-size:20px}
+.fn-title{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--wh)}
+.fn-desc{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.55}
+.fn-amt{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--lime);margin-top:6px}
+.farrow{text-align:center;color:var(--lime);font-size:18px;padding:2px 0;opacity:0.5}
+.sc-tag{display:inline-flex;align-items:center;gap:5px;background:var(--ld);border:1px solid var(--lb);color:var(--lime);font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;margin-top:6px}
+.fn-split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.triage-photo{margin:32px auto 0;width:100%;max-width:760px;border-radius:18px;overflow:hidden;border:2px solid rgba(170,255,0,0.15);box-shadow:0 16px 48px rgba(0,0,0,0.45)}
+.triage-photo img{display:block;width:100%;height:auto}
+.mini-photo{width:100%;max-width:520px;margin:28px auto;border-radius:18px;overflow:hidden;border:2px solid rgba(10,22,40,0.05);box-shadow:0 18px 60px rgba(0,0,0,0.35)}
+.mini-photo img{display:block;width:100%;height:auto}
+.card-credit{width:100%;max-width:560px;margin:16px auto 0;background:var(--wh);border-radius:18px;border:1px solid var(--lg);box-shadow:0 12px 36px rgba(10,22,40,0.12);padding:20px;display:flex;flex-direction:column;gap:14px;text-align:center}
+.card-credit img{width:100%;height:auto;display:block;border-radius:12px}
+.card-credit p{font-size:13px;color:var(--gr);line-height:1.6}
+.card-credit strong{color:var(--gm)}
+.container-photo{margin:30px auto 0;width:100%;max-width:780px;border-radius:20px;overflow:hidden;border:2px solid rgba(170,255,0,0.15);box-shadow:0 20px 64px rgba(0,0,0,0.45)}
+.container-photo img{display:block;width:100%;height:auto}
+.container-photo figcaption{padding:14px 18px;background:rgba(10,22,40,0.7);color:rgba(255,255,255,0.8);font-size:13px;font-family:var(--fb);}
+
+/* ─── APP MOCKUP ─── */
+#produto{background:var(--of)}
+.phone{width:100%;max-width:255px;margin:24px auto 0;background:var(--nv);border-radius:32px;padding:16px 13px;border:2px solid rgba(255,255,255,0.08);box-shadow:0 24px 64px rgba(0,0,0,0.4)}
+.pscreen{background:#0d1f10;border-radius:22px;overflow:hidden}
+.ph{background:var(--gd);padding:14px 14px 10px;display:flex;align-items:center;justify-content:space-between}
+.ph-logo{font-family:var(--fd);font-size:14px;font-weight:800;color:var(--wh)}.ph-logo span{color:var(--lime)}
+.pb-lbl{font-size:9px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.5px;padding:10px 14px 0}
+.pb-val{font-family:var(--fm);font-size:26px;font-weight:600;color:var(--lime);padding:3px 14px 12px}
+.pactions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:0 14px 12px}
+.pa{background:rgba(255,255,255,0.06);border-radius:9px;padding:9px 6px;text-align:center;font-size:9px;color:rgba(255,255,255,0.7);font-weight:600}
+.pa span{display:block;font-size:17px;margin-bottom:3px}
+.pseclbl{font-size:9px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.5px;padding:6px 14px 4px}
+.ptx{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid rgba(255,255,255,0.04)}
+.ptx-l{display:flex;align-items:center;gap:8px}
+.ptx-dot{width:27px;height:27px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.ptx-name{font-size:11px;color:rgba(255,255,255,0.8);font-weight:500}
+.ptx-date{font-size:9px;color:rgba(255,255,255,0.28)}
+.ptx-val{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--lime)}
+.pmap{background:#0d2a15;margin:0 14px 14px;border-radius:10px;padding:12px;position:relative;overflow:hidden;height:82px}
+.mp{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+.mp::after{content:'';position:absolute;top:-4px;left:-4px;width:18px;height:18px;border-radius:50%;background:rgba(170,255,0,0.3);animation:ping 1.6s infinite}
+@keyframes ping{0%{transform:scale(1);opacity:0.7}100%{transform:scale(2.2);opacity:0}}
+.pmap-lbl{position:absolute;bottom:7px;left:10px;font-size:9px;color:rgba(255,255,255,0.45);font-family:var(--fm)}
+
+.pfeat-grid{display:flex;flex-direction:column;gap:9px;margin-top:22px}
+.pfeat{display:flex;gap:12px;align-items:flex-start;background:var(--wh);border-radius:12px;padding:13px;border:1px solid var(--lg)}
+.pfeat-ic{width:36px;height:36px;min-width:36px;background:rgba(26,122,50,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.pfeat h5{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:2px}
+.pfeat p{font-size:12px;color:var(--gr);line-height:1.5}
+
+/* ─── DEFENSABILIDADE ─── */
+#defesa{background:var(--gd)}
+.moat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:26px}
+.mcard{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:17px 14px;transition:border-color 0.4s}
+.mcard.vis{border-color:rgba(170,255,0,0.2)}
+.mc-ic{font-size:24px;margin-bottom:8px}
+.mcard h4{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--wh);margin-bottom:5px}
+.mcard p{font-size:11px;color:rgba(255,255,255,0.48);line-height:1.55}
+
+/* ─── TECH ─── */
+#tech{background:var(--nv)}
+.tl{border-radius:14px;padding:17px 15px;border:1px solid transparent;margin-bottom:6px}
+.tl-a{background:rgba(170,255,0,0.07);border-color:rgba(170,255,0,0.2)}
+.tl-b{background:rgba(46,168,74,0.07);border-color:rgba(46,168,74,0.18)}
+.tl-c{background:rgba(26,122,50,0.06);border-color:rgba(26,122,50,0.15)}
+.tlh{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tlbadge{background:var(--lime);color:var(--nv);font-family:var(--fm);font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px}
+.tltitle{font-family:var(--fd);font-size:clamp(14px,4vw,16px);font-weight:700;color:var(--wh)}
+.tldesc{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-family:var(--fm);font-size:10px;padding:3px 9px;border-radius:6px}
+
+/* ─── PREFEITURA & ESG ─── */
+#solucoes{background:linear-gradient(160deg,var(--nv) 0%,#0f3520 100%)}
+.dual{display:flex;flex-direction:column;gap:14px;margin-top:26px}
+.dp{border-radius:20px;padding:24px 20px}
+.dp-g{background:rgba(255,255,255,0.03);border:1px solid rgba(170,255,0,0.15)}
+.dp-e{background:rgba(255,255,255,0.03);border:1px solid rgba(30,120,200,0.22)}
+.dp h3{font-family:var(--fd);font-size:clamp(17px,5vw,20px);font-weight:800;color:var(--wh);margin-bottom:14px}
+.dp-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.dpk{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 10px;text-align:center}
+.dpk-n{font-family:var(--fm);font-size:clamp(16px,4.5vw,20px);font-weight:600;color:var(--lime);line-height:1}
+.dpk-l{font-size:9px;color:rgba(255,255,255,0.38);margin-top:4px;text-transform:uppercase;line-height:1.3}
+.dp-list{display:flex;flex-direction:column;gap:7px;margin-bottom:20px}
+.dpi{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:rgba(255,255,255,0.72);line-height:1.5}
+.dpi::before{content:"→";color:var(--lime);font-weight:700;flex-shrink:0}
+
+/* ─── INVESTIDOR GATE ─── */
+#investidor{background:linear-gradient(135deg,#060f1e,#0a2010)}
+.inv-card{background:rgba(255,255,255,0.03);border:1px solid rgba(170,255,0,0.15);border-radius:20px;padding:28px 22px;max-width:520px;margin:28px auto 0}
+.inv-lock{text-align:center;margin-bottom:24px}
+.inv-lock-icon{font-size:44px;margin-bottom:10px}
+.inv-lock h3{font-family:var(--fd);font-size:clamp(18px,5vw,22px);font-weight:800;color:var(--wh);margin-bottom:8px}
+.inv-lock p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
+.inv-teaser{display:flex;flex-direction:column;gap:7px;margin-bottom:24px}
+.inv-t{display:flex;gap:10px;align-items:center;padding:10px 14px;background:rgba(170,255,0,0.05);border:1px solid rgba(170,255,0,0.1);border-radius:9px}
+.inv-t-icon{font-size:16px;flex-shrink:0}
+.inv-t-text{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.4}
+.inv-t-text strong{color:rgba(255,255,255,0.85)}
+.inv-form{display:flex;flex-direction:column;gap:10px}
+.inv-input{width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-family:var(--fb);font-size:15px;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+.inv-input:focus{border-color:var(--lime)}
+.inv-input::placeholder{color:rgba(255,255,255,0.25)}
+.inv-input option{background:var(--nv);color:var(--wh)}
+select.inv-input{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.inv-note{font-size:10px;color:rgba(255,255,255,0.25);text-align:center;line-height:1.5}
+.inv-success{display:none;text-align:center;padding:24px 0}
+.inv-success.show{display:block;animation:fiu 0.4s ease}
+.inv-success-icon{font-size:40px;margin-bottom:10px}
+.inv-success h4{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--lime);margin-bottom:8px}
+.inv-success p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
+
+/* ─── CLOSING ─── */
+#closing{background:linear-gradient(135deg,var(--gd) 0%,var(--nv) 100%);text-align:center;padding:72px 20px}
+.cl-badge{display:inline-flex;align-items:center;gap:8px;background:var(--ld);border:1px solid var(--lb);color:var(--lime);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:20px}
+.cl-title{font-family:var(--fd);font-size:clamp(24px,6vw,40px);font-weight:800;color:var(--wh);letter-spacing:-0.8px;line-height:1.1;margin-bottom:16px}
+.cl-sub{font-size:clamp(13px,3.5vw,15px);color:rgba(255,255,255,0.55);max-width:460px;margin:0 auto 28px;line-height:1.7}
+.cl-checks{display:flex;flex-direction:column;gap:8px;max-width:380px;margin:0 auto 28px;text-align:left}
+.cc{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:rgba(255,255,255,0.72);line-height:1.5}
+.cc::before{content:"✓";color:var(--lime);font-weight:700;font-size:14px;flex-shrink:0}
+.cl-btns{display:flex;flex-direction:column;gap:10px;align-items:center;max-width:360px;margin:0 auto 32px}
+
+/* CONTACT FORM */
+.cl-form{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 20px;max-width:460px;margin:0 auto}
+.cl-form h4{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--wh);margin-bottom:16px;text-align:left}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:rgba(255,255,255,0.4);margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-family:var(--fb);font-size:15px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none}
+.fg textarea{min-height:80px;resize:vertical;font-size:14px}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gi)}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,0.2)}
+.fg select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.fg select option{background:var(--nv)}
+.form-ok{display:none;text-align:center;padding:16px 0;color:var(--gi);font-weight:600;font-size:14px}
+.form-ok.show{display:block;animation:fiu 0.4s ease}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:9px;background:#25D366;color:var(--wh);font-family:var(--fd);font-weight:700;font-size:14px;padding:14px;border-radius:10px;text-decoration:none;margin-top:10px;transition:all 0.2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+
+/* CICLOPONTO IMAGE */
+.cicloponto-img{width:100%;max-width:600px;margin:24px auto;border-radius:16px;overflow:hidden;border:2px solid rgba(170,255,0,0.15);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.cicloponto-img img{width:100%;height:auto;display:block}
+
+/* FOOTER */
+footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.05)}
+.fl{font-family:var(--fd);font-size:22px;font-weight:800;color:var(--wh);margin-bottom:6px}
+.fl span{color:var(--lime)}
+.ft{font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:18px}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 14px;margin-bottom:16px}
+.flinks a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;transition:color 0.2s}
+.flinks a:hover{color:var(--lime)}
+.fcopy{font-size:10px;color:rgba(255,255,255,0.45);line-height:1.7}
+.ftech{font-family:var(--fm);font-size:9px;color:rgba(170,255,0,0.55);margin-top:6px}
+
+/* WA FLOAT */
+.wa{position:fixed;bottom:82px;right:16px;z-index:997;width:48px;height:48px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;animation:pulse 2.5s infinite;-webkit-tap-highlight-color:transparent}
+@keyframes pulse{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,0.4)}50%{box-shadow:0 4px 28px rgba(37,211,102,0.65)}}
+
+/* MOBILE NAV */
+.mobnav{position:fixed;bottom:0;left:0;right:0;z-index:998;background:rgba(10,22,40,0.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(170,255,0,0.08);display:flex;justify-content:space-around;align-items:center;padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom));min-height:62px}
+.mni{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:rgba(255,255,255,0.38);padding:5px 6px;transition:color 0.2s;flex:1;text-align:center;-webkit-tap-highlight-color:transparent}
+.mni.active,.mni:active{color:var(--lime)}
+.mni span:first-child{font-size:19px;line-height:1}
+.mni .lb{font-size:8px;font-weight:500;margin-top:2px}
+
+@media(min-width:640px){
+  body{padding-bottom:0}.mobnav{display:none}.wa{bottom:24px}
+  .nav-links{display:flex}
+  section{padding:80px 40px}
+  .cta-grid{grid-template-columns:repeat(3,1fr)}.cta-card.prime{grid-column:1/-1}
+  .hero-proof{grid-template-columns:repeat(3,1fr)}
+  .steps3{flex-direction:row}
+  .pstats{grid-template-columns:repeat(4,1fr)}
+  .kpi-row{grid-template-columns:repeat(4,1fr)}
+  .bcard-grid{grid-template-columns:repeat(3,1fr)}
+  .moat-grid{grid-template-columns:repeat(4,1fr)}
+  .dual{flex-direction:row}.dp{flex:1}
+  .cl-btns{flex-direction:row;justify-content:center}
+  .fn-split{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#hero" class="nav-logo" aria-label="CicloBem">
+    <img src="ciclobem_logo_top_1.png" alt="CicloBem logo">
+  </a>
+  <div class="nav-links">
+    <a href="#como">Como Funciona</a>
+    <a href="#beneficios">Benefícios</a>
+    <a href="#produto">App</a>
+    <a href="#solucoes">Prefeituras & ESG</a>
+    <a href="#investidor">Investidores</a>
+    <a href="#closing" class="nav-cta-btn">Falar com Especialista</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hgrid"></div><div class="hglow"></div>
+
+  <div class="hero-pills reveal">
+    <div class="pill live">Sistema Testado · Rio de Janeiro</div>
+    <div class="pill wh">Programa Recicla Comunidade · Prefeitura do Rio</div>
+  </div>
+
+  <h1 class="h1 hero-title reveal" style="transition-delay:.08s">
+    Transforme lixo em dinheiro<br><span class="accent">com rastreabilidade total.</span>
+  </h1>
+
+  <p class="sub hero-sub reveal" style="transition-delay:.14s">
+    O CicloBem é a infraestrutura financeira da economia circular — tokenizamos resíduos recicláveis, geramos créditos ambientais verificados e distribuímos renda automaticamente via Blockchain.
+  </p>
+  <p class="hero-anchor reveal" style="transition-delay:.18s">
+    <strong>Validado pela Prefeitura do Rio de Janeiro</strong> — 12 pontos de coleta operados em comunidades cariocas com conta digital, pesagem e relatórios mensais de impacto.
+  </p>
+
+  <div class="cta-grid reveal" style="transition-delay:.24s">
+    <a href="#como" class="cta-card prime">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div class="cta-role" style="color:var(--nv);font-size:15px">♻️ Quero ganhar reciclando</div><div class="cta-hint" style="color:rgba(10,22,40,0.55)">Cidadão · descarte e receba créditos na hora</div></div>
+        <span style="font-size:24px">→</span>
+      </div>
+    </a>
+    <a href="#solucoes" class="cta-card"><div class="cta-icon">🏛️</div><div class="cta-role">Sou prefeitura</div><div class="cta-hint">Compliance PNRS · 90 dias para operar</div></a>
+    <a href="#solucoes" class="cta-card"><div class="cta-icon">🌿</div><div class="cta-role">Empresa ESG</div><div class="cta-hint">Créditos de reciclagem e carbono verificados</div></a>
+    <a href="#closing" class="cta-card"><div class="cta-icon">🤝</div><div class="cta-role">Cooperativa</div><div class="cta-hint">Pagamento automático · sem burocracia</div></a>
+    <a href="#investidor" class="cta-card"><div class="cta-icon">📈</div><div class="cta-role">Sou investidor</div><div class="cta-hint">Seed Round aberto · acesse o deck</div></a>
+  </div>
+
+  <div class="hero-proof reveal" style="transition-delay:.32s">
+    <div class="pitem"><div class="pnum" data-target="12" data-suffix="">0</div><div class="plbl">CicloPontos instalados no piloto</div></div>
+    <div class="pitem"><div class="pnum" data-target="2" data-suffix=" anos">0 anos</div><div class="plbl">Operando com a Prefeitura do Rio</div></div>
+    <div class="pitem"><div class="pnum" data-target="100" data-suffix="%">0%</div><div class="plbl">Dados rastreados on-chain</div></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mwrap">
+  <div class="mtrack">
+    <div class="mpill"><em>🏛</em> Validado pela Prefeitura do Rio</div>
+    <div class="mpill"><em>⛓</em> Blockchain Polygon L2</div>
+    <div class="mpill"><em>🤖</em> Smart Contracts</div>
+    <div class="mpill"><em>🏦</em> Banking as a Service</div>
+    <div class="mpill"><em>🪙</em> Tokenização de Resíduos</div>
+    <div class="mpill"><em>✅</em> PNRS Compliance Automático</div>
+    <div class="mpill"><em>🌿</em> Créditos de Carbono</div>
+    <div class="mpill"><em>💰</em> Liquidação via Pix</div>
+    <div class="mpill"><em>📊</em> Relatórios Mensais de Impacto</div>
+    <div class="mpill"><em>🏛</em> Validado pela Prefeitura do Rio</div>
+    <div class="mpill"><em>⛓</em> Blockchain Polygon L2</div>
+    <div class="mpill"><em>🤖</em> Smart Contracts</div>
+    <div class="mpill"><em>🏦</em> Banking as a Service</div>
+    <div class="mpill"><em>🪙</em> Tokenização de Resíduos</div>
+    <div class="mpill"><em>✅</em> PNRS Compliance Automático</div>
+    <div class="mpill"><em>🌿</em> Créditos de Carbono</div>
+    <div class="mpill"><em>💰</em> Liquidação via Pix</div>
+    <div class="mpill"><em>📊</em> Relatórios Mensais de Impacto</div>
+  </div>
+</div>
+
+<!-- ─── COMO FUNCIONA ─── -->
+<section id="como">
+  <span class="stag">Simples assim</span>
+  <h2 class="h2 reveal">3 passos. Dinheiro na conta.</h2>
+  <p class="subdk reveal" style="transition-delay:.08s;margin-top:10px">Sem burocracia, sem intermediários. Cada kg reciclado vira crédito na sua carteira em segundos.</p>
+  <div class="steps3">
+    <div class="step3 reveal" style="transition-delay:.1s">
+      <div class="s3n">1</div>
+      <div><h4>Descarte inteligente</h4><p>Leve seus recicláveis ao CicloPonto mais próximo e escaneie seu QR Code pelo app.</p><span class="stag2 tb">📍 Mapa no App</span></div>
+    </div>
+    <div class="step3 reveal" style="transition-delay:.2s">
+      <div class="s3n">2</div>
+      <div><h4>Pesagem e registro</h4><p>O totem pesa automaticamente cada material. O depósito é registrado em Blockchain — imutável e auditável.</p><span class="stag2 to">⛓ Registro verificável</span></div>
+    </div>
+    <div class="step3 reveal" style="transition-delay:.3s">
+      <div class="s3n">3</div>
+      <div><h4>Crédito instantâneo</h4><p>O valor cai na sua carteira CicloBem na hora. Saque via Pix, use em parceiros ou doe para sua cooperativa.</p><span class="stag2 tg">💰 Pix instantâneo</span></div>
+    </div>
+  </div>
+  <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">
+    <a href="#produto" class="btn btn-green">Ver o app →</a>
+    <a href="#beneficios" class="btn btn-outline">Quanto eu ganho?</a>
+  </div>
+</section>
+
+<!-- ─── PROVA REAL ─── -->
+<section id="prova">
+  <span class="stag lt">Prova real</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Já está<br><span class="accent">acontecendo.</span></h2>
+
+  <div class="pilot-badge reveal" style="transition-delay:.1s;margin-top:24px">
+    <div class="pdot"></div>
+    <div class="pilot-badge-text">
+      <h4>Programa Recicla Comunidade · Prefeitura do Rio de Janeiro</h4>
+      <p><strong>12 pontos de coleta</strong> instalados em comunidades cariocas · 2022–2023 · Conta digital, pesagem automatizada e <strong>relatórios mensais de massas e impacto</strong> entregues à prefeitura.</p>
+    </div>
+  </div>
+
+  <div class="pstats reveal" style="transition-delay:.18s">
+    <div class="pstat"><div class="psn" data-target="12" data-suffix="">0</div><div class="psl">CicloPontos instalados</div></div>
+    <div class="pstat"><div class="psn" data-target="2" data-suffix=" anos">0 anos</div><div class="psl">Em operação com a prefeitura</div></div>
+    <div class="pstat"><div class="psn" data-target="100" data-suffix="%">0%</div><div class="psl">Materiais pesados e registrados</div></div>
+    <div class="pstat"><div class="psn" data-target="24" data-suffix="">0</div><div class="psl">Relatórios de impacto entregues</div></div>
+  </div>
+
+  <div class="testis reveal" style="transition-delay:.26s">
+    <div class="testi"><p class="ttext">"Antes eu descartava e perdia. Agora descarto e recebo. Todo mês cai um valor na minha carteira — é real."</p><span class="tauthor">Maria S.<span class="trole">Moradora · Comunidade piloto, RJ</span></span></div>
+    <div class="testi"><p class="ttext">"Os relatórios mensais de massas facilitaram muito a prestação de contas e o compliance com a política de resíduos do município."</p><span class="tauthor">Gestor Municipal<span class="trole">Secretaria de Meio Ambiente, RJ</span></span></div>
+    <div class="testi"><p class="ttext">"Pagamos pelos créditos verificados e recebemos relatório ESG com rastreabilidade completa — exatamente o que os auditores exigem."</p><span class="tauthor">Ana P.<span class="trole">Head ESG · Empresa de Varejo</span></span></div>
+  </div>
+
+  <div class="cicloponto-img reveal" style="transition-delay:.3s">
+    <img src="cicloponto.png" alt="CicloPonto — Economia Circular CicloBem" loading="lazy">
+  </div>
+
+  <a href="#closing" class="btn btn-lime btn-full reveal" style="transition-delay:.36s">Quero ser o próximo piloto →</a>
+</section>
+
+<!-- ─── BENEFÍCIOS POR PERFIL ─── -->
+<section id="beneficios">
+  <span class="stag">O que você ganha</span>
+  <h2 class="h2 reveal">Cada perfil ganha<br><span class="accent-g">de forma diferente.</span></h2>
+  <p class="subdk reveal" style="transition-delay:.08s;margin-top:10px">Selecione o seu perfil e veja os benefícios diretos:</p>
+
+  <div class="eco-tabs reveal" style="transition-delay:.14s;margin-top:22px">
+    <button class="eco-tab active" onclick="setTab('cidadao',this)">👤 Cidadão</button>
+    <button class="eco-tab" onclick="setTab('prefeitura',this)">🏛 Prefeitura</button>
+    <button class="eco-tab" onclick="setTab('empresa',this)">🌿 Empresa</button>
+    <button class="eco-tab" onclick="setTab('coop',this)">🤝 Cooperativa</button>
+  </div>
+
+  <!-- CIDADÃO -->
+  <div id="tab-cidadao" class="eco-panel active">
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-n">R$4,50</div><div class="kpi-l">por kg de metal / alumínio</div></div>
+      <div class="kpi"><div class="kpi-n">R$1,20</div><div class="kpi-l">por kg de plástico PET</div></div>
+      <div class="kpi"><div class="kpi-n">R$2,00</div><div class="kpi-l">por kg de eletrônico</div></div>
+      <div class="kpi"><div class="kpi-n">R$0,40</div><div class="kpi-l">por kg de papel / papelão</div></div>
+    </div>
+    <div class="bcard-grid">
+      <div class="bcard"><div class="bcard-icon">💰</div><h5>Melhores preços do mercado</h5><p>Receba o valor justo pelo seu material — sem intermediários, sem desconto.</p></div>
+      <div class="bcard"><div class="bcard-icon">⚡</div><h5>Crédito na hora</h5><p>O valor cai na carteira em segundos após o depósito, sem espera ou burocracia.</p></div>
+      <div class="bcard"><div class="bcard-icon">🏆</div><h5>Prêmios e gincanas</h5><p>Participe de desafios semanais e ganhe bônus, vales e prêmios reais.</p></div>
+      <div class="bcard"><div class="bcard-icon">🌿</div><h5>Impacto verificado</h5><p>Veja em tempo real quanto CO₂ você evitou e compartilhe seu histórico verde.</p></div>
+      <div class="bcard"><div class="bcard-icon">🔄</div><h5>Microcrédito disponível</h5><p>Acesse crédito rápido usando seu histórico de reciclagem como referência.</p></div>
+      <div class="bcard"><div class="bcard-icon">🛡️</div><h5>Proteção financeira</h5><p>Seguros acessíveis para catadores e cooperativas — renda protegida.</p></div>
+    </div>
+  </div>
+
+  <!-- PREFEITURA -->
+  <div id="tab-prefeitura" class="eco-panel">
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-n">-40%</div><div class="kpi-l">custo de coleta vs tradicional</div></div>
+      <div class="kpi"><div class="kpi-n">90d</div><div class="kpi-l">implantação completa</div></div>
+      <div class="kpi"><div class="kpi-n">100%</div><div class="kpi-l">PNRS automatizado</div></div>
+      <div class="kpi"><div class="kpi-n">R$0</div><div class="kpi-l">investimento inicial (PPP)</div></div>
+    </div>
+    <div class="eco-list">
+      <div class="eitem">Relatórios mensais de massas e impacto prontos para o TCU — sem equipe dedicada</div>
+      <div class="eitem">Redução de até 40% no custo operacional de coleta seletiva</div>
+      <div class="eitem">Geração de renda e formalização para catadores do município</div>
+      <div class="eitem">Painel de gestão com dados por bairro em tempo real</div>
+      <div class="eitem">Modelo PPP disponível — a prefeitura não desembolsa capital inicial</div>
+      <div class="eitem">Validado pelo Programa Recicla Comunidade da Prefeitura do Rio (2022–2023)</div>
+    </div>
+  </div>
+
+  <!-- EMPRESA -->
+  <div id="tab-empresa" class="eco-panel">
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-n">100%</div><div class="kpi-l">rastreável on-chain</div></div>
+      <div class="kpi"><div class="kpi-n">GRI</div><div class="kpi-l">relatório ESG automático</div></div>
+      <div class="kpi"><div class="kpi-n">API</div><div class="kpi-l">integração com ERP</div></div>
+      <div class="kpi"><div class="kpi-n">NFT</div><div class="kpi-l">crédito verificável</div></div>
+    </div>
+    <div class="bcard-grid">
+      <div class="bcard"><div class="bcard-icon">🪙</div><h5>Créditos de carbono reais</h5><p>Compre créditos tokenizados com evidência blockchain — aceitos por certificadoras.</p></div>
+      <div class="bcard"><div class="bcard-icon">📊</div><h5>Relatório ESG automático</h5><p>Dados verificáveis em blockchain prontos para auditores e stakeholders.</p></div>
+      <div class="bcard"><div class="bcard-icon">♻️</div><h5>CicloPonto na sua marca</h5><p>Instale um ponto de coleta no seu espaço e ofereça créditos aos seus clientes.</p></div>
+    </div>
+  </div>
+
+  <!-- COOPERATIVA -->
+  <div id="tab-coop" class="eco-panel">
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-n">Auto</div><div class="kpi-l">pagamento sem atraso</div></div>
+      <div class="kpi"><div class="kpi-n">+30%</div><div class="kpi-l">renda média por catador</div></div>
+      <div class="kpi"><div class="kpi-n">Zero</div><div class="kpi-l">burocracia de cobrança</div></div>
+      <div class="kpi"><div class="kpi-n">B2B</div><div class="kpi-l">acesso a compradores</div></div>
+    </div>
+    <div class="eco-list">
+      <div class="eitem">Receba hoje o que venderia amanhã — antecipação de recebíveis integrada</div>
+      <div class="eitem">Pagamento automático por lote triado via Smart Contract — sem negociação</div>
+      <div class="eitem">Formalização com CNPJ, nota fiscal digital e acesso a crédito</div>
+      <div class="eitem">Acesso direto ao mercado comprador nacional de recicláveis</div>
+      <div class="eitem">Seguros e proteção financeira para catadores da cooperativa</div>
+    </div>
+  </div>
+
+  <div style="margin-top:22px"><a href="#closing" class="btn btn-lime btn-full">Falar com especialista →</a></div>
+</section>
+
+<!-- ─── FLUXO DO DINHEIRO ─── -->
+<section id="fluxo" style="background:var(--nm)">
+  <span class="stag lt">Transparência total</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">O fluxo do<br><span class="accent">dinheiro.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Sem caixa-preta. Cada centavo é rastreado e liquidado automaticamente pelo Smart Contract.</p>
+  <div class="flow reveal" style="transition-delay:.15s">
+    <div class="fn fn-co">
+      <div class="fn-head"><div class="fn-icon">🏢</div><div class="fn-title">Empresa ESG</div></div>
+      <div class="fn-desc">Compra créditos ambientais verificados para cumprir metas ESG e relatórios de carbono.</div>
+      <div class="fn-amt">Paga: R$ por tonelada de CO₂ evitada</div>
+    </div>
+    <div class="farrow">↓</div>
+    <div class="fn fn-pl">
+      <div class="fn-head"><div class="fn-icon">⛓️</div><div class="fn-title">CicloBem Platform</div></div>
+      <div class="fn-desc">Valida os dados de reciclagem on-chain, tokeniza os créditos e distribui automaticamente para cada parte.</div>
+      <div class="sc-tag">🤖 Smart Contract executa sem intervenção humana</div>
+    </div>
+    <div class="farrow">↓</div>
+    <div class="fn-split">
+      <div class="fn fn-us">
+        <div class="fn-head"><div class="fn-icon">👤</div><div class="fn-title">Cidadão</div></div>
+        <div class="fn-desc">Recebe crédito por kg reciclado na carteira digital instantaneamente.</div>
+        <div class="fn-amt">Recebe: R$/kg via Pix</div>
+      </div>
+      <div class="fn fn-cp">
+        <div class="fn-head"><div class="fn-icon">🤝</div><div class="fn-title">Cooperativa</div></div>
+        <div class="fn-desc">Recebe pagamento automático por lote triado e validado pelo sistema.</div>
+        <div class="fn-amt">Recebe: R$ por lote automático</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="triage-photo reveal" style="transition-delay:.22s">
+    <img src="Centro_Triagem.jpeg" alt="Centro de Triagem CicloBem com operação completa" loading="lazy">
+  </div>
+</section>
+
+<!-- ─── APP ─── -->
+<section id="produto">
+  <span class="stag">Produto real</span>
+  <h2 class="h2 reveal">Veja o app<br><span class="accent-g">funcionando.</span></h2>
+  <p class="subdk reveal" style="transition-delay:.08s;margin-top:10px">Carteira digital, extrato de ganhos, mapa de CicloPontos e histórico on-chain — tudo no celular.</p>
+
+  <div class="phone reveal sc" style="transition-delay:.15s">
+    <div class="pscreen">
+      <div class="ph"><div class="ph-logo">Ciclo<span>Bem</span></div><div class="pill live" style="font-size:9px;padding:3px 8px">● online</div></div>
+      <div class="pb-lbl">Saldo disponível</div>
+      <div class="pb-val">R$ 84,30</div>
+      <div class="pactions">
+        <div class="pa"><span>💸</span>Sacar Pix</div>
+        <div class="pa"><span>📍</span>Pontos</div>
+        <div class="pa"><span>🌿</span>Impacto</div>
+      </div>
+      <div class="pseclbl">Últimas transações</div>
+      <div class="ptx"><div class="ptx-l"><div class="ptx-dot" style="background:rgba(224,176,32,0.15)">🥫</div><div><div class="ptx-name">Alumínio · 1,2kg</div><div class="ptx-date">Hoje, 09:14</div></div></div><div class="ptx-val">+R$5,40</div></div>
+      <div class="ptx"><div class="ptx-l"><div class="ptx-dot" style="background:rgba(224,48,48,0.12)">♻️</div><div><div class="ptx-name">Plástico PET · 3kg</div><div class="ptx-date">Ontem, 14:32</div></div></div><div class="ptx-val">+R$3,60</div></div>
+      <div class="ptx"><div class="ptx-l"><div class="ptx-dot" style="background:rgba(48,96,208,0.12)">📦</div><div><div class="ptx-name">Papelão · 5kg</div><div class="ptx-date">23/06, 11:05</div></div></div><div class="ptx-val">+R$2,00</div></div>
+      <div class="pseclbl">CicloPontos próximos</div>
+      <div class="pmap">
+        <div class="mp" style="top:35%;left:40%"></div>
+        <div class="mp" style="top:58%;left:65%;animation-delay:.5s"></div>
+        <div class="mp" style="top:20%;left:70%;animation-delay:1s"></div>
+        <div class="pmap-lbl">3 pontos em até 800m ●</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mini-photo reveal" style="transition-delay:.2s">
+    <img src="mini_ciclobem.png" alt="Mini CicloBem instalado em shopping" loading="lazy">
+  </div>
+
+  <div class="card-credit reveal" style="transition-delay:.23s">
+    <img src="cartao_ciclobem_n.png" alt="Cartão CicloBem Visa e ecobag de recompensas" loading="lazy">
+    <p><strong>Conta digital CicloBem</strong> — cartão Visa para receber seus créditos, sacar via Pix e acessar microcrédito a partir do histórico de reciclagem. Benefícios convertidos em compras nos parceiros.</p>
+  </div>
+
+  <div class="pfeat-grid reveal" style="transition-delay:.25s">
+    <div class="pfeat"><div class="pfeat-ic">💰</div><div><h5>Carteira com Pix integrado</h5><p>Saldo em tempo real. Saque instantâneo ou use em parceiros conveniados.</p></div></div>
+    <div class="pfeat"><div class="pfeat-ic">⛓️</div><div><h5>Histórico on-chain verificável</h5><p>Cada depósito tem um hash Blockchain — auditável por qualquer pessoa.</p></div></div>
+    <div class="pfeat"><div class="pfeat-ic">🏆</div><div><h5>Gincana com prêmios reais</h5><p>Ranking semanal, desafios de bairro e prêmios — de vales a motos elétricas.</p></div></div>
+  </div>
+  <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+    <a href="#" class="btn btn-green">🍎 App Store</a>
+    <a href="#" class="btn btn-outline">▶️ Google Play</a>
+  </div>
+</section>
+
+<!-- ─── DEFENSABILIDADE ─── -->
+<section id="defesa" style="background:var(--gd)">
+  <span class="stag lt">Por que é difícil copiar</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Vantagens que<br><span class="accent">protegem o modelo.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Infraestrutura física + dados exclusivos + compliance regulatório formam um fosso competitivo real.</p>
+  <div class="moat-grid">
+    <div class="mcard reveal sc" style="transition-delay:.1s"><div class="mc-ic">🏛️</div><h4>Validação Institucional</h4><p>Operamos com a Prefeitura do Rio. Esse histórico é a maior barreira de entrada no mercado govtech.</p></div>
+    <div class="mcard reveal sc" style="transition-delay:.18s"><div class="mc-ic">🔗</div><h4>Efeito de Rede</h4><p>Mais usuários → mais CicloPontos → mais cooperativas → mais valor. Crescimento auto-alimentado.</p></div>
+    <div class="mcard reveal sc" style="transition-delay:.26s"><div class="mc-ic">📡</div><h4>Hardware + Software</h4><p>Totens físicos + app + blockchain. Combinar as três camadas é barreira de entrada alta.</p></div>
+    <div class="mcard reveal sc" style="transition-delay:.34s"><div class="mc-ic">📊</div><h4>Dados Exclusivos</h4><p>Base de fluxo de resíduos por bairro em tempo real — ativo valioso para prefeituras e fundos ESG.</p></div>
+  </div>
+</section>
+
+<!-- ─── TECNOLOGIA ─── -->
+<section id="tech" style="background:var(--nv)">
+  <span class="stag lt">Arquitetura</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Tecnologia que<br><span class="accent">garante confiança.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Transparência, segurança e auditabilidade para todos os stakeholders — sem depender da palavra de ninguém.</p>
+  <div class="reveal" style="transition-delay:.15s">
+    <div class="tl tl-a"><div class="tlh"><span class="tlbadge">L1</span><div class="tltitle">Experiência — App + Dashboard</div></div><p class="tldesc">Interface mobile-first para cidadãos, cooperativas e gestores municipais. Tudo em um único app.</p><div class="chips"><span class="chip">App CicloBem</span><span class="chip">Dashboard Municipal</span><span class="chip">White Label</span><span class="chip">Gamificação</span></div></div>
+    <div class="tl tl-b"><div class="tlh"><span class="tlbadge">L2</span><div class="tltitle">Operação — APIs & Banking as a Service</div></div><p class="tldesc">Serviços financeiros plug-and-play: conta digital, Pix, KYC automático e compliance regulatório sem construir banco do zero.</p><div class="chips"><span class="chip">BaaS</span><span class="chip">Pix Instantâneo</span><span class="chip">KYC Automático</span><span class="chip">RegTech</span><span class="chip">Antecipação</span></div></div>
+    <div class="tl tl-c"><div class="tlh"><span class="tlbadge">L3</span><div class="tltitle">Confiança — Blockchain & Smart Contracts</div></div><p class="tldesc">Cada kg reciclado e cada pagamento é registrado on-chain. Prefeituras, investidores e auditores verificam sem precisar confiar em ninguém.</p><div class="chips"><span class="chip">Polygon L2</span><span class="chip">Smart Contracts</span><span class="chip">Crédito Carbono NFT</span><span class="chip">Registro PNRS</span></div></div>
+  </div>
+</section>
+
+<!-- ─── PREFEITURA + ESG ─── -->
+<section id="solucoes" style="background:linear-gradient(160deg,var(--nv) 0%,#0f3520 100%)">
+  <span class="stag lt">Soluções específicas</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Para prefeituras<br><span class="accent">e empresas ESG.</span></h2>
+  <div class="dual reveal" style="transition-delay:.12s">
+    <div class="dp dp-g">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><span style="font-size:26px">🏛️</span><h3 style="margin:0">Para Prefeituras</h3></div>
+      <div class="dp-kpis">
+        <div class="dpk"><div class="dpk-n">-40%</div><div class="dpk-l">custo de coleta</div></div>
+        <div class="dpk"><div class="dpk-n">90d</div><div class="dpk-l">implantação</div></div>
+      </div>
+      <div class="dp-list">
+        <div class="dpi">Compliance PNRS automático — relatórios prontos para o TCU</div>
+        <div class="dpi">Redução real de custo operacional de coleta seletiva</div>
+        <div class="dpi">Geração de renda e emprego para catadores do município</div>
+        <div class="dpi">Modelo PPP — sem investimento inicial da prefeitura</div>
+        <div class="dpi">Validado pela Prefeitura do Rio de Janeiro (2022–2023)</div>
+      </div>
+      <a href="https://wa.me/5521995500927?text=Olá,%20sou%20gestor%20municipal%20e%20quero%20saber%20sobre%20o%20CicloBem" class="btn btn-lime btn-full" target="_blank" rel="noopener">Falar com especialista →</a>
+    </div>
+    <div class="dp dp-e">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><span style="font-size:26px">🌿</span><h3 style="margin:0">Para Empresas ESG</h3></div>
+      <div class="dp-kpis">
+        <div class="dpk"><div class="dpk-n">100%</div><div class="dpk-l">rastreável</div></div>
+        <div class="dpk"><div class="dpk-n">GRI</div><div class="dpk-l">relatório automático</div></div>
+      </div>
+      <div class="dp-list">
+        <div class="dpi">Créditos de carbono tokenizados com evidência blockchain</div>
+        <div class="dpi">Relatório ESG com dados auditáveis — aceito por certificadoras</div>
+        <div class="dpi">CicloPonto branded no seu espaço — diferencial de marca</div>
+        <div class="dpi">API para integração com ERP e sistemas de compliance</div>
+      </div>
+      <a href="https://wa.me/5521995500927?text=Olá,%20quero%20saber%20sobre%20créditos%20de%20carbono%20CicloBem" class="btn btn-ghost btn-full" target="_blank" rel="noopener">Solicitar proposta →</a>
+    </div>
+  </div>
+
+  <figure class="container-photo reveal" style="transition-delay:.18s">
+    <img src="container.png" alt="CicloPonto em estacionamento de shopping" loading="lazy">
+    <figcaption>
+      CicloPonto modular instalado em estacionamento de rede varejista — coleta automatizada para shoppings e mercados.
+    </figcaption>
+  </figure>
+</section>
+
+<!-- ─── INVESTIDOR GATE ─── -->
+<section id="investidor" style="background:linear-gradient(135deg,#060f1e,#0a2010)">
+  <span class="stag lt">Para investidores</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Seed Round<br><span class="accent">em andamento.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Múltiplos vetores de receita, modelo validado em campo e expansão nacional planejada. Acesse o deck completo.</p>
+
+  <div class="inv-card reveal" style="transition-delay:.15s">
+    <div class="inv-lock">
+      <div class="inv-lock-icon">🔒</div>
+      <h3>Deck Completo + Modelo Financeiro</h3>
+      <p>Preencha abaixo para receber acesso imediato ao deck do investidor com modelo de receita detalhado, projeções e termos do Seed Round.</p>
+    </div>
+    <div class="inv-teaser">
+      <div class="inv-t"><div class="inv-t-icon">💼</div><div class="inv-t-text"><strong>Múltiplos vetores de receita</strong> — plataforma financeira com receitas recorrentes e transacionais</div></div>
+      <div class="inv-t"><div class="inv-t-icon">🏛️</div><div class="inv-t-text"><strong>Validado em campo</strong> — 2 anos operando com a Prefeitura do Rio de Janeiro</div></div>
+      <div class="inv-t"><div class="inv-t-icon">📈</div><div class="inv-t-text"><strong>Mercado endereçável</strong> — 5.570 municípios obrigados ao PNRS + mercado ESG em expansão</div></div>
+      <div class="inv-t"><div class="inv-t-icon">🚀</div><div class="inv-t-text"><strong>Plano de expansão</strong> — 500 CicloPontos em 20 cidades até 2030</div></div>
+    </div>
+    <div id="inv-form-wrap">
+      <div class="inv-form">
+        <input class="inv-input" type="text" id="inv-nome" placeholder="Nome completo" autocomplete="name">
+        <input class="inv-input" type="email" id="inv-email" placeholder="E-mail corporativo" autocomplete="email" inputmode="email">
+        <select class="inv-input" id="inv-tipo">
+          <option value="">Perfil do investidor</option>
+          <option>Investidor Anjo</option>
+          <option>Fundo de Venture Capital</option>
+          <option>Fundo de Impacto / ESG</option>
+          <option>Family Office</option>
+          <option>Investidor Estratégico</option>
+        </select>
+        <input class="inv-input" type="text" id="inv-ticket" placeholder="Ticket médio de investimento (R$)">
+        <button class="btn btn-lime btn-full" onclick="solicitarDeck()" style="font-size:15px;padding:15px">Quero acessar o deck →</button>
+        <p class="inv-note">As informações são confidenciais e usadas apenas para qualificação do contato. Resposta em até 24h úteis.</p>
+      </div>
+    </div>
+    <div class="inv-success" id="inv-success">
+      <div class="inv-success-icon">✅</div>
+      <h4>Solicitação recebida!</h4>
+      <p>Nossa equipe entrará em contato em até 24h úteis com o deck completo e os termos do Seed Round.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CLOSING ─── -->
+<section id="closing">
+  <div class="cl-badge">🚀 Expansão nacional em andamento</div>
+  <h2 class="cl-title reveal">Implante o CicloBem<br>na sua cidade em <span class="accent">90 dias.</span></h2>
+  <p class="cl-sub reveal" style="transition-delay:.08s">Modelo validado em campo. Tecnologia pronta. Só falta a sua cidade.</p>
+  <div class="cl-checks reveal" style="transition-delay:.15s">
+    <div class="cc">Operacional em 90 dias — sem obras complexas</div>
+    <div class="cc">Compliance PNRS do dia 1 — relatórios automáticos</div>
+    <div class="cc">Modelo PPP disponível — sem risco de capital inicial</div>
+    <div class="cc">Modelo validado no Rio de Janeiro</div>
+    <div class="cc">Suporte técnico e capacitação incluídos</div>
+  </div>
+  <div class="cl-btns reveal" style="transition-delay:.22s">
+    <a href="https://wa.me/5521995500927?text=Olá,%20quero%20implantar%20o%20CicloBem" class="btn btn-lime" target="_blank" rel="noopener">💬 Falar com especialista</a>
+    <a href="mailto:contato@ciclobem.com.br" class="btn btn-ghost">Receber apresentação →</a>
+  </div>
+
+  <div class="cl-form reveal" style="transition-delay:.3s">
+    <h4>📋 Ou envie uma mensagem formal</h4>
+    <div class="fg"><label>Tipo de contato</label>
+      <select id="f-tipo"><option value="">Selecione...</option><option>Parceria Comercial</option><option>Prefeitura / Governo</option><option>Empresa ESG</option><option>Cooperativa</option><option>Imprensa</option><option>Suporte</option></select>
+    </div>
+    <div class="fg"><label>Nome</label><input type="text" id="f-nome" placeholder="Seu nome" autocomplete="name"></div>
+    <div class="fg"><label>E-mail</label><input type="email" id="f-email" placeholder="seu@email.com" autocomplete="email" inputmode="email"></div>
+    <div class="fg"><label>Mensagem</label><textarea id="f-msg" placeholder="Conte sobre sua proposta ou dúvida..."></textarea></div>
+    <button class="btn btn-green btn-full" onclick="enviarForm()" style="font-size:15px;padding:15px">Enviar mensagem →</button>
+    <div class="form-ok" id="form-ok">✅ Mensagem enviada! Retornaremos em até 48h úteis.</div>
+    <a href="https://wa.me/5521995500927?text=Olá,%20vim%20pelo%20site%20CicloBem!" class="wa-btn" target="_blank" rel="noopener">💬 WhatsApp direto</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">Ciclo<span>Bem</span></div>
+  <div class="ft">Infraestrutura financeira da economia circular · Rio de Janeiro → Brasil</div>
+  <div class="flinks">
+    <a href="#como">Como Funciona</a><a href="#beneficios">Benefícios</a>
+    <a href="#fluxo">Fluxo do Dinheiro</a><a href="#produto">App</a>
+    <a href="#tech">Tecnologia</a><a href="#solucoes">Prefeituras & ESG</a>
+    <a href="#investidor">Investidores</a><a href="#closing">Contato</a>
+  </div>
+  <div class="fcopy">© 2026 CicloBem · www.ciclobem.com.br</div>
+  <div class="ftech">⛓ Transações registradas em Blockchain · CicloBem Validado no Rio de Janeiro</div>
+</footer>
+
+<a href="https://wa.me/5521995500927" class="wa" target="_blank" rel="noopener">💬</a>
+
+<nav class="mobnav">
+  <a href="#hero" class="mni active"><span>🏠</span><span class="lb">Início</span></a>
+  <a href="#beneficios" class="mni"><span>💰</span><span class="lb">Benefícios</span></a>
+  <a href="#produto" class="mni"><span>📱</span><span class="lb">App</span></a>
+  <a href="#solucoes" class="mni"><span>🏛</span><span class="lb">Soluções</span></a>
+  <a href="#investidor" class="mni"><span>📈</span><span class="lb">Investir</span></a>
+</nav>
+
+<script>
+// REVEAL
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -28px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// STEP3 border
+const so=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');so.unobserve(e.target);}});},{threshold:0.2});
+document.querySelectorAll('.step3,.mcard').forEach(el=>so.observe(el));
+
+// COUNTERS
+function animCount(el){
+  const t=parseInt(el.dataset.target);if(isNaN(t))return;
+  const pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';
+  let c=0;const step=t/(1800/16);
+  const iv=setInterval(()=>{c=Math.min(c+step,t);el.textContent=pre+Math.floor(c)+suf;if(c>=t)clearInterval(iv);},16);
+}
+const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-target]').forEach(animCount);co.unobserve(e.target);}});},{threshold:0.2});
+document.querySelectorAll('.hero-proof,.pstats').forEach(el=>co.observe(el));
+
+// TABS
+function setTab(id,btn){
+  document.querySelectorAll('.eco-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.eco-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// MOBILE NAV ACTIVE
+const secs=document.querySelectorAll('section[id]');
+const mnis=document.querySelectorAll('.mni');
+let tk=false;
+window.addEventListener('scroll',()=>{if(!tk){requestAnimationFrame(()=>{let cur='hero';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});mnis.forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+cur));tk=false;});tk=true;}},{passive:true});
+
+// INVESTOR GATE
+function solicitarDeck(){
+  const nome=document.getElementById('inv-nome').value.trim();
+  const email=document.getElementById('inv-email').value.trim();
+  const tipo=document.getElementById('inv-tipo').value;
+  if(!nome||!email||!tipo){alert('Preencha nome, e-mail e perfil de investidor.');return;}
+  document.getElementById('inv-form-wrap').style.display='none';
+  document.getElementById('inv-success').classList.add('show');
+}
+
+// CONTACT FORM
+function enviarForm(){
+  const tipo=document.getElementById('f-tipo').value;
+  const nome=document.getElementById('f-nome').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  if(!tipo||!nome||!email){alert('Preencha tipo, nome e e-mail.');return;}
+  const btn=event.target;btn.disabled=true;btn.textContent='Enviando...';
+  setTimeout(()=>{btn.style.display='none';document.getElementById('form-ok').classList.add('show');},800);
+}
+</script>
+</body>
+</html>
