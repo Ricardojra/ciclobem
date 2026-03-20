@@ -34,8 +34,42 @@
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#0a1628">
 
+<!-- Preconnect to Google Fonts for faster font loading -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CicloBem",
+  "url": "https://www.ciclobem.com.br",
+  "logo": "https://www.ciclobem.com.br/ciclobem_logo_top_1.png",
+  "description": "Infraestrutura financeira da economia circular. Tokenizamos resíduos recicláveis, geramos créditos ambientais verificados e distribuímos renda via Blockchain.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Rio de Janeiro",
+    "addressRegion": "RJ",
+    "addressCountry": "BR"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+55-21-99550-0927",
+    "contactType": "sales",
+    "availableLanguage": "Portuguese"
+  },
+  "sameAs": []
+}
+</script>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+
+<!-- Skip Navigation for Accessibility -->
+<style>
+.skip-link{position:absolute;top:-40px;left:0;background:var(--lime);color:var(--nv);padding:8px 16px;z-index:10000;font-weight:700;font-size:14px;transition:top 0.2s}
+.skip-link:focus{top:0}
+</style>
 <style>
 :root{
   --gd:#0a3d1a;--gm:#1a7a32;--gi:#2ea84a;--gl:#4ecb6a;
@@ -335,6 +369,12 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
 .fcopy{font-size:10px;color:rgba(255,255,255,0.45);line-height:1.7}
 .ftech{font-family:var(--fm);font-size:9px;color:rgba(170,255,0,0.55);margin-top:6px}
 
+/* FOCUS STYLES (Accessibility) */
+a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+
+/* REDUCED MOTION */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important}}
+
 /* WA FLOAT */
 .wa{position:fixed;bottom:82px;right:16px;z-index:997;width:48px;height:48px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;animation:pulse 2.5s infinite;-webkit-tap-highlight-color:transparent}
 @keyframes pulse{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,0.4)}50%{box-shadow:0 4px 28px rgba(37,211,102,0.65)}}
@@ -364,11 +404,12 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
 </style>
 </head>
 <body>
+<a href="#hero" class="skip-link">Pular para o conteúdo principal</a>
 
 <!-- BETA MODAL -->
-<div id="beta-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(10,22,40,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px">
+<div id="beta-modal" role="dialog" aria-modal="true" aria-label="Cadastro para acesso antecipado ao app" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(10,22,40,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px">
   <div style="background:#0d2040;border:1px solid rgba(170,255,0,0.2);border-radius:20px;padding:32px 24px;max-width:400px;width:100%;position:relative">
-    <button onclick="document.getElementById('beta-modal').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer;line-height:1">×</button>
+    <button onclick="document.getElementById('beta-modal').style.display='none'" aria-label="Fechar modal" style="position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer;line-height:1">×</button>
     <div style="text-align:center;margin-bottom:20px">
       <div style="font-size:36px;margin-bottom:10px">📱</div>
       <h3 style="font-family:var(--fd);font-size:20px;font-weight:800;color:var(--wh);margin-bottom:8px">App em lançamento</h3>
@@ -385,7 +426,7 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
 </div>
 
 <!-- NAV -->
-<nav class="nav">
+<nav class="nav" role="navigation" aria-label="Navegação principal">
   <a href="#hero" class="nav-logo" aria-label="CicloBem">
     <img src="ciclobem_logo_top_1.png" alt="CicloBem logo" width="140" height="34" fetchpriority="high">
   </a>
@@ -400,6 +441,7 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
 </nav>
 
 <!-- ─── HERO ─── -->
+<main role="main">
 <section id="hero">
   <div class="hgrid"></div><div class="hglow"></div>
 
@@ -881,12 +923,12 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
 
   <div class="cl-form reveal" style="transition-delay:.3s">
     <h4>📋 Ou envie uma mensagem formal</h4>
-    <div class="fg"><label>Tipo de contato</label>
+    <div class="fg"><label for="f-tipo">Tipo de contato</label>
       <select id="f-tipo"><option value="">Selecione...</option><option>Parceria Comercial</option><option>Prefeitura / Governo</option><option>Empresa ESG</option><option>Cooperativa</option><option>Imprensa</option><option>Suporte</option></select>
     </div>
-    <div class="fg"><label>Nome</label><input type="text" id="f-nome" placeholder="Seu nome" autocomplete="name"></div>
-    <div class="fg"><label>E-mail</label><input type="email" id="f-email" placeholder="seu@email.com" autocomplete="email" inputmode="email"></div>
-    <div class="fg"><label>Mensagem</label><textarea id="f-msg" placeholder="Conte sobre sua proposta ou dúvida..."></textarea></div>
+    <div class="fg"><label for="f-nome">Nome</label><input type="text" id="f-nome" placeholder="Seu nome" autocomplete="name"></div>
+    <div class="fg"><label for="f-email">E-mail</label><input type="email" id="f-email" placeholder="seu@email.com" autocomplete="email" inputmode="email"></div>
+    <div class="fg"><label for="f-msg">Mensagem</label><textarea id="f-msg" placeholder="Conte sobre sua proposta ou dúvida..."></textarea></div>
     <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:12px">
       <input type="checkbox" id="f-lgpd" style="width:16px;height:16px;min-width:16px;margin-top:2px;accent-color:#2ea84a;cursor:pointer">
       <span style="font-size:11px;color:rgba(255,255,255,0.4);line-height:1.6">Concordo com o tratamento dos meus dados nos termos da <a href="#" onclick="document.getElementById('lgpd').style.display='flex';return false;" style="color:rgba(170,255,0,0.55);text-decoration:none">Política de Privacidade</a> da CicloBem (LGPD).</span>
@@ -898,7 +940,8 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
 </section>
 
 <!-- FOOTER -->
-<footer>
+</main>
+<footer role="contentinfo">
   <div class="fl">Ciclo<span>Bem</span></div>
   <div class="ft">Infraestrutura financeira da economia circular · Rio de Janeiro → Brasil</div>
   <div class="flinks">
@@ -917,9 +960,9 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
   <div class="ftech">⛓ Transações registradas em Blockchain · Validado pela Prefeitura do Rio de Janeiro (2022–2023)</div>
 
   <!-- LGPD Modal anchor -->
-  <div id="lgpd" style="display:none;position:fixed;inset:0;z-index:2001;background:rgba(10,22,40,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto">
+  <div id="lgpd" role="dialog" aria-modal="true" aria-label="Política de Privacidade e LGPD" style="display:none;position:fixed;inset:0;z-index:2001;background:rgba(10,22,40,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto">
     <div style="background:#0d2040;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 24px;max-width:560px;width:100%;position:relative;margin:auto">
-      <button onclick="document.getElementById('lgpd').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer">×</button>
+      <button onclick="document.getElementById('lgpd').style.display='none'" aria-label="Fechar política de privacidade" style="position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer">×</button>
       <h3 style="font-family:var(--fd);font-size:20px;font-weight:800;color:var(--wh);margin-bottom:16px">🔒 Política de Privacidade & LGPD</h3>
       <p style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:12px">A CicloBem respeita a sua privacidade e trata seus dados pessoais em conformidade com a <strong style="color:var(--wh)">Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018)</strong>.</p>
       <h4 style="font-family:var(--fd);font-size:14px;font-weight:700;color:var(--lime);margin-bottom:8px">Dados coletados</h4>
@@ -935,9 +978,9 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
   </div>
 </footer>
 
-<a href="https://wa.me/5521995500927" class="wa" target="_blank" rel="noopener">💬</a>
+<a href="https://wa.me/5521995500927" class="wa" target="_blank" rel="noopener" aria-label="Fale conosco pelo WhatsApp">💬</a>
 
-<nav class="mobnav">
+<nav class="mobnav" role="navigation" aria-label="Navegação rápida">
   <a href="#hero" class="mni active"><span>🏠</span><span class="lb">Início</span></a>
   <a href="#beneficios" class="mni"><span>💰</span><span class="lb">Benefícios</span></a>
   <a href="#produto" class="mni"><span>📱</span><span class="lb">App</span></a>
