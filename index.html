@@ -159,7 +159,7 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .step3{display:flex;gap:16px;align-items:flex-start;background:var(--wh);border-radius:14px;padding:20px;border:1.5px solid var(--lg);transition:border-color 0.4s}
 .step3.vis{border-color:#a8d8a8}
 .s3n{width:44px;height:44px;min-width:44px;background:var(--gm);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:16px;font-weight:600;color:var(--lime)}
-.step3 h4{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--nv);margin-bottom:4px}
+.step3 h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--nv);margin-bottom:4px}
 .step3 p{font-size:13px;color:var(--gr);line-height:1.55}
 .stag2{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;padding:3px 8px;border-radius:6px;margin-top:6px}
 .tb{background:rgba(20,80,200,0.1);color:#1450c8}
@@ -204,7 +204,7 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .bcard{background:var(--of);border-radius:12px;padding:16px 14px;border:1px solid transparent;transition:border-color 0.3s}
 .bcard:hover{border-color:#b0d8b0}
 .bcard-icon{font-size:22px;margin-bottom:8px}
-.bcard h5{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px}
+.bcard h3{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px}
 .bcard p{font-size:11px;color:#3b4a3b;line-height:1.5}
 .bcard.wide{grid-column:1/-1}
 
@@ -267,7 +267,7 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .pfeat-grid{display:flex;flex-direction:column;gap:9px;margin-top:22px}
 .pfeat{display:flex;gap:12px;align-items:flex-start;background:var(--wh);border-radius:12px;padding:13px;border:1px solid var(--lg)}
 .pfeat-ic{width:36px;height:36px;min-width:36px;background:rgba(26,122,50,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
-.pfeat h5{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:2px}
+.pfeat h3{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:2px}
 .pfeat p{font-size:12px;color:#364536;line-height:1.5}
 
 /* ─── DEFENSABILIDADE ─── */
@@ -276,7 +276,7 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .mcard{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:17px 14px;transition:border-color 0.4s}
 .mcard.vis{border-color:rgba(170,255,0,0.2)}
 .mc-ic{font-size:24px;margin-bottom:8px}
-.mcard h4{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--wh);margin-bottom:5px}
+.mcard h3{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--wh);margin-bottom:5px}
 .mcard p{font-size:11px;color:rgba(255,255,255,0.48);line-height:1.55}
 
 /* ─── TECH ─── */
@@ -321,6 +321,7 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .inv-t-text strong{color:rgba(255,255,255,0.85)}
 .inv-form{display:flex;flex-direction:column;gap:10px}
 .inv-input{width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-family:var(--fb);font-size:15px;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+.inv-label{font-size:11px;color:rgba(255,255,255,0.75);font-weight:600;letter-spacing:0.3px;text-transform:uppercase;margin:4px 0 -4px 2px;display:block}
 .inv-input:focus{border-color:var(--lime)}
 .inv-input::placeholder{color:rgba(255,255,255,0.25)}
 .inv-input option{background:var(--nv);color:var(--wh)}
@@ -329,7 +330,7 @@ select.inv-input{appearance:none;-webkit-appearance:none;background-image:url("d
 .inv-success{display:none;text-align:center;padding:24px 0}
 .inv-success.show{display:block;animation:fiu 0.4s ease}
 .inv-success-icon{font-size:40px;margin-bottom:10px}
-.inv-success h4{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--lime);margin-bottom:8px}
+.inv-success h3{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--lime);margin-bottom:8px}
 .inv-success p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
 
 /* ─── CLOSING ─── */
@@ -520,15 +521,15 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   <div class="steps3">
     <div class="step3 reveal" style="transition-delay:.1s">
       <div class="s3n">1</div>
-      <div><h4>Descarte inteligente</h4><p>Leve seus recicláveis ao CicloPonto mais próximo e escaneie seu QR Code pelo app.</p><span class="stag2 tb">📍 Mapa no App</span></div>
+      <div><h3>Descarte inteligente</h3><p>Leve seus recicláveis ao CicloPonto mais próximo e escaneie seu QR Code pelo app.</p><span class="stag2 tb">📍 Mapa no App</span></div>
     </div>
     <div class="step3 reveal" style="transition-delay:.2s">
       <div class="s3n">2</div>
-      <div><h4>Pesagem e registro</h4><p>O totem pesa automaticamente cada material. O depósito é registrado em Blockchain — imutável e auditável.</p><span class="stag2 to">⛓ Registro verificável</span></div>
+      <div><h3>Pesagem e registro</h3><p>O totem pesa automaticamente cada material. O depósito é registrado em Blockchain — imutável e auditável.</p><span class="stag2 to">⛓ Registro verificável</span></div>
     </div>
     <div class="step3 reveal" style="transition-delay:.3s">
       <div class="s3n">3</div>
-      <div><h4>Crédito instantâneo</h4><p>O valor cai na sua carteira CicloBem na hora. Saque via Pix, use em parceiros ou doe para sua cooperativa.</p><span class="stag2 tg">💰 Pix instantâneo</span></div>
+      <div><h3>Crédito instantâneo</h3><p>O valor cai na sua carteira CicloBem na hora. Saque via Pix, use em parceiros ou doe para sua cooperativa.</p><span class="stag2 tg">💰 Pix instantâneo</span></div>
     </div>
   </div>
   <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">
@@ -545,7 +546,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   <div class="pilot-badge reveal" style="transition-delay:.1s;margin-top:24px">
     <div class="pdot"></div>
     <div class="pilot-badge-text">
-      <h4>Programa Recicla Comunidade · Prefeitura do Rio de Janeiro</h4>
+      <h3>Programa Recicla Comunidade · Prefeitura do Rio de Janeiro</h3>
       <p><strong>12 pontos de coleta</strong> instalados em comunidades cariocas · 2022–2023 · Conta digital, pesagem automatizada e <strong>relatórios mensais de massas e impacto</strong> entregues à prefeitura.</p>
     </div>
   </div>
@@ -613,12 +614,12 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
       <div class="kpi"><div class="kpi-n">R$0,40</div><div class="kpi-l">por kg de papel / papelão</div></div>
     </div>
     <div class="bcard-grid">
-      <div class="bcard"><div class="bcard-icon">💰</div><h5>Melhores preços do mercado</h5><p>Receba o valor justo pelo seu material — sem intermediários, sem desconto.</p></div>
-      <div class="bcard"><div class="bcard-icon">⚡</div><h5>Crédito na hora</h5><p>O valor cai na carteira em segundos após o depósito, sem espera ou burocracia.</p></div>
-      <div class="bcard"><div class="bcard-icon">🏆</div><h5>Prêmios e gincanas</h5><p>Participe de desafios semanais e ganhe bônus, vales e prêmios reais.</p></div>
-      <div class="bcard"><div class="bcard-icon">🌿</div><h5>Impacto verificado</h5><p>Veja em tempo real quanto CO₂ você evitou e compartilhe seu histórico verde.</p></div>
-      <div class="bcard"><div class="bcard-icon">🔄</div><h5>Microcrédito disponível</h5><p>Acesse crédito rápido usando seu histórico de reciclagem como referência.</p></div>
-      <div class="bcard"><div class="bcard-icon">🛡️</div><h5>Proteção financeira</h5><p>Seguros acessíveis para catadores e cooperativas — renda protegida.</p></div>
+      <div class="bcard"><div class="bcard-icon">💰</div><h3>Melhores preços do mercado</h3><p>Receba o valor justo pelo seu material — sem intermediários, sem desconto.</p></div>
+      <div class="bcard"><div class="bcard-icon">⚡</div><h3>Crédito na hora</h3><p>O valor cai na carteira em segundos após o depósito, sem espera ou burocracia.</p></div>
+      <div class="bcard"><div class="bcard-icon">🏆</div><h3>Prêmios e gincanas</h3><p>Participe de desafios semanais e ganhe bônus, vales e prêmios reais.</p></div>
+      <div class="bcard"><div class="bcard-icon">🌿</div><h3>Impacto verificado</h3><p>Veja em tempo real quanto CO₂ você evitou e compartilhe seu histórico verde.</p></div>
+      <div class="bcard"><div class="bcard-icon">🔄</div><h3>Microcrédito disponível</h3><p>Acesse crédito rápido usando seu histórico de reciclagem como referência.</p></div>
+      <div class="bcard"><div class="bcard-icon">🛡️</div><h3>Proteção financeira</h3><p>Seguros acessíveis para catadores e cooperativas — renda protegida.</p></div>
     </div>
   </div>
 
@@ -649,9 +650,9 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
       <div class="kpi"><div class="kpi-n">NFT</div><div class="kpi-l">crédito verificável</div></div>
     </div>
     <div class="bcard-grid">
-      <div class="bcard"><div class="bcard-icon">🪙</div><h5>Créditos de carbono reais</h5><p>Compre créditos tokenizados com evidência blockchain — aceitos por certificadoras.</p></div>
-      <div class="bcard"><div class="bcard-icon">📊</div><h5>Relatório ESG automático</h5><p>Dados verificáveis em blockchain prontos para auditores e stakeholders.</p></div>
-      <div class="bcard"><div class="bcard-icon">♻️</div><h5>CicloPonto na sua marca</h5><p>Instale um ponto de coleta no seu espaço e ofereça créditos aos seus clientes.</p></div>
+      <div class="bcard"><div class="bcard-icon">🪙</div><h3>Créditos de carbono reais</h3><p>Compre créditos tokenizados com evidência blockchain — aceitos por certificadoras.</p></div>
+      <div class="bcard"><div class="bcard-icon">📊</div><h3>Relatório ESG automático</h3><p>Dados verificáveis em blockchain prontos para auditores e stakeholders.</p></div>
+      <div class="bcard"><div class="bcard-icon">♻️</div><h3>CicloPonto na sua marca</h3><p>Instale um ponto de coleta no seu espaço e ofereça créditos aos seus clientes.</p></div>
     </div>
   </div>
 
@@ -752,9 +753,9 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   </div>
 
   <div class="pfeat-grid reveal" style="transition-delay:.25s">
-    <div class="pfeat"><div class="pfeat-ic">💰</div><div><h5>Carteira com Pix integrado</h5><p>Saldo em tempo real. Saque instantâneo ou use em parceiros conveniados.</p></div></div>
-    <div class="pfeat"><div class="pfeat-ic">⛓️</div><div><h5>Histórico on-chain verificável</h5><p>Cada depósito tem um hash Blockchain — auditável por qualquer pessoa.</p></div></div>
-    <div class="pfeat"><div class="pfeat-ic">🏆</div><div><h5>Gincana com prêmios reais</h5><p>Ranking semanal, desafios de bairro e prêmios — de vales a motos elétricas.</p></div></div>
+    <div class="pfeat"><div class="pfeat-ic">💰</div><div><h3>Carteira com Pix integrado</h3><p>Saldo em tempo real. Saque instantâneo ou use em parceiros conveniados.</p></div></div>
+    <div class="pfeat"><div class="pfeat-ic">⛓️</div><div><h3>Histórico on-chain verificável</h3><p>Cada depósito tem um hash Blockchain — auditável por qualquer pessoa.</p></div></div>
+    <div class="pfeat"><div class="pfeat-ic">🏆</div><div><h3>Gincana com prêmios reais</h3><p>Ranking semanal, desafios de bairro e prêmios — de vales a motos elétricas.</p></div></div>
   </div>
   <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
     <button onclick="document.getElementById('beta-modal').style.display='flex'" class="btn btn-green" style="border:none;cursor:pointer">🍎 App Store</button>
@@ -769,10 +770,10 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   <h2 class="h2 reveal" style="color:var(--wh)">Vantagens que<br><span class="accent">protegem o modelo.</span></h2>
   <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Infraestrutura física + dados exclusivos + compliance regulatório formam um fosso competitivo real.</p>
   <div class="moat-grid">
-    <div class="mcard reveal sc" style="transition-delay:.1s"><div class="mc-ic">🏛️</div><h4>Validação Institucional</h4><p>Operamos com a Prefeitura do Rio. Esse histórico é a maior barreira de entrada no mercado govtech.</p></div>
-    <div class="mcard reveal sc" style="transition-delay:.18s"><div class="mc-ic">🔗</div><h4>Efeito de Rede</h4><p>Mais usuários → mais CicloPontos → mais cooperativas → mais valor. Crescimento auto-alimentado.</p></div>
-    <div class="mcard reveal sc" style="transition-delay:.26s"><div class="mc-ic">📡</div><h4>Hardware + Software</h4><p>Totens físicos + app + blockchain. Combinar as três camadas é barreira de entrada alta.</p></div>
-    <div class="mcard reveal sc" style="transition-delay:.34s"><div class="mc-ic">📊</div><h4>Dados Exclusivos</h4><p>Base de fluxo de resíduos por bairro em tempo real — ativo valioso para prefeituras e fundos ESG.</p></div>
+    <div class="mcard reveal sc" style="transition-delay:.1s"><div class="mc-ic">🏛️</div><h3>Validação Institucional</h3><p>Operamos com a Prefeitura do Rio. Esse histórico é a maior barreira de entrada no mercado govtech.</p></div>
+    <div class="mcard reveal sc" style="transition-delay:.18s"><div class="mc-ic">🔗</div><h3>Efeito de Rede</h3><p>Mais usuários → mais CicloPontos → mais cooperativas → mais valor. Crescimento auto-alimentado.</p></div>
+    <div class="mcard reveal sc" style="transition-delay:.26s"><div class="mc-ic">📡</div><h3>Hardware + Software</h3><p>Totens físicos + app + blockchain. Combinar as três camadas é barreira de entrada alta.</p></div>
+    <div class="mcard reveal sc" style="transition-delay:.34s"><div class="mc-ic">📊</div><h3>Dados Exclusivos</h3><p>Base de fluxo de resíduos por bairro em tempo real — ativo valioso para prefeituras e fundos ESG.</p></div>
   </div>
 </section>
 
@@ -854,8 +855,8 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
       <div class="inv-form">
         <input class="inv-input" type="text" id="inv-nome" placeholder="Nome completo" autocomplete="name">
         <input class="inv-input" type="email" id="inv-email" placeholder="E-mail corporativo" autocomplete="email" inputmode="email">
-        <label class="sr-only" for="inv-tipo" style="position:absolute;left:-9999px">Perfil do investidor</label>
-        <select class="inv-input" id="inv-tipo" aria-label="Perfil do investidor">
+        <label class="inv-label" for="inv-tipo">Perfil do investidor</label>
+        <select class="inv-input" id="inv-tipo">
           <option value="">Perfil do investidor</option>
           <option>Investidor Anjo</option>
           <option>Fundo de Venture Capital</option>
@@ -889,7 +890,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   <div class="reveal" style="transition-delay:.12s;display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:560px">
     <div style="background:var(--wh);border:1px solid var(--lg);border-radius:14px;padding:18px 16px">
       <div style="font-size:22px;margin-bottom:8px">📰</div>
-      <h5 style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px">Media Kit</h5>
+      <h3 style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px">Media Kit</h3>
       <p style="font-size:12px;color:var(--gr);line-height:1.5;margin-bottom:12px">Logo, fotos, dados do piloto e boilerplate para publicação.</p>
       <a href="mailto:imprensa@ciclobem.com.br?subject=Solicitação%20Media%20Kit%20CicloBem" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-size:12px;font-weight:700;color:var(--gm);text-decoration:none">Solicitar →</a>
     </div>
@@ -933,7 +934,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   </div>
 
   <div class="cl-form reveal" style="transition-delay:.3s">
-    <h4>📋 Ou envie uma mensagem formal</h4>
+    <h3>📋 Ou envie uma mensagem formal</h3>
     <div class="fg"><label for="f-tipo">Tipo de contato</label>
       <select id="f-tipo"><option value="">Selecione...</option><option>Parceria Comercial</option><option>Prefeitura / Governo</option><option>Empresa ESG</option><option>Cooperativa</option><option>Imprensa</option><option>Suporte</option></select>
     </div>
