@@ -85,7 +85,7 @@ body{font-family:var(--fb);background:var(--wh);color:var(--nv);overflow-x:hidde
 /* NAV */
 .nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(170,255,0,0.08);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
-.nav-logo img{height:34px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))}
+.nav-logo img{height:40px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))}
 .nav-links{display:none;gap:2px;align-items:center}
 .nav-links a{color:rgba(255,255,255,0.65);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.4px;padding:6px 10px;border-radius:20px;transition:all 0.2s;text-transform:uppercase;white-space:nowrap}
 .nav-links a:hover{color:var(--lime);background:var(--ld)}
@@ -116,15 +116,17 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .btn-full{width:100%;display:flex}
 
 /* ─── HERO ─── */
-#hero{min-height:100svh;background:linear-gradient(150deg,var(--nv) 0%,#0f3520 55%,#0a2a10 100%);padding:78px 20px 56px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
-.hgrid{position:absolute;inset:0;opacity:0.035;pointer-events:none;background-image:linear-gradient(rgba(170,255,0,1) 1px,transparent 1px),linear-gradient(90deg,rgba(170,255,0,1) 1px,transparent 1px);background-size:44px 44px}
-.hglow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(20,100,40,0.5) 0%,transparent 70%);top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+#hero{min-height:100svh;background:linear-gradient(160deg,#060e1c 0%,#0a1e2e 25%,#0c2f1e 50%,#0f3520 75%,#071a0e 100%);padding:78px 20px 56px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.hgrid{position:absolute;inset:0;opacity:0.06;pointer-events:none;background-image:linear-gradient(rgba(170,255,0,0.6) 1px,transparent 1px),linear-gradient(90deg,rgba(170,255,0,0.6) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 70%)}
+.hglow{position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(40,160,60,0.4) 0%,rgba(25,120,45,0.2) 30%,rgba(15,80,30,0.08) 50%,transparent 65%);top:25%;left:45%;transform:translate(-50%,-50%);pointer-events:none}
+#hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(170,255,0,0.12) 0%,rgba(170,255,0,0.04) 40%,transparent 60%);top:5%;right:-8%;pointer-events:none}
+#hero::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 .hero-pills{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
 .hero-title{color:var(--wh);margin-bottom:18px}
-.hero-sub{max-width:500px;margin-bottom:10px}
-.hero-anchor{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:28px;line-height:1.5;max-width:500px}
-.hero-anchor strong{color:rgba(255,255,255,0.65)}
+.hero-sub{max-width:500px;margin-bottom:14px;color:rgba(255,255,255,0.75)}
+.hero-anchor{font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:36px;line-height:1.6;max-width:500px}
+.hero-anchor strong{color:rgba(255,255,255,0.8)}
 
 /* SEGMENTED CTAs */
 .cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:500px;margin-bottom:36px}
@@ -389,6 +391,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
 @media(min-width:640px){
   body{padding-bottom:0}.mobnav{display:none}.wa{bottom:24px}
   .nav-links{display:flex}
+  .nav-logo img{height:44px}
   section{padding:80px 40px}
   .cta-grid{grid-template-columns:repeat(3,1fr)}.cta-card.prime{grid-column:1/-1}
   .hero-proof{grid-template-columns:repeat(3,1fr)}
