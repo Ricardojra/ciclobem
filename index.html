@@ -1055,6 +1055,8 @@ let sectionOffsets=[];
 function computeSectionOffsets(){
   sectionOffsets=Array.from(secs).map(s=>({id:s.id,top:s.getBoundingClientRect().top+window.scrollY}));
 }
+computeSectionOffsets();
+document.addEventListener('DOMContentLoaded',computeSectionOffsets);
 window.addEventListener('load',computeSectionOffsets,{once:false});
 let resizeTO;
 window.addEventListener('resize',()=>{
