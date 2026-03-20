@@ -2,9 +2,40 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>CicloBem — Infraestrutura Financeira da Economia Circular</title>
+<meta name="description" content="CicloBem é a infraestrutura financeira da economia circular. Tokenizamos resíduos recicláveis, geramos créditos ambientais verificados e distribuímos renda via Blockchain. Validado pela Prefeitura do Rio de Janeiro.">
+<meta name="keywords" content="economia circular, reciclagem, fintech, créditos de carbono, PNRS, blockchain, ESG, cooperativas, prefeitura, Rio de Janeiro">
+<meta name="author" content="CicloBem">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.ciclobem.com.br/">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ciclobem.com.br/">
+<meta property="og:title" content="CicloBem — Infraestrutura Financeira da Economia Circular">
+<meta property="og:description" content="Tokenizamos resíduos recicláveis, geramos créditos ambientais verificados e distribuímos renda via Blockchain. Validado com a Prefeitura do Rio de Janeiro.">
+<meta property="og:image" content="https://www.ciclobem.com.br/ciclobem_og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="CicloBem">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://www.ciclobem.com.br/">
+<meta name="twitter:title" content="CicloBem — Infraestrutura Financeira da Economia Circular">
+<meta name="twitter:description" content="Tokenizamos resíduos recicláveis, geramos créditos ambientais verificados e distribuímos renda via Blockchain.">
+<meta name="twitter:image" content="https://www.ciclobem.com.br/ciclobem_og.png">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1628'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='18' fill='%23aaff00'%3ECB%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0a1628">
+
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 <style>
 :root{
   --gd:#0a3d1a;--gm:#1a7a32;--gi:#2ea84a;--gl:#4ecb6a;
@@ -334,10 +365,29 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
 </head>
 <body>
 
+<!-- BETA MODAL -->
+<div id="beta-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(10,22,40,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:24px">
+  <div style="background:#0d2040;border:1px solid rgba(170,255,0,0.2);border-radius:20px;padding:32px 24px;max-width:400px;width:100%;position:relative">
+    <button onclick="document.getElementById('beta-modal').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer;line-height:1">×</button>
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:36px;margin-bottom:10px">📱</div>
+      <h3 style="font-family:var(--fd);font-size:20px;font-weight:800;color:var(--wh);margin-bottom:8px">App em lançamento</h3>
+      <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.65">Estamos finalizando o app para iOS e Android. Entre na lista e seja notificado no lançamento.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <input type="text" id="beta-nome" placeholder="Seu nome" autocomplete="name" style="width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-size:15px;outline:none;font-family:var(--fb);-webkit-appearance:none" onfocus="this.style.borderColor='var(--lime)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      <input type="email" id="beta-email" placeholder="seu@email.com" inputmode="email" autocomplete="email" style="width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-size:15px;outline:none;font-family:var(--fb);-webkit-appearance:none" onfocus="this.style.borderColor='var(--lime)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      <button onclick="submitBeta()" style="background:var(--lime);color:var(--nv);font-family:var(--fd);font-weight:700;font-size:15px;padding:14px;border:none;border-radius:10px;cursor:pointer;width:100%;-webkit-tap-highlight-color:transparent">Quero acesso antecipado →</button>
+      <div id="beta-ok" style="display:none;text-align:center;padding:10px 0;color:#4ecb6a;font-weight:600;font-size:14px">✅ Cadastrado! Você será notificado no lançamento.</div>
+      <p style="font-size:10px;color:rgba(255,255,255,0.25);text-align:center;margin-top:4px">Não enviamos spam. Dados tratados conforme nossa <a href="#lgpd" onclick="document.getElementById('beta-modal').style.display='none'" style="color:rgba(170,255,0,0.5);text-decoration:none">Política de Privacidade</a>.</p>
+    </div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav class="nav">
   <a href="#hero" class="nav-logo" aria-label="CicloBem">
-    <img src="ciclobem_logo_top_1.png" alt="CicloBem logo">
+    <img src="ciclobem_logo_top_1.png" alt="CicloBem logo" width="140" height="34" fetchpriority="high">
   </a>
   <div class="nav-links">
     <a href="#como">Como Funciona</a>
@@ -383,9 +433,9 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
   </div>
 
   <div class="hero-proof reveal" style="transition-delay:.32s">
-    <div class="pitem"><div class="pnum" data-target="12" data-suffix="">0</div><div class="plbl">CicloPontos instalados no piloto</div></div>
-    <div class="pitem"><div class="pnum" data-target="2" data-suffix=" anos">0 anos</div><div class="plbl">Operando com a Prefeitura do Rio</div></div>
-    <div class="pitem"><div class="pnum" data-target="100" data-suffix="%">0%</div><div class="plbl">Dados rastreados on-chain</div></div>
+    <div class="pitem"><div class="pnum" data-target="12" data-suffix="">12</div><div class="plbl">CicloPontos instalados no piloto</div></div>
+    <div class="pitem"><div class="pnum" data-target="2" data-suffix=" anos">2 anos</div><div class="plbl">Operando com a Prefeitura do Rio</div></div>
+    <div class="pitem"><div class="pnum" data-target="100" data-suffix="%">100%</div><div class="plbl">Dados rastreados on-chain</div></div>
   </div>
 </section>
 
@@ -452,20 +502,38 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
   </div>
 
   <div class="pstats reveal" style="transition-delay:.18s">
-    <div class="pstat"><div class="psn" data-target="12" data-suffix="">0</div><div class="psl">CicloPontos instalados</div></div>
-    <div class="pstat"><div class="psn" data-target="2" data-suffix=" anos">0 anos</div><div class="psl">Em operação com a prefeitura</div></div>
-    <div class="pstat"><div class="psn" data-target="100" data-suffix="%">0%</div><div class="psl">Materiais pesados e registrados</div></div>
-    <div class="pstat"><div class="psn" data-target="24" data-suffix="">0</div><div class="psl">Relatórios de impacto entregues</div></div>
+    <div class="pstat"><div class="psn" data-target="12" data-suffix="">12</div><div class="psl">CicloPontos instalados</div></div>
+    <div class="pstat"><div class="psn" data-target="2" data-suffix=" anos">2 anos</div><div class="psl">Em operação com a prefeitura</div></div>
+    <div class="pstat"><div class="psn" data-target="100" data-suffix="%">100%</div><div class="psl">Materiais pesados e registrados</div></div>
+    <div class="pstat"><div class="psn" data-target="24" data-suffix="">24</div><div class="psl">Relatórios de impacto entregues</div></div>
   </div>
 
   <div class="testis reveal" style="transition-delay:.26s">
-    <div class="testi"><p class="ttext">"Antes eu descartava e perdia. Agora descarto e recebo. Todo mês cai um valor na minha carteira — é real."</p><span class="tauthor">Maria S.<span class="trole">Moradora · Comunidade piloto, RJ</span></span></div>
-    <div class="testi"><p class="ttext">"Os relatórios mensais de massas facilitaram muito a prestação de contas e o compliance com a política de resíduos do município."</p><span class="tauthor">Gestor Municipal<span class="trole">Secretaria de Meio Ambiente, RJ</span></span></div>
-    <div class="testi"><p class="ttext">"Pagamos pelos créditos verificados e recebemos relatório ESG com rastreabilidade completa — exatamente o que os auditores exigem."</p><span class="tauthor">Ana P.<span class="trole">Head ESG · Empresa de Varejo</span></span></div>
+    <div class="testi">
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:10px">
+        <div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:linear-gradient(135deg,#1a7a32,#4ecb6a);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:14px;font-weight:800;color:var(--wh)">MS</div>
+        <div><div class="tauthor">Maria S.</div><div class="trole" style="margin-left:0">Moradora · Comunidade piloto, RJ</div></div>
+      </div>
+      <p class="ttext">"Antes eu descartava e perdia. Agora descarto e recebo. Todo mês cai um valor na minha carteira — é real."</p>
+    </div>
+    <div class="testi">
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:10px">
+        <div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:linear-gradient(135deg,#0a3d1a,#1a7a32);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:14px;font-weight:800;color:var(--lime)">GM</div>
+        <div><div class="tauthor">Gestor Municipal</div><div class="trole" style="margin-left:0">Secretaria de Meio Ambiente, RJ</div></div>
+      </div>
+      <p class="ttext">"Os relatórios mensais de massas facilitaram muito a prestação de contas e o compliance com a política de resíduos do município."</p>
+    </div>
+    <div class="testi">
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:10px">
+        <div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:linear-gradient(135deg,#0a2040,#1a5080);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:14px;font-weight:800;color:var(--wh)">AP</div>
+        <div><div class="tauthor">Ana P.</div><div class="trole" style="margin-left:0">Head ESG · Empresa de Varejo</div></div>
+      </div>
+      <p class="ttext">"Pagamos pelos créditos verificados e recebemos relatório ESG com rastreabilidade completa — exatamente o que os auditores exigem."</p>
+    </div>
   </div>
 
   <div class="cicloponto-img reveal" style="transition-delay:.3s">
-    <img src="cicloponto.png" alt="CicloPonto — Economia Circular CicloBem" loading="lazy">
+    <img src="cicloponto.png" alt="CicloPonto — Estação de coleta seletiva CicloBem" width="600" height="400" loading="lazy">
   </div>
 
   <a href="#closing" class="btn btn-lime btn-full reveal" style="transition-delay:.36s">Quero ser o próximo piloto →</a>
@@ -588,7 +656,7 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
   </div>
 
   <div class="triage-photo reveal" style="transition-delay:.22s">
-    <img src="Centro_Triagem.jpeg" alt="Centro de Triagem CicloBem com operação completa" loading="lazy">
+    <img src="Centro_Triagem.jpeg" alt="Centro de Triagem CicloBem com operação completa" width="760" height="480" loading="lazy">
   </div>
 </section>
 
@@ -623,11 +691,11 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
   </div>
 
   <div class="mini-photo reveal" style="transition-delay:.2s">
-    <img src="mini_ciclobem.png" alt="Mini CicloBem instalado em shopping" loading="lazy">
+    <img src="mini_ciclobem.png" alt="Mini CicloBem instalado em shopping — coleta compacta" width="520" height="380" loading="lazy">
   </div>
 
   <div class="card-credit reveal" style="transition-delay:.23s">
-    <img src="cartao_ciclobem_n.png" alt="Cartão CicloBem Visa e ecobag de recompensas" loading="lazy">
+    <img src="cartao_ciclobem.png" alt="Cartão CicloBem Visa — conta digital e ecobag de recompensas" width="560" height="360" loading="lazy">
     <p><strong>Conta digital CicloBem</strong> — cartão Visa para receber seus créditos, sacar via Pix e acessar microcrédito a partir do histórico de reciclagem. Benefícios convertidos em compras nos parceiros.</p>
   </div>
 
@@ -637,9 +705,10 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
     <div class="pfeat"><div class="pfeat-ic">🏆</div><div><h5>Gincana com prêmios reais</h5><p>Ranking semanal, desafios de bairro e prêmios — de vales a motos elétricas.</p></div></div>
   </div>
   <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
-    <a href="#" class="btn btn-green">🍎 App Store</a>
-    <a href="#" class="btn btn-outline">▶️ Google Play</a>
+    <button onclick="document.getElementById('beta-modal').style.display='flex'" class="btn btn-green" style="border:none;cursor:pointer">🍎 App Store</button>
+    <button onclick="document.getElementById('beta-modal').style.display='flex'" class="btn btn-outline" style="cursor:pointer">▶️ Google Play</button>
   </div>
+  <p style="margin-top:10px;font-size:11px;color:var(--gr)">🔔 App em fase final de publicação — cadastre-se para acesso antecipado</p>
 </section>
 
 <!-- ─── DEFENSABILIDADE ─── -->
@@ -704,7 +773,7 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
   </div>
 
   <figure class="container-photo reveal" style="transition-delay:.18s">
-    <img src="container.png" alt="CicloPonto em estacionamento de shopping" loading="lazy">
+    <img src="container.png" alt="CicloPonto modular em estacionamento de shopping — coleta automatizada" width="780" height="480" loading="lazy">
     <figcaption>
       CicloPonto modular instalado em estacionamento de rede varejista — coleta automatizada para shoppings e mercados.
     </figcaption>
@@ -742,6 +811,10 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
           <option>Investidor Estratégico</option>
         </select>
         <input class="inv-input" type="text" id="inv-ticket" placeholder="Ticket médio de investimento (R$)">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-top:4px">
+          <input type="checkbox" id="inv-lgpd" style="width:16px;height:16px;min-width:16px;margin-top:2px;accent-color:var(--lime);cursor:pointer">
+          <span style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6">Concordo com o tratamento dos meus dados conforme a <a href="#lgpd" id="inv-lgpd-link" style="color:rgba(170,255,0,0.6);text-decoration:none">Política de Privacidade</a> da CicloBem, nos termos da LGPD.</span>
+        </label>
         <button class="btn btn-lime btn-full" onclick="solicitarDeck()" style="font-size:15px;padding:15px">Quero acessar o deck →</button>
         <p class="inv-note">As informações são confidenciais e usadas apenas para qualificação do contato. Resposta em até 24h úteis.</p>
       </div>
@@ -752,6 +825,41 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
       <p>Nossa equipe entrará em contato em até 24h úteis com o deck completo e os termos do Seed Round.</p>
     </div>
   </div>
+</section>
+
+<!-- ─── IMPRENSA ─── -->
+<section id="imprensa" style="background:var(--of);padding:52px 20px">
+  <span class="stag">Imprensa & Reconhecimento</span>
+  <h2 class="h2 reveal" style="margin-bottom:10px">Na mídia e<br><span class="accent-g">nos bastidores.</span></h2>
+  <p class="subdk reveal" style="transition-delay:.08s;margin-top:0;margin-bottom:28px">Jornalistas, pesquisadores e parceiros — solicite nosso media kit ou press release.</p>
+
+  <div class="reveal" style="transition-delay:.12s;display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:560px">
+    <div style="background:var(--wh);border:1px solid var(--lg);border-radius:14px;padding:18px 16px">
+      <div style="font-size:22px;margin-bottom:8px">📰</div>
+      <h5 style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px">Media Kit</h5>
+      <p style="font-size:12px;color:var(--gr);line-height:1.5;margin-bottom:12px">Logo, fotos, dados do piloto e boilerplate para publicação.</p>
+      <a href="mailto:imprensa@ciclobem.com.br?subject=Solicitação%20Media%20Kit%20CicloBem" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-size:12px;font-weight:700;color:var(--gm);text-decoration:none">Solicitar →</a>
+    </div>
+    <div style="background:var(--wh);border:1px solid var(--lg);border-radius:14px;padding:18px 16px">
+      <div style="font-size:22px;margin-bottom:8px">📋</div>
+      <h5 style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px">Press Release</h5>
+      <p style="font-size:12px;color:var(--gr);line-height:1.5;margin-bottom:12px">Nota sobre o Seed Round e expansão nacional do CicloBem.</p>
+      <a href="mailto:imprensa@ciclobem.com.br?subject=Solicitação%20Press%20Release%20CicloBem" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-size:12px;font-weight:700;color:var(--gm);text-decoration:none">Solicitar →</a>
+    </div>
+    <div style="background:var(--wh);border:1px solid var(--lg);border-radius:14px;padding:18px 16px">
+      <div style="font-size:22px;margin-bottom:8px">🎙️</div>
+      <h5 style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px">Entrevistas</h5>
+      <p style="font-size:12px;color:var(--gr);line-height:1.5;margin-bottom:12px">Disponibilidade para podcasts, reportagens e eventos.</p>
+      <a href="https://wa.me/5521995500927?text=Olá,%20sou%20jornalista%20e%20gostaria%20de%20uma%20entrevista%20com%20o%20CicloBem" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-size:12px;font-weight:700;color:var(--gm);text-decoration:none">WhatsApp →</a>
+    </div>
+    <div style="background:var(--wh);border:1px solid var(--lg);border-radius:14px;padding:18px 16px">
+      <div style="font-size:22px;margin-bottom:8px">🏛️</div>
+      <h5 style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px">Piloto Rio de Janeiro</h5>
+      <p style="font-size:12px;color:var(--gr);line-height:1.5;margin-bottom:12px">Relatórios do Programa Recicla Comunidade 2022–2023.</p>
+      <a href="mailto:imprensa@ciclobem.com.br?subject=Relatório%20Piloto%20CicloBem" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-size:12px;font-weight:700;color:var(--gm);text-decoration:none">Solicitar →</a>
+    </div>
+  </div>
+  <p class="reveal" style="transition-delay:.2s;margin-top:20px;font-size:12px;color:var(--gr)">Contato imprensa: <a href="mailto:imprensa@ciclobem.com.br" style="color:var(--gm);font-weight:600">imprensa@ciclobem.com.br</a></p>
 </section>
 
 <!-- ─── CLOSING ─── -->
@@ -779,6 +887,10 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
     <div class="fg"><label>Nome</label><input type="text" id="f-nome" placeholder="Seu nome" autocomplete="name"></div>
     <div class="fg"><label>E-mail</label><input type="email" id="f-email" placeholder="seu@email.com" autocomplete="email" inputmode="email"></div>
     <div class="fg"><label>Mensagem</label><textarea id="f-msg" placeholder="Conte sobre sua proposta ou dúvida..."></textarea></div>
+    <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:12px">
+      <input type="checkbox" id="f-lgpd" style="width:16px;height:16px;min-width:16px;margin-top:2px;accent-color:#2ea84a;cursor:pointer">
+      <span style="font-size:11px;color:rgba(255,255,255,0.4);line-height:1.6">Concordo com o tratamento dos meus dados nos termos da <a href="#" onclick="document.getElementById('lgpd').style.display='flex';return false;" style="color:rgba(170,255,0,0.55);text-decoration:none">Política de Privacidade</a> da CicloBem (LGPD).</span>
+    </label>
     <button class="btn btn-green btn-full" onclick="enviarForm()" style="font-size:15px;padding:15px">Enviar mensagem →</button>
     <div class="form-ok" id="form-ok">✅ Mensagem enviada! Retornaremos em até 48h úteis.</div>
     <a href="https://wa.me/5521995500927?text=Olá,%20vim%20pelo%20site%20CicloBem!" class="wa-btn" target="_blank" rel="noopener">💬 WhatsApp direto</a>
@@ -793,10 +905,34 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
     <a href="#como">Como Funciona</a><a href="#beneficios">Benefícios</a>
     <a href="#fluxo">Fluxo do Dinheiro</a><a href="#produto">App</a>
     <a href="#tech">Tecnologia</a><a href="#solucoes">Prefeituras & ESG</a>
-    <a href="#investidor">Investidores</a><a href="#closing">Contato</a>
+    <a href="#investidor">Investidores</a><a href="#imprensa">Imprensa</a><a href="#closing">Contato</a>
   </div>
-  <div class="fcopy">© 2026 CicloBem · www.ciclobem.com.br</div>
-  <div class="ftech">⛓ Transações registradas em Blockchain · CicloBem Validado no Rio de Janeiro</div>
+  <div class="flinks" style="margin-top:-4px;margin-bottom:16px;border-top:1px solid rgba(255,255,255,0.05);padding-top:12px">
+    <a href="mailto:contato@ciclobem.com.br">contato@ciclobem.com.br</a>
+    <a href="https://wa.me/5521995500927" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="#lgpd" id="lgpd-link">Política de Privacidade</a>
+    <a href="#lgpd" id="terms-link">Termos de Uso</a>
+  </div>
+  <div class="fcopy">© 2026 CicloBem Tecnologia Ltda · CNPJ em registro · www.ciclobem.com.br</div>
+  <div class="ftech">⛓ Transações registradas em Blockchain · Validado pela Prefeitura do Rio de Janeiro (2022–2023)</div>
+
+  <!-- LGPD Modal anchor -->
+  <div id="lgpd" style="display:none;position:fixed;inset:0;z-index:2001;background:rgba(10,22,40,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto">
+    <div style="background:#0d2040;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 24px;max-width:560px;width:100%;position:relative;margin:auto">
+      <button onclick="document.getElementById('lgpd').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer">×</button>
+      <h3 style="font-family:var(--fd);font-size:20px;font-weight:800;color:var(--wh);margin-bottom:16px">🔒 Política de Privacidade & LGPD</h3>
+      <p style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:12px">A CicloBem respeita a sua privacidade e trata seus dados pessoais em conformidade com a <strong style="color:var(--wh)">Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018)</strong>.</p>
+      <h4 style="font-family:var(--fd);font-size:14px;font-weight:700;color:var(--lime);margin-bottom:8px">Dados coletados</h4>
+      <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:12px">Coletamos nome, e-mail e perfil profissional quando você preenche formulários no site. Esses dados são utilizados exclusivamente para responder ao seu contato e qualificar parceiros e investidores.</p>
+      <h4 style="font-family:var(--fd);font-size:14px;font-weight:700;color:var(--lime);margin-bottom:8px">Base legal e finalidade</h4>
+      <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:12px">O tratamento é realizado com base no consentimento do titular (Art. 7º, I, LGPD) e no legítimo interesse para execução de contrato ou diligências pré-contratuais (Art. 7º, V, LGPD).</p>
+      <h4 style="font-family:var(--fd);font-size:14px;font-weight:700;color:var(--lime);margin-bottom:8px">Seus direitos</h4>
+      <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:12px">Você pode solicitar acesso, correção, eliminação ou portabilidade dos seus dados a qualquer momento pelo e-mail <a href="mailto:privacidade@ciclobem.com.br" style="color:var(--lime)">privacidade@ciclobem.com.br</a>.</p>
+      <h4 style="font-family:var(--fd);font-size:14px;font-weight:700;color:var(--lime);margin-bottom:8px">Não vendemos seus dados</h4>
+      <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:20px">Os dados coletados não são vendidos, cedidos ou compartilhados com terceiros para fins comerciais.</p>
+      <button onclick="document.getElementById('lgpd').style.display='none'" style="background:var(--lime);color:var(--nv);font-family:var(--fd);font-weight:700;font-size:14px;padding:12px 24px;border:none;border-radius:10px;cursor:pointer;width:100%">Entendido →</button>
+    </div>
+  </div>
 </footer>
 
 <a href="https://wa.me/5521995500927" class="wa" target="_blank" rel="noopener">💬</a>
@@ -810,25 +946,32 @@ footer{background:var(--nv);padding:36px 20px 24px;text-align:center;border-top:
 </nav>
 
 <script>
-// REVEAL
+// ── REVEAL ON SCROLL ──────────────────────────────────────
 const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -28px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-// STEP3 border
+// ── STEP / MCARD BORDER ANIMATION ─────────────────────────
 const so=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');so.unobserve(e.target);}});},{threshold:0.2});
 document.querySelectorAll('.step3,.mcard').forEach(el=>so.observe(el));
 
-// COUNTERS
+// ── ANIMATED COUNTERS (restart from 0 on entry) ───────────
 function animCount(el){
-  const t=parseInt(el.dataset.target);if(isNaN(t))return;
-  const pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';
-  let c=0;const step=t/(1800/16);
-  const iv=setInterval(()=>{c=Math.min(c+step,t);el.textContent=pre+Math.floor(c)+suf;if(c>=t)clearInterval(iv);},16);
+  const t=parseInt(el.dataset.target);
+  if(isNaN(t))return;
+  const suf=el.dataset.suffix||'';
+  let c=0;
+  const step=Math.max(1,t/80);
+  el.textContent='0'+suf;
+  const iv=setInterval(()=>{
+    c=Math.min(c+step,t);
+    el.textContent=Math.floor(c)+suf;
+    if(c>=t)clearInterval(iv);
+  },16);
 }
-const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-target]').forEach(animCount);co.unobserve(e.target);}});},{threshold:0.2});
+const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-target]').forEach(animCount);co.unobserve(e.target);}});},{threshold:0.25});
 document.querySelectorAll('.hero-proof,.pstats').forEach(el=>co.observe(el));
 
-// TABS
+// ── PROFILE TABS ──────────────────────────────────────────
 function setTab(id,btn){
   document.querySelectorAll('.eco-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.eco-tab').forEach(b=>b.classList.remove('active'));
@@ -836,31 +979,148 @@ function setTab(id,btn){
   btn.classList.add('active');
 }
 
-// MOBILE NAV ACTIVE
+// ── MOBILE NAV ACTIVE STATE ───────────────────────────────
 const secs=document.querySelectorAll('section[id]');
 const mnis=document.querySelectorAll('.mni');
 let tk=false;
-window.addEventListener('scroll',()=>{if(!tk){requestAnimationFrame(()=>{let cur='hero';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});mnis.forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+cur));tk=false;});tk=true;}},{passive:true});
+window.addEventListener('scroll',()=>{
+  if(!tk){
+    requestAnimationFrame(()=>{
+      let cur='hero';
+      secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+      mnis.forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+cur));
+      tk=false;
+    });
+    tk=true;
+  }
+},{passive:true});
 
-// INVESTOR GATE
+// ── FORM VALIDATION HELPER ────────────────────────────────
+function showFieldError(id,msg){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.borderColor='#ff5555';
+  el.style.boxShadow='0 0 0 3px rgba(255,85,85,0.15)';
+  let hint=el.nextElementSibling;
+  if(!hint||!hint.classList.contains('field-hint')){
+    hint=document.createElement('p');
+    hint.className='field-hint';
+    hint.style.cssText='font-size:10px;color:#ff7070;margin-top:4px;margin-bottom:0';
+    el.parentNode.insertBefore(hint,el.nextSibling);
+  }
+  hint.textContent=msg;
+}
+function clearFieldError(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.borderColor='';el.style.boxShadow='';
+  const hint=el.nextElementSibling;
+  if(hint&&hint.classList.contains('field-hint'))hint.remove();
+}
+function isValidEmail(e){return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+
+// ── INVESTOR GATE ─────────────────────────────────────────
 function solicitarDeck(){
   const nome=document.getElementById('inv-nome').value.trim();
   const email=document.getElementById('inv-email').value.trim();
   const tipo=document.getElementById('inv-tipo').value;
-  if(!nome||!email||!tipo){alert('Preencha nome, e-mail e perfil de investidor.');return;}
+  const lgpd=document.getElementById('inv-lgpd').checked;
+  let ok=true;
+  ['inv-nome','inv-email','inv-tipo'].forEach(id=>clearFieldError(id));
+  if(!nome){showFieldError('inv-nome','Por favor, informe seu nome completo.');ok=false;}
+  if(!email||!isValidEmail(email)){showFieldError('inv-email','Informe um e-mail válido.');ok=false;}
+  if(!tipo){showFieldError('inv-tipo','Selecione seu perfil de investidor.');ok=false;}
+  if(!lgpd){
+    const cb=document.getElementById('inv-lgpd');
+    cb.parentElement.querySelector('span').style.color='#ff7070';
+    ok=false;
+  }
+  if(!ok)return;
   document.getElementById('inv-form-wrap').style.display='none';
   document.getElementById('inv-success').classList.add('show');
 }
 
-// CONTACT FORM
+// ── CONTACT FORM ──────────────────────────────────────────
 function enviarForm(){
   const tipo=document.getElementById('f-tipo').value;
   const nome=document.getElementById('f-nome').value.trim();
   const email=document.getElementById('f-email').value.trim();
-  if(!tipo||!nome||!email){alert('Preencha tipo, nome e e-mail.');return;}
-  const btn=event.target;btn.disabled=true;btn.textContent='Enviando...';
-  setTimeout(()=>{btn.style.display='none';document.getElementById('form-ok').classList.add('show');},800);
+  const lgpd=document.getElementById('f-lgpd').checked;
+  let ok=true;
+  ['f-tipo','f-nome','f-email'].forEach(id=>clearFieldError(id));
+  if(!tipo){showFieldError('f-tipo','Selecione o tipo de contato.');ok=false;}
+  if(!nome){showFieldError('f-nome','Informe seu nome.');ok=false;}
+  if(!email||!isValidEmail(email)){showFieldError('f-email','Informe um e-mail válido.');ok=false;}
+  if(!lgpd){
+    document.getElementById('f-lgpd').parentElement.querySelector('span').style.color='#ff7070';
+    ok=false;
+  }
+  if(!ok)return;
+  const btn=document.querySelector('#closing .btn-green');
+  btn.disabled=true;btn.textContent='Enviando...';
+  setTimeout(()=>{
+    btn.style.display='none';
+    document.getElementById('form-ok').classList.add('show');
+  },900);
 }
+
+// ── BETA APP MODAL ────────────────────────────────────────
+function submitBeta(){
+  const nome=document.getElementById('beta-nome').value.trim();
+  const email=document.getElementById('beta-email').value.trim();
+  if(!nome||!email||!isValidEmail(email)){
+    if(!nome)document.getElementById('beta-nome').style.borderColor='#ff5555';
+    if(!email||!isValidEmail(email))document.getElementById('beta-email').style.borderColor='#ff5555';
+    return;
+  }
+  document.getElementById('beta-ok').style.display='block';
+  document.querySelector('#beta-modal button[onclick="submitBeta()"]').style.display='none';
+}
+
+// ── LGPD / PRIVACY MODAL LINKS ────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  ['lgpd-link','terms-link','inv-lgpd-link'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){
+      el.addEventListener('click',e=>{
+        e.preventDefault();
+        const m=document.getElementById('lgpd');
+        if(m)m.style.display='flex';
+      });
+    }
+  });
+  // Close modals on outside click
+  ['beta-modal','lgpd'].forEach(id=>{
+    const m=document.getElementById(id);
+    if(m){
+      m.addEventListener('click',e=>{
+        if(e.target===m)m.style.display='none';
+      });
+    }
+  });
+  // Close on ESC
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      ['beta-modal','lgpd'].forEach(id=>{
+        const m=document.getElementById(id);
+        if(m)m.style.display='none';
+      });
+    }
+  });
+});
+
+// ── INLINE VALIDATION ON BLUR ─────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('input[type=email]').forEach(inp=>{
+    inp.addEventListener('blur',()=>{
+      if(inp.value&&!isValidEmail(inp.value)){
+        inp.style.borderColor='#ff5555';
+      } else {
+        inp.style.borderColor='';
+      }
+    });
+  });
+});
 </script>
 </body>
 </html>
