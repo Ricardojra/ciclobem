@@ -34,10 +34,11 @@
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#0a1628">
 
-<!-- Preconnect to Google Fonts for faster font loading -->
+<!-- Async Google Fonts (preload + swap) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"></noscript>
 
 <!-- Structured Data -->
 <script type="application/ld+json">
@@ -431,7 +432,10 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
 <!-- NAV -->
 <nav class="nav" role="navigation" aria-label="Navegação principal">
   <a href="#hero" class="nav-logo" aria-label="CicloBem">
-    <img src="ciclobem_logo_top_1.png" alt="CicloBem logo" width="140" height="34" fetchpriority="high">
+    <picture>
+      <source srcset="ciclobem_logo_top_1.webp" type="image/webp">
+      <img src="ciclobem_logo_top_1.png" alt="CicloBem logo" width="140" height="34" fetchpriority="high">
+    </picture>
   </a>
   <div class="nav-links">
     <a href="#como">Como Funciona</a>
@@ -578,7 +582,10 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   </div>
 
   <div class="cicloponto-img reveal" style="transition-delay:.3s">
-    <img src="cicloponto.png" alt="CicloPonto — Estação de coleta seletiva CicloBem" width="600" height="400" loading="lazy">
+    <picture>
+      <source srcset="cicloponto.webp" type="image/webp">
+      <img src="cicloponto.png" alt="CicloPonto — Estação de coleta seletiva CicloBem" width="600" height="402" loading="lazy">
+    </picture>
   </div>
 
   <a href="#closing" class="btn btn-lime btn-full reveal" style="transition-delay:.36s">Quero ser o próximo piloto →</a>
