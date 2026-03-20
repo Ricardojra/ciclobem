@@ -992,6 +992,22 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
 </nav>
 
 <script>
+// ── GLOBAL HELPERS ────────────────────────────────────────
+const WHATSAPP_NUMBER='5521995500927';
+function sendWhatsAppLead(tag,details){
+  const text=`[${tag}] ${details.join(' | ')}`;
+  const url=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  const win=window.open(url,'_blank','noopener,noreferrer');
+  if(!win)window.location.href=url;
+}
+
+function resetConsentColor(cbId,defaultColor){
+  const cb=document.getElementById(cbId);
+  if(!cb)return;
+  const label=cb.parentElement?.querySelector('span');
+  if(label)label.style.color=defaultColor;
+}
+
 // ── REVEAL ON SCROLL ──────────────────────────────────────
 const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -28px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
@@ -1071,8 +1087,10 @@ function solicitarDeck(){
   const email=document.getElementById('inv-email').value.trim();
   const tipo=document.getElementById('inv-tipo').value;
   const lgpd=document.getElementById('inv-lgpd').checked;
+  const ticket=document.getElementById('inv-ticket').value.trim();
   let ok=true;
   ['inv-nome','inv-email','inv-tipo'].forEach(id=>clearFieldError(id));
+  resetConsentColor('inv-lgpd','rgba(255,255,255,0.45)');
   if(!nome){showFieldError('inv-nome','Por favor, informe seu nome completo.');ok=false;}
   if(!email||!isValidEmail(email)){showFieldError('inv-email','Informe um e-mail válido.');ok=false;}
   if(!tipo){showFieldError('inv-tipo','Selecione seu perfil de investidor.');ok=false;}
@@ -1082,6 +1100,17 @@ function solicitarDeck(){
     ok=false;
   }
   if(!ok)return;
+  sendWhatsAppLead('Lead Investidor',[
+    `Nome: ${nome}`,
+    `Email: ${email}`,
+    `Perfil: ${tipo}`,
+    `Ticket: ${ticket||'não informado'}`
+  ]);
+  document.getElementById('inv-nome').value='';
+  document.getElementById('inv-email').value='';
+  document.getElementById('inv-tipo').value='';
+  document.getElementById('inv-ticket').value='';
+  document.getElementById('inv-lgpd').checked=false;
   document.getElementById('inv-form-wrap').style.display='none';
   document.getElementById('inv-success').classList.add('show');
 }
@@ -1091,9 +1120,11 @@ function enviarForm(){
   const tipo=document.getElementById('f-tipo').value;
   const nome=document.getElementById('f-nome').value.trim();
   const email=document.getElementById('f-email').value.trim();
+  const msg=document.getElementById('f-msg').value.trim();
   const lgpd=document.getElementById('f-lgpd').checked;
   let ok=true;
   ['f-tipo','f-nome','f-email'].forEach(id=>clearFieldError(id));
+  resetConsentColor('f-lgpd','rgba(255,255,255,0.4)');
   if(!tipo){showFieldError('f-tipo','Selecione o tipo de contato.');ok=false;}
   if(!nome){showFieldError('f-nome','Informe seu nome.');ok=false;}
   if(!email||!isValidEmail(email)){showFieldError('f-email','Informe um e-mail válido.');ok=false;}
@@ -1103,11 +1134,20 @@ function enviarForm(){
   }
   if(!ok)return;
   const btn=document.querySelector('#closing .btn-green');
-  btn.disabled=true;btn.textContent='Enviando...';
-  setTimeout(()=>{
-    btn.style.display='none';
-    document.getElementById('form-ok').classList.add('show');
-  },900);
+  btn.disabled=true;btn.textContent='Abrindo WhatsApp...';
+  sendWhatsAppLead('Lead Contato',[
+    `Tipo: ${tipo}`,
+    `Nome: ${nome}`,
+    `Email: ${email}`,
+    `Mensagem: ${msg||'Não informado'}`
+  ]);
+  document.getElementById('f-tipo').value='';
+  document.getElementById('f-nome').value='';
+  document.getElementById('f-email').value='';
+  document.getElementById('f-msg').value='';
+  document.getElementById('f-lgpd').checked=false;
+  document.getElementById('form-ok').classList.add('show');
+  btn.disabled=false;btn.textContent='Enviar mensagem →';
 }
 
 // ── BETA APP MODAL ────────────────────────────────────────
@@ -1119,6 +1159,12 @@ function submitBeta(){
     if(!email||!isValidEmail(email))document.getElementById('beta-email').style.borderColor='#ff5555';
     return;
   }
+  sendWhatsAppLead('Lista Beta',[
+    `Nome: ${nome}`,
+    `Email: ${email}`
+  ]);
+  document.getElementById('beta-nome').value='';
+  document.getElementById('beta-email').value='';
   document.getElementById('beta-ok').style.display='block';
   document.querySelector('#beta-modal button[onclick="submitBeta()"]').style.display='none';
 }
