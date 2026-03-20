@@ -1051,12 +1051,24 @@ function setTab(id,btn){
 // ── MOBILE NAV ACTIVE STATE ───────────────────────────────
 const secs=document.querySelectorAll('section[id]');
 const mnis=document.querySelectorAll('.mni');
+let sectionOffsets=[];
+function computeSectionOffsets(){
+  sectionOffsets=Array.from(secs).map(s=>({id:s.id,top:s.getBoundingClientRect().top+window.scrollY}));
+}
+window.addEventListener('load',computeSectionOffsets,{once:false});
+let resizeTO;
+window.addEventListener('resize',()=>{
+  clearTimeout(resizeTO);
+  resizeTO=setTimeout(computeSectionOffsets,150);
+});
 let tk=false;
 window.addEventListener('scroll',()=>{
   if(!tk){
     requestAnimationFrame(()=>{
+      if(!sectionOffsets.length)computeSectionOffsets();
       let cur='hero';
-      secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+      const y=window.scrollY+120;
+      sectionOffsets.forEach(s=>{if(y>=s.top)cur=s.id;});
       mnis.forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+cur));
       tk=false;
     });
