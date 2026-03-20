@@ -96,13 +96,13 @@ body{font-family:var(--fb);background:var(--wh);color:var(--nv);overflow-x:hidde
 .pill{display:inline-flex;align-items:center;gap:6px;background:var(--ld);border:1px solid var(--lb);color:var(--lime);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:20px}
 .pill.live::before{content:"●";font-size:7px;color:var(--gl)}
 .pill.wh{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.8)}
-.stag{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gi);margin-bottom:8px;display:block}
+.stag{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0f5f2b;margin-bottom:8px;display:block}
 .stag.lt{color:var(--lime)}
 .h1{font-family:var(--fd);font-size:clamp(28px,7vw,52px);font-weight:800;line-height:1.08;letter-spacing:-1px}
 .h2{font-family:var(--fd);font-size:clamp(22px,5vw,34px);font-weight:800;line-height:1.15;letter-spacing:-0.5px}
 .accent{color:var(--lime)}.accent-g{color:var(--gi)}
 .sub{font-size:clamp(13px,3.5vw,15px);line-height:1.75;color:rgba(255,255,255,0.65)}
-.subdk{font-size:clamp(13px,3.5vw,15px);line-height:1.75;color:var(--gr)}
+.subdk{font-size:clamp(13px,3.5vw,15px);line-height:1.75;color:#3b4a3b}
 .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease}
 .reveal.vis{opacity:1;transform:none}
 .reveal.lft{transform:translateX(-20px)}.reveal.rgt{transform:translateX(20px)}.reveal.sc{transform:scale(0.93)}
@@ -197,7 +197,7 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
 .kpi{background:var(--of);border-radius:12px;padding:16px 14px;border-left:3px solid var(--gi)}
 .kpi-n{font-family:var(--fm);font-size:clamp(18px,5vw,24px);font-weight:600;color:var(--gm);line-height:1}
-.kpi-l{font-size:10px;color:var(--gr);margin-top:4px;line-height:1.35}
+.kpi-l{font-size:10px;color:#3c4c3c;margin-top:4px;line-height:1.35}
 
 /* BENEFIT CARDS */
 .bcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
@@ -205,11 +205,11 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .bcard:hover{border-color:#b0d8b0}
 .bcard-icon{font-size:22px;margin-bottom:8px}
 .bcard h5{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px}
-.bcard p{font-size:11px;color:var(--gr);line-height:1.5}
+.bcard p{font-size:11px;color:#3b4a3b;line-height:1.5}
 .bcard.wide{grid-column:1/-1}
 
 .eco-list{display:flex;flex-direction:column;gap:7px}
-.eitem{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;background:var(--of);border-radius:10px;font-size:13px;color:var(--nv);line-height:1.5}
+.eitem{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;background:var(--of);border-radius:10px;font-size:13px;color:#132132;line-height:1.5}
 .eitem::before{content:"✓";color:var(--gi);font-weight:700;font-size:13px;flex-shrink:0;margin-top:1px}
 
 /* ─── FLUXO ─── */
@@ -268,7 +268,7 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .pfeat{display:flex;gap:12px;align-items:flex-start;background:var(--wh);border-radius:12px;padding:13px;border:1px solid var(--lg)}
 .pfeat-ic{width:36px;height:36px;min-width:36px;background:rgba(26,122,50,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
 .pfeat h5{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:2px}
-.pfeat p{font-size:12px;color:var(--gr);line-height:1.5}
+.pfeat p{font-size:12px;color:#364536;line-height:1.5}
 
 /* ─── DEFENSABILIDADE ─── */
 #defesa{background:var(--gd)}
@@ -854,7 +854,8 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
       <div class="inv-form">
         <input class="inv-input" type="text" id="inv-nome" placeholder="Nome completo" autocomplete="name">
         <input class="inv-input" type="email" id="inv-email" placeholder="E-mail corporativo" autocomplete="email" inputmode="email">
-        <select class="inv-input" id="inv-tipo">
+        <label class="sr-only" for="inv-tipo" style="position:absolute;left:-9999px">Perfil do investidor</label>
+        <select class="inv-input" id="inv-tipo" aria-label="Perfil do investidor">
           <option value="">Perfil do investidor</option>
           <option>Investidor Anjo</option>
           <option>Fundo de Venture Capital</option>
