@@ -478,6 +478,49 @@ select.inv-input{appearance:none;-webkit-appearance:none;background-image:url("d
 .inv-success h3{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--lime);margin-bottom:8px}
 .inv-success p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
 
+/* ─── SOBRE ─── */
+#sobre{background:var(--of)}
+.sobre-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:28px}
+.sobre-bloco{background:var(--wh);border:1px solid var(--lg);border-radius:14px;padding:22px 20px}
+.sobre-bloco h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--nv);margin-bottom:8px}
+.sobre-bloco p{font-size:13px;color:var(--gr);line-height:1.7}
+.sobre-bloco strong{color:var(--nv)}
+.sobre-kw{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.sobre-kw span{font-size:10px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:rgba(26,122,50,0.08);border:1px solid rgba(26,122,50,0.18);color:var(--gm)}
+
+/* ─── FAQ ─── */
+#faq{background:var(--nv)}
+.faq-list{margin-top:28px;display:flex;flex-direction:column;gap:10px}
+.faq-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
+.faq-q{width:100%;background:none;border:none;padding:18px 20px;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:var(--fd);font-size:14px;font-weight:700;color:var(--wh);line-height:1.4}
+.faq-q:hover{background:rgba(170,255,0,0.04)}
+.faq-q .faq-arrow{font-size:18px;color:var(--lime);transition:transform 0.25s;flex-shrink:0;line-height:1}
+.faq-item.open .faq-arrow{transform:rotate(45deg)}
+.faq-a{display:none;padding:0 20px 18px;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75}
+.faq-a strong{color:rgba(255,255,255,0.9)}
+.faq-item.open .faq-a{display:block}
+
+/* ─── GLOSSÁRIO ─── */
+#glossario{background:var(--nv)}
+.glos-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:28px}
+.glos-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px 20px}
+.glos-term{font-family:var(--fd);font-size:13px;font-weight:800;color:var(--lime);margin-bottom:6px;letter-spacing:0.2px}
+.glos-def{font-size:13px;color:rgba(255,255,255,0.58);line-height:1.75}
+.glos-def strong{color:rgba(255,255,255,0.88)}
+
+/* ─── CASOS DE USO ─── */
+#casos{background:var(--of)}
+.casos-list{display:flex;flex-direction:column;gap:24px;margin-top:28px}
+.caso{background:var(--wh);border:1px solid var(--lg);border-radius:16px;padding:24px 20px}
+.caso-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.caso-icon{font-size:28px;line-height:1}
+.caso-title{font-family:var(--fd);font-size:16px;font-weight:800;color:var(--nv)}
+.caso-subtitle{font-size:12px;color:var(--gr);margin-top:1px}
+.caso-body p{font-size:13px;color:var(--gr);line-height:1.75;margin-bottom:10px}
+.caso-body p strong{color:var(--nv)}
+.caso-results{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.caso-r{background:rgba(26,122,50,0.07);border:1px solid rgba(26,122,50,0.2);border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--gm)}
+
 /* ─── CLOSING ─── */
 #closing{background:linear-gradient(135deg,var(--gd) 0%,var(--nv) 100%);text-align:center;padding:72px 20px}
 .cl-badge{display:inline-flex;align-items:center;gap:8px;background:var(--ld);border:1px solid var(--lb);color:var(--lime);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:20px}
@@ -550,6 +593,9 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   .dual{flex-direction:row}.dp{flex:1}
   .cl-btns{flex-direction:row;justify-content:center}
   .fn-split{grid-template-columns:1fr 1fr}
+  .sobre-grid{grid-template-columns:1fr 1fr}
+  .glos-grid{grid-template-columns:repeat(2,1fr)}
+  .casos-list{gap:28px}
 }
 </style>
 </head>
@@ -589,7 +635,11 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
     <a href="#produto">App</a>
     <a href="#solucoes">Prefeituras & ESG</a>
     <a href="#investidor">Investidores</a>
-    <a href="#closing" class="nav-cta-btn">Falar com Especialista</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#faq">FAQ</a>
+    <a href="#glossario">Glossário</a>
+    <a href="#casos">Casos de Uso</a>
+    <a href="#investidor" class="nav-cta-btn">Falar com Especialista</a>
   </div>
 </nav>
 
@@ -1061,6 +1111,253 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   <p class="reveal" style="transition-delay:.2s;margin-top:20px;font-size:12px;color:var(--gr)">Contato imprensa: <a href="mailto:imprensa@ciclobem.com.br" style="color:var(--gm);font-weight:600">imprensa@ciclobem.com.br</a></p>
 </section>
 
+<!-- ─── SOBRE A CICLOBEM ─── -->
+<section id="sobre">
+  <span class="stag">Quem somos</span>
+  <h2 class="h2 reveal">Sobre a CicloBem —<br><span class="accent-g">economia circular no Brasil.</span></h2>
+  <p class="subdk reveal" style="transition-delay:.08s;margin-top:10px">A CicloBem é uma empresa de tecnologia sediada no Rio de Janeiro que desenvolve infraestrutura financeira para a <strong>economia circular</strong> no Brasil.</p>
+  <div class="sobre-grid reveal" style="transition-delay:.14s">
+    <div class="sobre-bloco">
+      <h3>O que fazemos</h3>
+      <p>Desenvolvemos uma plataforma que <strong>tokeniza resíduos recicláveis</strong>, registra cada operação em <strong>blockchain (Polygon L2)</strong> e distribui automaticamente os pagamentos via <strong>Pix</strong> para cidadãos, cooperativas e catadores. O resultado é um sistema de <strong>coleta seletiva inteligente</strong> com rastreabilidade total e compliance automático com a <strong>Política Nacional de Resíduos Sólidos (PNRS)</strong>.</p>
+      <div class="sobre-kw">
+        <span>Reciclagem</span><span>Blockchain</span><span>Pix</span><span>PNRS</span><span>Economia Circular</span><span>ESG</span>
+      </div>
+    </div>
+    <div class="sobre-bloco">
+      <h3>Nossa missão</h3>
+      <p>Democratizar o acesso à <strong>renda da reciclagem</strong> para comunidades vulneráveis, ao mesmo tempo em que oferecemos às <strong>prefeituras</strong> uma solução de <strong>gestão de resíduos sólidos</strong> com custo 40% menor que o modelo tradicional, e às <strong>empresas ESG</strong> créditos de carbono verificáveis e rastreáveis em blockchain.</p>
+      <div class="sobre-kw">
+        <span>Crédito de Carbono</span><span>Cooperativas</span><span>Prefeituras</span><span>Gestão de Resíduos</span>
+      </div>
+    </div>
+    <div class="sobre-bloco">
+      <h3>Histórico e validação</h3>
+      <p>Entre 2022 e 2023, a CicloBem operou <strong>12 CicloPontos em comunidades cariocas</strong> em parceria com a <strong>Prefeitura do Rio de Janeiro</strong>, entregando 24 relatórios mensais de massas e impacto ambiental. O modelo está em expansão para outras cidades brasileiras, com plano de atingir <strong>500 CicloPontos em 20 municípios até 2030</strong>.</p>
+      <div class="sobre-kw">
+        <span>Rio de Janeiro</span><span>Piloto Validado</span><span>Impacto Social</span><span>Expansão Nacional</span>
+      </div>
+    </div>
+    <div class="sobre-bloco">
+      <h3>Tecnologia e diferenciais</h3>
+      <p>A plataforma combina <strong>hardware IoT</strong> (totens de coleta com pesagem automática), <strong>aplicativo mobile</strong> com carteira digital integrada, <strong>Banking as a Service (BaaS)</strong> para conta digital e Pix, e <strong>smart contracts</strong> em blockchain para liquidação automática. Todos os dados de reciclagem são públicos, auditáveis e aceitos por certificadoras internacionais de <strong>créditos de carbono</strong>.</p>
+      <div class="sobre-kw">
+        <span>IoT</span><span>App Mobile</span><span>Smart Contracts</span><span>BaaS</span><span>Fintech</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PERGUNTAS FREQUENTES ─── -->
+<section id="faq" aria-label="Perguntas frequentes sobre a CicloBem">
+  <span class="stag lt">Tire suas dúvidas</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Perguntas<br><span class="accent">frequentes.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Tudo que você precisa saber sobre reciclagem com renda, créditos de carbono e o modelo CicloBem.</p>
+
+  <div class="faq-list reveal" style="transition-delay:.14s">
+    <div class="faq-item open">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="true">
+        O que é o CicloBem e como funciona?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        O <strong>CicloBem</strong> é uma plataforma de infraestrutura financeira para a <strong>economia circular</strong>. Instalamos <strong>CicloPontos</strong> — totens de coleta seletiva com pesagem automática — em comunidades, shoppings e espaços parceiros. Cada kg de material reciclável depositado é registrado em <strong>blockchain</strong> e o valor é creditado instantaneamente na carteira digital do usuário via <strong>Pix</strong>. O modelo foi validado em projeto com a <strong>Prefeitura do Rio de Janeiro</strong> entre 2022 e 2023.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        Quanto ganho por kg de material reciclado?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        Os valores variam por tipo de material: <strong>alumínio e metais pagam R$4,50/kg</strong>, <strong>plástico PET R$1,20/kg</strong>, <strong>eletrônicos R$2,00/kg</strong> e <strong>papel e papelão R$0,40/kg</strong>. O crédito é liberado na carteira digital em segundos após o depósito no CicloPonto, sem burocracia ou intermediários.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        Como a CicloBem ajuda prefeituras a cumprir a PNRS?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        A <strong>Política Nacional de Resíduos Sólidos (PNRS)</strong> exige que todos os municípios brasileiros tenham sistemas de coleta seletiva com rastreabilidade. O CicloBem entrega <strong>compliance automático</strong>: relatórios mensais de massas prontos para o TCU, painel de gestão por bairro em tempo real e redução de até <strong>40% no custo operacional</strong> de coleta seletiva. A implantação é feita em <strong>90 dias</strong> com modelo PPP — sem investimento inicial da prefeitura.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        O que são os créditos de carbono tokenizados da CicloBem?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        Cada tonelada de resíduo desviado de aterros gera uma quantidade de <strong>CO₂ evitado</strong> calculada e registrada on-chain. Esses dados são convertidos em <strong>créditos de carbono tokenizados (NFT)</strong> na blockchain Polygon L2, com hash auditável publicamente. <strong>Empresas ESG</strong> podem comprar esses créditos para seus relatórios de sustentabilidade — aceitos por certificadoras internacionais como GRI e ISO 14064.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        Como uma cooperativa de catadores se beneficia do CicloBem?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        <strong>Cooperativas de catadores</strong> recebem pagamento automático por lote triado via smart contract — sem negociação, sem atraso, sem burocracia. O sistema também oferece <strong>antecipação de recebíveis</strong>, formalização com CNPJ e nota fiscal digital, acesso direto ao mercado comprador de recicláveis e um aumento médio de <strong>+30% na renda por catador</strong>.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        O CicloBem já funciona? Onde posso ver o projeto em operação?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        Sim. O modelo foi validado entre 2022 e 2023 em um projeto realizado com a <strong>Prefeitura do Rio de Janeiro</strong>, com <strong>12 CicloPontos instalados em comunidades cariocas</strong>. Foram entregues 24 relatórios mensais de massas e impacto ambiental com rastreabilidade completa. Atualmente o CicloBem está em fase de expansão nacional para novas cidades e municípios.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        Como investir no CicloBem?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        O CicloBem está com <strong>Seed Round aberto</strong>. O modelo tem múltiplos vetores de receita recorrente e transacional, validação em campo de 2 anos e mercado endereçável de <strong>5.570 municípios brasileiros</strong> obrigados pela PNRS mais o mercado ESG em expansão. Investidores anjo, fundos de VC, fundos de impacto e family offices podem solicitar o <strong>deck completo com modelo financeiro</strong> diretamente pelo site.
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:22px;text-align:center">
+    <a href="#closing" class="btn btn-lime">Falar com a equipe CicloBem →</a>
+  </div>
+</section>
+
+<!-- ─── GLOSSÁRIO TÉCNICO ─── -->
+<section id="glossario">
+  <span class="stag lt">Terminologia</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Glossário da<br><span class="accent">economia circular.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Entenda os principais conceitos por trás da tecnologia CicloBem — da regulação ambiental ao blockchain.</p>
+
+  <div class="glos-grid reveal" style="transition-delay:.14s">
+    <div class="glos-item">
+      <div class="glos-term">PNRS — Política Nacional de Resíduos Sólidos</div>
+      <div class="glos-def">A <strong>Lei nº 12.305/2010</strong> institui a Política Nacional de Resíduos Sólidos, obrigando todos os <strong>5.570 municípios brasileiros</strong> a implantar sistemas de <strong>coleta seletiva com logística reversa</strong>. O não cumprimento implica vedação de transferências voluntárias da União. O CicloBem automatiza o compliance e gera os <strong>relatórios de massa exigidos pelo TCU</strong> sem equipe dedicada.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Economia Circular</div>
+      <div class="glos-def">Modelo econômico que substitui o paradigma linear "extrair → produzir → descartar" por ciclos fechados: <strong>reduzir, reutilizar, reciclar e regenerar</strong>. Na prática, significa que resíduos de uma cadeia viram insumo de outra. O CicloBem cria a <strong>infraestrutura financeira</strong> que torna esse ciclo economicamente viável para cidadãos, cooperativas, prefeituras e empresas simultaneamente.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Crédito de Carbono (VCM)</div>
+      <div class="glos-def">Instrumento do <strong>Mercado Voluntário de Carbono (VCM)</strong> que representa 1 tonelada de CO₂ equivalente evitado ou removido da atmosfera. Cada tonelada de resíduo desviado de aterros sanitários gera um volume calculável de <strong>CO₂ evitado</strong>. No CicloBem, esses créditos são <strong>tokenizados em blockchain</strong> como NFTs auditáveis, aceitos por certificadoras como <strong>GRI, ISO 14064 e Verra VCS</strong>.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Tokenização de Resíduos</div>
+      <div class="glos-def">Processo de converter dados físicos de reciclagem — peso, tipo de material, localização, timestamp — em <strong>ativos digitais registrados em blockchain</strong>. Cada depósito no CicloPonto gera um token que representa aquele evento de reciclagem de forma <strong>imutável, pública e auditável</strong>. Esse token serve como base para calcular créditos de carbono, pagamentos automáticos e relatórios ESG.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Logística Reversa</div>
+      <div class="glos-def">Sistema pelo qual fabricantes, importadores e distribuidores são <strong>responsáveis pelo retorno dos resíduos pós-consumo</strong> para reaproveitamento. Exigida pela PNRS para embalagens, eletroeletrônicos, pilhas, pneus, óleos lubrificantes e agrotóxicos. O CicloBem opera como <strong>ponto de coleta inteligente</strong> da logística reversa, registrando cada material devolvido em blockchain para comprovação legal.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Smart Contract</div>
+      <div class="glos-def">Programa auto-executável armazenado em blockchain que executa ações automaticamente quando <strong>condições pré-definidas são satisfeitas</strong> — sem intervenção humana. No CicloBem, o smart contract recebe o peso validado do CicloPonto, calcula o valor devido por material, debita da conta da empresa compradora de créditos e <strong>credita via Pix</strong> na carteira do cidadão ou cooperativa em segundos.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">ESG (Environmental, Social and Governance)</div>
+      <div class="glos-def">Conjunto de critérios usados por investidores, reguladores e stakeholders para avaliar a <strong>sustentabilidade e responsabilidade</strong> de empresas. O "E" (ambiental) exige evidências de redução de emissões e gestão de resíduos. O CicloBem fornece às empresas <strong>dados ESG verificáveis em blockchain</strong> prontos para relatórios GRI, CDP, B3 ISE e auditorias internacionais.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Banking as a Service (BaaS)</div>
+      <div class="glos-def">Modelo em que infraestrutura bancária — <strong>conta digital, Pix, KYC, cartão</strong> — é oferecida como serviço via API, sem a empresa precisar obter licença bancária própria. O CicloBem usa BaaS para oferecer <strong>conta digital gratuita</strong> a cidadãos e cooperativas, com saque instantâneo via Pix, microcrédito baseado em histórico de reciclagem e cartão para uso em parceiros.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">PPP — Parceria Público-Privada</div>
+      <div class="glos-def">Modelo contratual pelo qual o poder público utiliza a <strong>iniciativa privada para prestação de serviços públicos</strong>, sem desembolso de capital inicial pelo município. No modelo PPP da CicloBem, a empresa instala e opera os CicloPontos e se remunera através das receitas geradas — <strong>a prefeitura não aporta recursos financeiros</strong>, apenas o espaço físico e a parceria institucional.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Blockchain Polygon L2</div>
+      <div class="glos-def">Rede blockchain de segunda camada (<strong>Layer 2</strong>) construída sobre o Ethereum, com transações mais rápidas e taxas até 99% menores. O CicloBem escolheu Polygon L2 por sua <strong>compatibilidade com certificadoras ambientais</strong>, velocidade para processar milhares de depósitos diários e pela rastreabilidade pública — qualquer pessoa pode verificar um hash de reciclagem no explorador de blocos.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Coleta Seletiva Inteligente</div>
+      <div class="glos-def">Evolução da coleta seletiva tradicional por meio de <strong>hardware IoT com sensores, pesagem automática e conectividade</strong>. Cada CicloPonto da CicloBem identifica o usuário via QR Code, pesa cada material separado, registra o evento em blockchain e dispara o pagamento automático — eliminando a dependência de <strong>gestão manual, planilhas e intermediários</strong> que tornam a coleta tradicional ineficiente.</div>
+    </div>
+    <div class="glos-item">
+      <div class="glos-term">Catador de Materiais Recicláveis</div>
+      <div class="glos-def">Trabalhador que realiza a <strong>triagem, coleta e comercialização</strong> de materiais recicláveis, fundamental para a cadeia da reciclagem no Brasil. São aproximadamente <strong>800 mil catadores</strong> no país, muitos informais e sem acesso a serviços financeiros. O CicloBem formaliza cooperativas de catadores, oferece conta digital, antecipação de recebíveis e aumento médio de <strong>30% na renda</strong> via pagamento automático por lote triado.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CASOS DE USO ─── -->
+<section id="casos">
+  <span class="stag">Na prática</span>
+  <h2 class="h2 reveal">Como o CicloBem<br><span class="accent-g">funciona para cada perfil.</span></h2>
+  <p class="subdk reveal" style="transition-delay:.08s;margin-top:10px">Três cenários reais de aplicação da plataforma — do cidadão à prefeitura, da cooperativa à empresa ESG.</p>
+
+  <div class="casos-list reveal" style="transition-delay:.14s">
+    <div class="caso">
+      <div class="caso-head">
+        <div class="caso-icon">🏛️</div>
+        <div>
+          <div class="caso-title">Prefeitura de médio porte · PNRS compliance em 90 dias</div>
+          <div class="caso-subtitle">Cenário: município com 200 mil habitantes, coleta seletiva precária, pressão do TCU</div>
+        </div>
+      </div>
+      <div class="caso-body">
+        <p>Uma prefeitura de médio porte no interior do Brasil enfrenta o prazo da <strong>Política Nacional de Resíduos Sólidos (PNRS)</strong> para implantar coleta seletiva rastreável. O modelo tradicional exigiria licitação de caminhões, contratação de pessoal, compra de software e meses de implantação — com custo médio de <strong>R$800 mil a R$1,2 milhão</strong>.</p>
+        <p>Com o <strong>modelo PPP da CicloBem</strong>, o município assina o contrato e recebe os CicloPontos instalados em <strong>90 dias</strong>, sem desembolso inicial. A plataforma gera automaticamente os <strong>relatórios mensais de massa por material e bairro</strong>, com hash blockchain para auditoria do TCU. O custo operacional cai até <strong>40% em relação ao modelo de coleta porta a porta</strong>, e o município ainda gera renda para catadores locais — cumprindo tanto o pilar ambiental quanto o social da PNRS.</p>
+        <p>O painel de gestão municipal mostra em tempo real: toneladas coletadas por tipo de material, número de usuários ativos, renda distribuída à comunidade, CO₂ evitado e cumprimento das metas do Plano Municipal de Gestão Integrada de Resíduos Sólidos (PMGIRS).</p>
+      </div>
+      <div class="caso-results">
+        <span class="caso-r">-40% custo operacional</span>
+        <span class="caso-r">90 dias para implantar</span>
+        <span class="caso-r">PNRS compliant do dia 1</span>
+        <span class="caso-r">R$0 investimento inicial</span>
+        <span class="caso-r">Relatórios TCU automáticos</span>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">
+        <div class="caso-icon">🌿</div>
+        <div>
+          <div class="caso-title">Rede varejista · Créditos de carbono verificados para ESG</div>
+          <div class="caso-subtitle">Cenário: empresa com obrigações de relatório GRI e metas de neutralidade de carbono</div>
+        </div>
+      </div>
+      <div class="caso-body">
+        <p>Uma rede varejista com <strong>200 lojas no Brasil</strong> precisa reduzir sua pegada de carbono para cumprir metas ESG assumidas com investidores e reportadas nos padrões <strong>GRI (Global Reporting Initiative) e CDP</strong>. A alternativa tradicional — compra de créditos de carbono no mercado internacional — é cara, pouco transparente e sujeita a questionamentos de auditores.</p>
+        <p>Com a CicloBem, a rede instala <strong>CicloPontos branded</strong> nos estacionamentos de suas lojas, transformando cada ponto de venda em um centro de <strong>logística reversa de embalagens</strong>. Cada kg reciclado pelos clientes é registrado em blockchain. A plataforma calcula automaticamente o <strong>CO₂ equivalente evitado</strong> por desvio de aterro, tokeniza em créditos verificáveis e emite o <strong>relatório ESG com hash blockchain</strong> pronto para auditores.</p>
+        <p>A empresa ainda se beneficia do <strong>efeito de marca</strong>: clientes que reciclam nas lojas recebem créditos na carteira CicloBem usáveis em compras — criando um loop de fidelização sustentável que reduz custos de marketing enquanto gera impacto ambiental rastreável.</p>
+      </div>
+      <div class="caso-results">
+        <span class="caso-r">Créditos carbono rastreáveis</span>
+        <span class="caso-r">Relatório GRI automático</span>
+        <span class="caso-r">100% auditável on-chain</span>
+        <span class="caso-r">Logística reversa integrada</span>
+        <span class="caso-r">Fidelização de clientes</span>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">
+        <div class="caso-icon">🤝</div>
+        <div>
+          <div class="caso-title">Cooperativa de catadores · Formalização e aumento de renda</div>
+          <div class="caso-subtitle">Cenário: cooperativa com 40 catadores, renda irregular, sem acesso a crédito</div>
+        </div>
+      </div>
+      <div class="caso-body">
+        <p>Uma <strong>cooperativa de catadores</strong> no Rio de Janeiro opera de forma informal: triagem manual, negociação individual com atravessadores, pagamento irregular e sem acesso a serviços financeiros. Os catadores recebem <strong>30 a 50% abaixo do preço de mercado</strong> porque precisam do atravessador para escoar o material. Não têm CNPJ ativo, nota fiscal ou histórico financeiro para acessar crédito.</p>
+        <p>Ao se integrar à plataforma CicloBem, a cooperativa começa a receber <strong>pagamento automático por lote triado via smart contract</strong> — sem negociação, sem atraso, sem desconto de atravessador. O sistema emite <strong>nota fiscal digital</strong> por cada lote, constrói histórico financeiro formal e abre acesso a <strong>microcrédito e antecipação de recebíveis</strong>. Os catadores ganham conta digital individual com cartão e saque via Pix.</p>
+        <p>Com acesso direto ao <strong>mercado comprador nacional de recicláveis</strong> via plataforma B2B da CicloBem, a cooperativa elimina o atravessador e aumenta a renda média por catador em <strong>+30%</strong>. Seguros de saúde e renda são oferecidos como benefício, reduzindo a vulnerabilidade financeira de toda a equipe.</p>
+      </div>
+      <div class="caso-results">
+        <span class="caso-r">+30% renda por catador</span>
+        <span class="caso-r">Pagamento automático Pix</span>
+        <span class="caso-r">Formalização com CNPJ</span>
+        <span class="caso-r">Acesso a microcrédito</span>
+        <span class="caso-r">Sem atravessadores</span>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:24px"><a href="#closing" class="btn btn-lime btn-full reveal">Quero implantar o CicloBem →</a></div>
+</section>
+
 <!-- ─── CLOSING ─── -->
 <section id="closing">
   <div class="cl-badge">🚀 Expansão nacional em andamento</div>
@@ -1105,7 +1402,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
     <a href="#como">Como Funciona</a><a href="#beneficios">Benefícios</a>
     <a href="#fluxo">Fluxo do Dinheiro</a><a href="#produto">App</a>
     <a href="#tech">Tecnologia</a><a href="#solucoes">Prefeituras & ESG</a>
-    <a href="#investidor">Investidores</a><a href="#imprensa">Imprensa</a><a href="#closing">Contato</a>
+    <a href="#investidor">Investidores</a><a href="#imprensa">Imprensa</a><a href="#sobre">Sobre</a><a href="#faq">FAQ</a><a href="#glossario">Glossário</a><a href="#casos">Casos de Uso</a><a href="#closing">Contato</a>
   </div>
   <div class="flinks" style="margin-top:-4px;margin-bottom:16px;border-top:1px solid rgba(255,255,255,0.05);padding-top:12px">
     <a href="mailto:contato@ciclobem.com.br">contato@ciclobem.com.br</a>
@@ -1146,6 +1443,20 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
 </nav>
 
 <script>
+// ── FAQ TOGGLE ────────────────────────────────────────────
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{
+    i.classList.remove('open');
+    i.querySelector('.faq-q').setAttribute('aria-expanded','false');
+  });
+  if(!isOpen){
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+  }
+}
+
 // ── GLOBAL HELPERS ────────────────────────────────────────
 const WHATSAPP_NUMBER='5521995500927';
 function sendWhatsAppLead(tag,details){
