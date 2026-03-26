@@ -90,8 +90,9 @@
   "telephone": "+55-21-99550-0927",
   "description": "Infraestrutura financeira da economia circular. Tokenizamos resíduos recicláveis, geramos créditos ambientais verificados e distribuímos renda via Blockchain no Rio de Janeiro.",
   "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Rio de Janeiro",
+    "@type": "PostalAddress", 
+        "addressLocality": "Rio de Janeiro",
+        
     "addressRegion": "RJ",
     "addressCountry": "BR"
   },
@@ -229,9 +230,9 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:var(--fb);background:var(--wh);color:var(--nv);overflow-x:hidden;padding-bottom:68px}
 
 /* NAV */
-.nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(170,255,0,0.08);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(170,255,0,0.08);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:center}
 .nav-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
-.nav-logo img{height:40px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))}
+.nav-logo img{height:44px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))}
 .nav-links{display:none;gap:2px;align-items:center}
 .nav-links a{color:rgba(255,255,255,0.65);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.4px;padding:6px 10px;border-radius:20px;transition:all 0.2s;text-transform:uppercase;white-space:nowrap}
 .nav-links a:hover{color:var(--lime);background:var(--ld)}
@@ -465,7 +466,7 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .inv-t-text{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.4}
 .inv-t-text strong{color:rgba(255,255,255,0.85)}
 .inv-form{display:flex;flex-direction:column;gap:10px}
-.inv-input{width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-family:var(--fb);font-size:15px;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+.inv-input{width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-family:var(--fb);font-size:15px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none}
 .inv-label{font-size:11px;color:rgba(255,255,255,0.75);font-weight:600;letter-spacing:0.3px;text-transform:uppercase;margin:4px 0 -4px 2px;display:block}
 .inv-input:focus{border-color:var(--lime)}
 .inv-input::placeholder{color:rgba(255,255,255,0.25)}
@@ -580,8 +581,10 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
 
 @media(min-width:640px){
   body{padding-bottom:0}.mobnav{display:none}.wa{bottom:24px}
+  .nav{justify-content:space-between}
+  .nav-logo{margin-left:24px}
   .nav-links{display:flex}
-  .nav-logo img{height:44px}
+  .nav-logo img{height:50px}
   section{padding:80px 40px}
   .cta-grid{grid-template-columns:repeat(3,1fr)}.cta-card.prime{grid-column:1/-1}
   .hero-proof{grid-template-columns:repeat(3,1fr)}
@@ -612,8 +615,8 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
       <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.65">Estamos finalizando o app para iOS e Android. Entre na lista e seja notificado no lançamento.</p>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
-      <input type="text" id="beta-nome" placeholder="Seu nome" autocomplete="name" style="width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-size:15px;outline:none;font-family:var(--fb);-webkit-appearance:none" onfocus="this.style.borderColor='var(--lime)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-      <input type="email" id="beta-email" placeholder="seu@email.com" inputmode="email" autocomplete="email" style="width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-size:15px;outline:none;font-family:var(--fb);-webkit-appearance:none" onfocus="this.style.borderColor='var(--lime)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      <input type="text" id="beta-nome" placeholder="Seu nome" autocomplete="name" style="width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-size:15px;outline:none;font-family:var(--fb);-webkit-appearance:none;appearance:none" onfocus="this.style.borderColor='var(--lime)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      <input type="email" id="beta-email" placeholder="seu@email.com" inputmode="email" autocomplete="email" style="width:100%;padding:13px 14px;border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;background:rgba(255,255,255,0.05);color:var(--wh);font-size:15px;outline:none;font-family:var(--fb);-webkit-appearance:none;appearance:none" onfocus="this.style.borderColor='var(--lime)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
       <button onclick="submitBeta()" style="background:var(--lime);color:var(--nv);font-family:var(--fd);font-weight:700;font-size:15px;padding:14px;border:none;border-radius:10px;cursor:pointer;width:100%;-webkit-tap-highlight-color:transparent">Quero acesso antecipado →</button>
       <div id="beta-ok" style="display:none;text-align:center;padding:10px 0;color:#4ecb6a;font-weight:600;font-size:14px">✅ Cadastrado! Você será notificado no lançamento.</div>
       <p style="font-size:10px;color:rgba(255,255,255,0.25);text-align:center;margin-top:4px">Não enviamos spam. Dados tratados conforme nossa <a href="#lgpd" onclick="document.getElementById('beta-modal').style.display='none'" style="color:rgba(170,255,0,0.5);text-decoration:none">Política de Privacidade</a>.</p>
@@ -649,19 +652,19 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   <div class="hgrid"></div><div class="hglow"></div>
 
   <div class="hero-pills reveal">
-    <div class="pill live">Sistema Testado · Rio de Janeiro</div>
-    <div class="pill wh">Programa Realizado em Comunidades no Rio</div>
+    <div class="pill live">MVP Concluído · Rio de Janeiro 2022–2023</div>
+    <div class="pill wh">Expansão Privada B2B &amp; Franquias em Andamento</div>
   </div>
 
   <h1 class="h1 hero-title reveal" style="transition-delay:.08s">
-    Transforme lixo em dinheiro<br><span class="accent">com rastreabilidade total.</span>
+    CicloBem: A Infraestrutura Financeira<br><span class="accent">da Economia Circular.</span>
   </h1>
 
   <p class="sub hero-sub reveal" style="transition-delay:.14s">
-    O CicloBem é a infraestrutura financeira da economia circular — tokenizamos resíduos recicláveis, geramos créditos ambientais verificados e distribuímos renda automaticamente via Pix e Blockchain.
+    Tecnologia validada em campo, expansão privada e impacto real. Tokenizamos resíduos recicláveis, geramos créditos ambientais verificados e distribuímos renda automaticamente via Pix e Blockchain.
   </p>
   <p class="hero-anchor reveal" style="transition-delay:.18s">
-    <strong>Modelo Validado em Projeto da Prefeitura do Rio de Janeiro</strong> — 12 pontos de coleta operados em comunidades cariocas com conta digital, pesagem e relatórios mensais de impacto.
+    <strong>Piloto de Validação Concluído com Sucesso no Rio de Janeiro</strong> — 12 CicloPontos operaram por 2 anos como MVP, gerando 24 relatórios mensais de impacto rastreados on-chain. Agora, expansão 100% privada via B2B e Franquias.
   </p>
 
   <div class="cta-grid reveal" style="transition-delay:.24s">
@@ -677,9 +680,10 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
     <a href="#investidor" class="cta-card"><div class="cta-icon">📈</div><div class="cta-role">Sou investidor</div><div class="cta-hint">Seed Round aberto · acesse o deck</div></a>
   </div>
 
+  <p style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(170,255,0,0.5);text-align:center;margin-bottom:6px" class="reveal" style="transition-delay:.30s">Resultados Consolidados do Piloto</p>
   <div class="hero-proof reveal" style="transition-delay:.32s">
-    <div class="pitem"><div class="pnum" data-target="12" data-suffix="">12</div><div class="plbl">CicloPontos instalados no piloto</div></div>
-    <div class="pitem"><div class="pnum" data-target="2" data-suffix=" anos">2 anos</div><div class="plbl">Operando com a Prefeitura do Rio</div></div>
+    <div class="pitem"><div class="pnum" data-target="12" data-suffix="">12</div><div class="plbl">CicloPontos implantados</div></div>
+    <div class="pitem"><div class="pnum" data-target="2" data-suffix=" anos">2 anos</div><div class="plbl">MVP operado com sucesso</div></div>
     <div class="pitem"><div class="pnum" data-target="100" data-suffix="%">100%</div><div class="plbl">Dados rastreados on-chain</div></div>
   </div>
 </section>
@@ -687,7 +691,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
 <!-- MARQUEE -->
 <div class="mwrap">
   <div class="mtrack">
-    <div class="mpill"><em>🏛</em> Modelo Validado no Rio</div>
+    <div class="mpill"><em>✅</em> MVP Validado · Rio 2022–2023</div>
     <div class="mpill"><em>⛓</em> Blockchain Polygon L2</div>
     <div class="mpill"><em>🤖</em> Smart Contracts</div>
     <div class="mpill"><em>🏦</em> Banking as a Service</div>
@@ -696,7 +700,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
     <div class="mpill"><em>🌿</em> Créditos de Carbono</div>
     <div class="mpill"><em>💰</em> Liquidação via Pix</div>
     <div class="mpill"><em>📊</em> Relatórios Mensais de Impacto</div>
-    <div class="mpill"><em>🏛</em> Modelo Validado pela Prefeitura do Rio</div>
+    <div class="mpill"><em>🚀</em> Expansão B2B &amp; Franquias</div>
     <div class="mpill"><em>⛓</em> Blockchain Polygon L2</div>
     <div class="mpill"><em>🤖</em> Smart Contracts</div>
     <div class="mpill"><em>🏦</em> Banking as a Service</div>
@@ -735,21 +739,22 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
 
 <!-- ─── PROVA REAL ─── -->
 <section id="prova">
-  <span class="stag lt">Prova real</span>
-  <h2 class="h2 reveal" style="color:var(--wh)">Já está<br><span class="accent">acontecendo.</span></h2>
+  <span class="stag lt">Case de Sucesso</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Validação Robusta<br><span class="accent">em Campo no Rio.</span></h2>
 
   <div class="pilot-badge reveal" style="transition-delay:.1s;margin-top:24px">
     <div class="pdot"></div>
     <div class="pilot-badge-text">
-      <h3>Programa Validado em Comunidades · Rio de Janeiro</h3>
-      <p><strong>12 pontos de coleta</strong> instalados em comunidades cariocas · 2022–2023 · Conta digital, pesagem automatizada e <strong>relatórios mensais de massas e impacto</strong> ambiental evitado.</p>
+      <h3>MVP Concluído · Rio de Janeiro 2022–2023</h3>
+      <p><strong>12 CicloPontos</strong> operaram por 2 anos como piloto de validação da tecnologia on-chain em comunidades cariocas. O MVP comprovou a viabilidade técnica, financeira e operacional da plataforma — com pesagem automatizada, conta digital e <strong>24 relatórios mensais de massas e impacto</strong> entregues. Essa fase de testes está concluída e dá lugar à <strong>expansão comercial privada</strong>.</p>
     </div>
   </div>
 
+  <p style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(170,255,0,0.5);text-align:center;margin:16px 0 6px">Resultados Consolidados do Piloto</p>
   <div class="pstats reveal" style="transition-delay:.18s">
-    <div class="pstat"><div class="psn" data-target="12" data-suffix="">12</div><div class="psl">CicloPontos instalados</div></div>
-    <div class="pstat"><div class="psn" data-target="2" data-suffix=" anos">2 anos</div><div class="psl">Em operação realizada</div></div>
-    <div class="pstat"><div class="psn" data-target="100" data-suffix="%">100%</div><div class="psl">Materiais pesados e registrados</div></div>
+    <div class="pstat"><div class="psn" data-target="12" data-suffix="">12</div><div class="psl">CicloPontos no MVP</div></div>
+    <div class="pstat"><div class="psn" data-target="2" data-suffix=" anos">2 anos</div><div class="psl">Piloto operado com sucesso</div></div>
+    <div class="pstat"><div class="psn" data-target="100" data-suffix="%">100%</div><div class="psl">Dados rastreados on-chain</div></div>
     <div class="pstat"><div class="psn" data-target="24" data-suffix="">24</div><div class="psl">Relatórios de impacto entregues</div></div>
   </div>
 
@@ -784,7 +789,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
     </picture>
   </div>
 
-  <a href="#closing" class="btn btn-lime btn-full reveal" style="transition-delay:.36s">Quero ser o próximo piloto →</a>
+  <a href="#closing" class="btn btn-lime btn-full reveal" style="transition-delay:.36s">Quero implantar na minha cidade →</a>
 </section>
 
 <!-- ─── BENEFÍCIOS POR PERFIL ─── -->
@@ -798,6 +803,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
     <button class="eco-tab" onclick="setTab('prefeitura',this)">🏛 Prefeitura</button>
     <button class="eco-tab" onclick="setTab('empresa',this)">🌿 Empresa</button>
     <button class="eco-tab" onclick="setTab('coop',this)">🤝 Cooperativa</button>
+    <button class="eco-tab" onclick="setTab('b2b',this)">🚀 B2B &amp; Franquias</button>
   </div>
 
   <!-- CIDADÃO -->
@@ -832,7 +838,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
       <div class="eitem">Geração de renda e formalização para catadores do município</div>
       <div class="eitem">Painel de gestão com dados por bairro em tempo real</div>
       <div class="eitem">Modelo PPP disponível — a prefeitura não desembolsa capital inicial</div>
-      <div class="eitem">Validado pelo Programa da Prefeitura do Rio (2022–2023)</div>
+      <div class="eitem">Piloto de validação concluído — MVP de 2 anos operado com sucesso no Rio de Janeiro (2022–2023)</div>
     </div>
   </div>
 
@@ -848,6 +854,24 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
       <div class="bcard"><div class="bcard-icon">🪙</div><h3>Créditos de carbono reais</h3><p>Compre créditos tokenizados com evidência blockchain — aceitos por certificadoras.</p></div>
       <div class="bcard"><div class="bcard-icon">📊</div><h3>Relatório ESG automático</h3><p>Dados verificáveis em blockchain prontos para auditores e stakeholders.</p></div>
       <div class="bcard"><div class="bcard-icon">♻️</div><h3>CicloPonto na sua marca</h3><p>Instale um ponto de coleta no seu espaço e ofereça créditos aos seus clientes.</p></div>
+    </div>
+  </div>
+
+  <!-- B2B & FRANQUIAS -->
+  <div id="tab-b2b" class="eco-panel">
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-n">100%</div><div class="kpi-l">privado e autônomo</div></div>
+      <div class="kpi"><div class="kpi-n">B2B</div><div class="kpi-l">parcerias corporativas</div></div>
+      <div class="kpi"><div class="kpi-n">API</div><div class="kpi-l">integração com parceiros</div></div>
+      <div class="kpi"><div class="kpi-n">MRR</div><div class="kpi-l">receita recorrente</div></div>
+    </div>
+    <div class="bcard-grid">
+      <div class="bcard"><div class="bcard-icon">🚀</div><h3>Expansão Privada e Autônoma</h3><p>O CicloBem foca em expansão via parcerias B2B e Franquias, com total liberdade para definir locais e mapeamentos, sem dependência de ciclos governamentais.</p></div>
+      <div class="bcard"><div class="bcard-icon">🤝</div><h3>Modelo de Franquia</h3><p>Operadores privados implantam CicloPontos sob a marca CicloBem com suporte tecnológico completo — hardware, software e plataforma financeira inclusas.</p></div>
+      <div class="bcard"><div class="bcard-icon">🏢</div><h3>Parcerias Corporativas</h3><p>Shoppings, redes varejistas, condomínios e parques industriais se tornam hubs de coleta seletiva gerando compliance ESG e fidelização de clientes.</p></div>
+      <div class="bcard"><div class="bcard-icon">📈</div><h3>Receita Recorrente (MRR)</h3><p>Modelo SaaS + transacional: taxa por CicloPonto ativo, percentual sobre créditos negociados e licença de plataforma — receita previsível e escalável.</p></div>
+      <div class="bcard"><div class="bcard-icon">🗺️</div><h3>Mapeamento Livre</h3><p>Sem dependência de aprovações governamentais. Parceiros B2B escolhem localizações estratégicas com base em dados de densidade de reciclagem.</p></div>
+      <div class="bcard"><div class="bcard-icon">⚡</div><h3>Implantação Ágil</h3><p>CicloPonto operacional em até 30 dias para parceiros B2B — sem burocracia pública, processo totalmente privado e orientado por contrato comercial.</p></div>
     </div>
   </div>
 
@@ -965,7 +989,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   <h2 class="h2 reveal" style="color:var(--wh)">Vantagens que<br><span class="accent">protegem o modelo.</span></h2>
   <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Infraestrutura física + dados exclusivos + compliance regulatório formam um fosso competitivo real.</p>
   <div class="moat-grid">
-    <div class="mcard reveal sc" style="transition-delay:.1s"><div class="mc-ic">🏛️</div><h3>Validação Institucional</h3><p>Operamos com a Prefeitura do Rio. Esse histórico é a maior barreira de entrada no mercado govtech.</p></div>
+    <div class="mcard reveal sc" style="transition-delay:.1s"><div class="mc-ic">✅</div><h3>MVP Validado em Campo</h3><p>2 anos de operação real no Rio de Janeiro. Tecnologia on-chain comprovada — barreira de entrada inimitável para competidores.</p></div>
     <div class="mcard reveal sc" style="transition-delay:.18s"><div class="mc-ic">🔗</div><h3>Efeito de Rede</h3><p>Mais usuários → mais CicloPontos → mais cooperativas → mais valor. Crescimento auto-alimentado.</p></div>
     <div class="mcard reveal sc" style="transition-delay:.26s"><div class="mc-ic">📡</div><h3>Hardware + Software</h3><p>Totens físicos + app + blockchain. Combinar as três camadas é barreira de entrada alta.</p></div>
     <div class="mcard reveal sc" style="transition-delay:.34s"><div class="mc-ic">📊</div><h3>Dados Exclusivos</h3><p>Base de fluxo de resíduos por bairro em tempo real — ativo valioso para prefeituras e fundos ESG.</p></div>
@@ -987,7 +1011,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
 <!-- ─── PREFEITURA + ESG ─── -->
 <section id="solucoes" style="background:linear-gradient(160deg,var(--nv) 0%,#0f3520 100%)">
   <span class="stag lt">Soluções específicas</span>
-  <h2 class="h2 reveal" style="color:var(--wh)">Para prefeituras<br><span class="accent">e empresas ESG.</span></h2>
+  <h2 class="h2 reveal" style="color:var(--wh)">Para empresas,<br><span class="accent">prefeituras e franquias.</span></h2>
   <div class="dual reveal" style="transition-delay:.12s">
     <div class="dp dp-g">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><span style="font-size:26px">🏛️</span><h3 style="margin:0">Para Prefeituras</h3></div>
@@ -1000,23 +1024,37 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
         <div class="dpi">Redução real de custo operacional de coleta seletiva</div>
         <div class="dpi">Geração de renda e emprego para catadores do município</div>
         <div class="dpi">Modelo PPP — sem investimento inicial da prefeitura</div>
-        <div class="dpi">Validado pela Prefeitura do Rio de Janeiro (2022–2023)</div>
+        <div class="dpi">Tecnologia validada em MVP de 2 anos no Rio de Janeiro</div>
       </div>
       <a href="https://wa.me/5521995500927?text=Olá,%20sou%20gestor%20municipal%20e%20quero%20saber%20sobre%20o%20CicloBem" class="btn btn-lime btn-full" target="_blank" rel="noopener">Falar com especialista →</a>
     </div>
     <div class="dp dp-e">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><span style="font-size:26px">🌿</span><h3 style="margin:0">Para Empresas ESG</h3></div>
       <div class="dp-kpis">
-        <div class="dpk"><div class="dpk-n">100%</div><div class="dpk-l">rastreável</div></div>
+        <div class="dpk"><div class="dpk-n">100%</div><div class="dpk-l">rastreável on-chain</div></div>
         <div class="dpk"><div class="dpk-n">GRI</div><div class="dpk-l">relatório automático</div></div>
       </div>
       <div class="dp-list">
-        <div class="dpi">Créditos de carbono tokenizados com evidência blockchain</div>
-        <div class="dpi">Relatório ESG com dados auditáveis — aceito por certificadoras</div>
-        <div class="dpi">CicloPonto branded no seu espaço — diferencial de marca</div>
-        <div class="dpi">API para integração com ERP e sistemas de compliance</div>
+        <div class="dpi"><strong>Conformidade PNRS</strong> verificada via infraestrutura de tokenização blockchain</div>
+        <div class="dpi">Créditos ESG tokenizados com evidência on-chain — aceitos por GRI e ISO 14064</div>
+        <div class="dpi">CicloPonto branded no seu espaço — logística reversa integrada</div>
+        <div class="dpi">API para integração com ERP, BI e sistemas de auditoria ESG</div>
+        <div class="dpi">Relatórios de impacto com hash blockchain prontos para auditores</div>
       </div>
       <a href="https://wa.me/5521995500927?text=Olá,%20quero%20saber%20sobre%20créditos%20de%20carbono%20CicloBem" class="btn btn-ghost btn-full" target="_blank" rel="noopener">Solicitar proposta →</a>
+    </div>
+  </div>
+  <div class="dual reveal" style="transition-delay:.22s;margin-top:14px">
+    <div class="dp" style="background:rgba(170,255,0,0.06);border:1px solid rgba(170,255,0,0.18);border-radius:20px;padding:24px 20px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><span style="font-size:26px">🚀</span><h3 style="margin:0;color:var(--wh)">Expansão B2B &amp; Franquias</h3></div>
+      <p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:14px">O CicloBem agora foca em <strong style="color:var(--lime)">expansão privada e autônoma</strong> via parcerias B2B e Franquias, com total liberdade para definir locais e mapeamentos, <strong style="color:var(--lime)">sem dependência de ciclos governamentais.</strong> Shoppings, redes varejistas, condomínios e operadores independentes já podem implantar CicloPontos com suporte tecnológico completo.</p>
+      <div class="dp-list">
+        <div class="dpi">Implantação em até 30 dias — processo 100% privado e ágil</div>
+        <div class="dpi">Modelo de franquia com suporte de hardware, software e plataforma</div>
+        <div class="dpi">Receita recorrente (MRR) para o franqueado + percentual sobre créditos</div>
+        <div class="dpi">Mapeamento livre de localizações — sem aprovações burocráticas</div>
+      </div>
+      <a href="https://wa.me/5521995500927?text=Olá,%20tenho%20interesse%20em%20parceria%20B2B%20ou%20franquia%20CicloBem" class="btn btn-lime btn-full" target="_blank" rel="noopener">Quero ser parceiro B2B →</a>
     </div>
   </div>
 
@@ -1042,7 +1080,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
     </div>
     <div class="inv-teaser">
       <div class="inv-t"><div class="inv-t-icon">💼</div><div class="inv-t-text"><strong>Múltiplos vetores de receita</strong> — plataforma financeira com receitas recorrentes e transacionais</div></div>
-      <div class="inv-t"><div class="inv-t-icon">🏛️</div><div class="inv-t-text"><strong>Validado em campo</strong> — 2 anos operando com a Prefeitura do Rio de Janeiro</div></div>
+      <div class="inv-t"><div class="inv-t-icon">✅</div><div class="inv-t-text"><strong>MVP validado em campo</strong> — 2 anos de operação real no Rio de Janeiro, tecnologia on-chain comprovada</div></div>
       <div class="inv-t"><div class="inv-t-icon">📈</div><div class="inv-t-text"><strong>Mercado endereçável</strong> — 5.570 municípios obrigados ao PNRS + mercado ESG em expansão</div></div>
       <div class="inv-t"><div class="inv-t-icon">🚀</div><div class="inv-t-text"><strong>Plano de expansão</strong> — 500 CicloPontos em 20 cidades até 2030</div></div>
     </div>
@@ -1206,7 +1244,16 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
         <span class="faq-arrow">+</span>
       </button>
       <div class="faq-a">
-        Sim. O modelo foi validado entre 2022 e 2023 em um projeto realizado com a <strong>Prefeitura do Rio de Janeiro</strong>, com <strong>12 CicloPontos instalados em comunidades cariocas</strong>. Foram entregues 24 relatórios mensais de massas e impacto ambiental com rastreabilidade completa. Atualmente o CicloBem está em fase de expansão nacional para novas cidades e municípios.
+        Sim. Entre 2022 e 2023, o CicloBem operou um <strong>piloto de validação (MVP)</strong> com <strong>12 CicloPontos instalados em comunidades cariocas</strong>, gerando 24 relatórios mensais de massas e impacto ambiental com rastreabilidade completa on-chain. Esse MVP comprovou a viabilidade técnica, financeira e operacional da plataforma. <strong>Essa fase de testes está concluída</strong> e o CicloBem está agora em expansão comercial privada via B2B e Franquias.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        O CicloBem depende de contratos governamentais?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        Não. O CicloBem é uma <strong>fintech privada e independente</strong>. O projeto piloto realizado com a Prefeitura do Rio de Janeiro entre 2022 e 2023 serviu para <strong>validar nossa tecnologia</strong> em condições reais de operação — e cumpriu esse papel com sucesso. Nossa expansão atual é focada em <strong>parcerias corporativas e franquias autônomas</strong>, com total liberdade para definir locais, contratos e mapeamentos sem depender de ciclos ou aprovações governamentais.
       </div>
     </div>
     <div class="faq-item">
