@@ -229,9 +229,10 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:var(--fb);background:var(--wh);color:var(--nv);overflow-x:hidden;padding-bottom:68px}
 
 /* NAV */
-.nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(170,255,0,0.08);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:center}
+.nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(170,255,0,0.16);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:center}
 .nav-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
-.nav-logo img{height:44px;width:auto;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))}
+.nav-logo img{height:44px;width:auto;display:block;filter:brightness(1.12) drop-shadow(0 0 10px rgba(170,255,0,0.18)) drop-shadow(0 2px 12px rgba(0,0,0,0.45));transition:filter 0.3s}
+.nav-logo:hover img{filter:brightness(1.2) drop-shadow(0 0 16px rgba(170,255,0,0.32)) drop-shadow(0 2px 12px rgba(0,0,0,0.45))}
 .nav-links{display:none;gap:2px;align-items:center}
 .nav-links a{color:rgba(255,255,255,0.65);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.4px;padding:6px 10px;border-radius:20px;transition:all 0.2s;text-transform:uppercase;white-space:nowrap}
 .nav-links a:hover{color:var(--lime);background:var(--ld)}
@@ -592,7 +593,7 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   .nav{justify-content:space-between}
   .nav-logo{margin-left:24px}
   .nav-links{display:flex}
-  .nav-logo img{height:50px}
+  .nav-logo img{height:50px;filter:brightness(1.12) drop-shadow(0 0 12px rgba(170,255,0,0.2)) drop-shadow(0 2px 14px rgba(0,0,0,0.45))}
   section{padding:80px 40px}
   .cta-grid{grid-template-columns:repeat(3,1fr)}.cta-card.prime{grid-column:1/-1}
   .hero-proof{grid-template-columns:repeat(3,1fr)}
