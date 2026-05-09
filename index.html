@@ -225,8 +225,15 @@
   --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
 body{font-family:var(--fb);background:var(--wh);color:var(--nv);overflow-x:hidden;padding-bottom:68px}
+
+/* Responsive media */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
 /* NAV */
 .nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(170,255,0,0.16);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:center}
