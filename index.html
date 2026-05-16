@@ -223,10 +223,21 @@
   --nv:#0a1628;--nm:#0d2040;--nl:#1a2f50;
   --wh:#fff;--of:#f4f7f4;--gr:#6b7c6b;--lg:#e8eee8;
   --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
+  /* Premium ESG/Fintech Variables */
+  --bg-primary: var(--nv);
+  --bg-secondary: var(--nm);
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-card-hover: rgba(255,255,255,0.06);
+  --border-card: rgba(170,255,0,0.1);
+  --border-card-hover: rgba(170,255,0,0.2);
+  --text-primary: var(--wh);
+  --text-secondary: rgba(255,255,255,0.72);
+  --text-muted: rgba(255,255,255,0.45);
+  --glow-green: rgba(170,255,0,0.15);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
-body{font-family:var(--fb);background:var(--wh);color:var(--nv);overflow-x:hidden;padding-bottom:68px}
+body{font-family:var(--fb);background:var(--bg-primary);color:var(--text-primary);overflow-x:hidden;padding-bottom:68px}
 
 /* Responsive media */
 img, video, iframe {
@@ -307,13 +318,13 @@ section{padding:64px 20px;scroll-margin-top:58px}
 @keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ─── 3 STEPS ─── */
-#como{background:var(--of)}
+#como{background:var(--bg-secondary)}
 .steps3{display:flex;flex-direction:column;gap:14px;margin-top:28px}
-.step3{display:flex;gap:16px;align-items:flex-start;background:var(--wh);border-radius:14px;padding:20px;border:1.5px solid var(--lg);transition:border-color 0.4s}
-.step3.vis{border-color:#a8d8a8}
+.step3{display:flex;gap:16px;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border-card);border-radius:14px;padding:20px;transition:all 0.3s}
+.step3.vis{border-color:var(--border-card-hover);background:var(--bg-card-hover)}
 .s3n{width:44px;height:44px;min-width:44px;background:var(--gm);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:16px;font-weight:600;color:var(--lime)}
-.step3 h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--nv);margin-bottom:4px}
-.step3 p{font-size:13px;color:var(--gr);line-height:1.55}
+.step3 h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px}
+.step3 p{font-size:13px;color:var(--text-secondary);line-height:1.55}
 .stag2{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;padding:3px 8px;border-radius:6px;margin-top:6px}
 .tb{background:rgba(20,80,200,0.1);color:#1450c8}
 .to{background:rgba(220,100,20,0.1);color:#c86414}
@@ -340,29 +351,29 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .trole{font-size:10px;color:rgba(255,255,255,0.55);margin-left:6px}
 
 /* ─── BENEFÍCIOS POR PERFIL ─── */
-#beneficios{background:var(--wh)}
-.eco-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--of);padding:4px;border-radius:12px;flex-wrap:wrap}
+#beneficios{background:var(--bg-secondary)}
+.eco-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg-card);padding:4px;border-radius:12px;flex-wrap:wrap}
 .eco-tab{flex:1;min-width:70px;padding:9px 6px;text-align:center;border-radius:9px;font-family:var(--fd);font-size:11px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--gr);transition:all 0.2s;-webkit-tap-highlight-color:transparent}
-.eco-tab.active{background:var(--wh);color:var(--nv);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.eco-tab.active{background:var(--bg-card-hover);color:var(--text-primary);border:1px solid var(--border-card)}
 .eco-panel{display:none}.eco-panel.active{display:block;animation:fiu 0.35s ease both}
 @keyframes fiu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 .kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
-.kpi{background:var(--of);border-radius:12px;padding:16px 14px;border-left:3px solid var(--gi)}
+.kpi{background:var(--bg-card);border:1px solid var(--border-card);border-radius:12px;padding:16px 14px;border-left:3px solid var(--gi)}
 .kpi-n{font-family:var(--fm);font-size:clamp(18px,5vw,24px);font-weight:600;color:var(--gm);line-height:1}
-.kpi-l{font-size:10px;color:#3c4c3c;margin-top:4px;line-height:1.35}
+.kpi-l{font-size:10px;color:var(--text-muted);margin-top:4px;line-height:1.35}
 
 /* BENEFIT CARDS */
 .bcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
-.bcard{background:var(--of);border-radius:12px;padding:16px 14px;border:1px solid transparent;transition:border-color 0.3s}
-.bcard:hover{border-color:#b0d8b0}
+.bcard{background:var(--bg-card);border:1px solid var(--border-card);border-radius:12px;padding:16px 14px;transition:all 0.3s}
+.bcard:hover{border-color:var(--border-card-hover);background:var(--bg-card-hover)}
 .bcard-icon{font-size:22px;margin-bottom:8px}
-.bcard h3{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:4px}
-.bcard p{font-size:11px;color:#3b4a3b;line-height:1.5}
+.bcard h3{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:4px}
+.bcard p{font-size:11px;color:var(--text-secondary);line-height:1.5}
 .bcard.wide{grid-column:1/-1}
 
 .eco-list{display:flex;flex-direction:column;gap:7px}
-.eitem{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;background:var(--of);border-radius:10px;font-size:13px;color:#132132;line-height:1.5}
+.eitem{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:10px;font-size:13px;color:var(--text-secondary);line-height:1.5}
 .eitem::before{content:"✓";color:var(--gi);font-weight:700;font-size:13px;flex-shrink:0;margin-top:1px}
 
 /* ─── FLUXO ─── */
@@ -385,16 +396,16 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .triage-photo img{display:block;width:100%;height:auto}
 .mini-photo{width:100%;max-width:520px;margin:28px auto;border-radius:18px;overflow:hidden;border:2px solid rgba(10,22,40,0.05);box-shadow:0 18px 60px rgba(0,0,0,0.35)}
 .mini-photo img{display:block;width:100%;height:auto}
-.card-credit{width:100%;max-width:560px;margin:16px auto 0;background:var(--wh);border-radius:18px;border:1px solid var(--lg);box-shadow:0 12px 36px rgba(10,22,40,0.12);padding:20px;display:flex;flex-direction:column;gap:14px;text-align:center}
+.card-credit{width:100%;max-width:560px;margin:16px auto 0;background:var(--bg-card);border:1px solid var(--border-card);border-radius:18px;box-shadow:0 12px 36px rgba(0,0,0,0.25);padding:20px;display:flex;flex-direction:column;gap:14px;text-align:center}
 .card-credit img{width:100%;height:auto;display:block;border-radius:12px}
-.card-credit p{font-size:13px;color:var(--gr);line-height:1.6}
+.card-credit p{font-size:13px;color:var(--text-secondary);line-height:1.6}
 .card-credit strong{color:var(--gm)}
 .container-photo{margin:30px auto 0;width:100%;max-width:780px;border-radius:20px;overflow:hidden;border:2px solid rgba(170,255,0,0.15);box-shadow:0 20px 64px rgba(0,0,0,0.45)}
 .container-photo img{display:block;width:100%;height:auto}
 .container-photo figcaption{padding:14px 18px;background:rgba(10,22,40,0.7);color:rgba(255,255,255,0.8);font-size:13px;font-family:var(--fb);}
 
 /* ─── APP MOCKUP ─── */
-#produto{background:var(--of)}
+#produto{background:var(--bg-secondary)}
 .phone{width:100%;max-width:255px;margin:24px auto 0;background:var(--nv);border-radius:32px;padding:16px 13px;border:2px solid rgba(255,255,255,0.08);box-shadow:0 24px 64px rgba(0,0,0,0.4)}
 .pscreen{background:#0d1f10;border-radius:22px;overflow:hidden}
 .ph{background:var(--gd);padding:14px 14px 10px;display:flex;align-items:center;justify-content:space-between}
@@ -418,10 +429,10 @@ section{padding:64px 20px;scroll-margin-top:58px}
 .pmap-lbl{position:absolute;bottom:7px;left:10px;font-size:9px;color:rgba(255,255,255,0.45);font-family:var(--fm)}
 
 .pfeat-grid{display:flex;flex-direction:column;gap:9px;margin-top:22px}
-.pfeat{display:flex;gap:12px;align-items:flex-start;background:var(--wh);border-radius:12px;padding:13px;border:1px solid var(--lg)}
-.pfeat-ic{width:36px;height:36px;min-width:36px;background:rgba(26,122,50,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
-.pfeat h3{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--nv);margin-bottom:2px}
-.pfeat p{font-size:12px;color:#364536;line-height:1.5}
+.pfeat{display:flex;gap:12px;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border-card);border-radius:12px;padding:13px;transition:all 0.3s}
+.pfeat-ic{width:36px;height:36px;min-width:36px;background:rgba(170,255,0,0.15);border:1px solid rgba(170,255,0,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.pfeat h3{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.pfeat p{font-size:12px;color:var(--text-secondary);line-height:1.5}
 
 /* ─── DEFENSABILIDADE ─── */
 #defesa{background:var(--gd)}
@@ -487,12 +498,12 @@ select.inv-input{appearance:none;-webkit-appearance:none;background-image:url("d
 .inv-success p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
 
 /* ─── SOBRE ─── */
-#sobre{background:var(--of)}
+#sobre{background:var(--bg-secondary)}
 .sobre-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:28px}
-.sobre-bloco{background:var(--wh);border:1px solid var(--lg);border-radius:14px;padding:22px 20px}
-.sobre-bloco h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--nv);margin-bottom:8px}
-.sobre-bloco p{font-size:13px;color:var(--gr);line-height:1.7}
-.sobre-bloco strong{color:var(--nv)}
+.sobre-bloco{background:var(--bg-card);border:1px solid var(--border-card);border-radius:14px;padding:22px 20px;transition:all 0.3s}
+.sobre-bloco h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+.sobre-bloco p{font-size:13px;color:var(--text-secondary);line-height:1.7}
+.sobre-bloco strong{color:var(--text-primary)}
 .sobre-kw{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .sobre-kw span{font-size:10px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:rgba(26,122,50,0.08);border:1px solid rgba(26,122,50,0.18);color:var(--gm)}
 
@@ -517,15 +528,15 @@ select.inv-input{appearance:none;-webkit-appearance:none;background-image:url("d
 .glos-def strong{color:rgba(255,255,255,0.88)}
 
 /* ─── CASOS DE USO ─── */
-#casos{background:var(--of)}
+#casos{background:var(--bg-secondary)}
 .casos-list{display:flex;flex-direction:column;gap:24px;margin-top:28px}
-.caso{background:var(--wh);border:1px solid var(--lg);border-radius:16px;padding:24px 20px}
+.caso{background:var(--bg-card);border:1px solid var(--border-card);border-radius:16px;padding:24px 20px;transition:all 0.3s}
 .caso-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .caso-icon{font-size:28px;line-height:1}
-.caso-title{font-family:var(--fd);font-size:16px;font-weight:800;color:var(--nv)}
-.caso-subtitle{font-size:12px;color:var(--gr);margin-top:1px}
-.caso-body p{font-size:13px;color:var(--gr);line-height:1.75;margin-bottom:10px}
-.caso-body p strong{color:var(--nv)}
+.caso-title{font-family:var(--fd);font-size:16px;font-weight:800;color:var(--text-primary)}
+.caso-subtitle{font-size:12px;color:var(--text-muted);margin-top:1px}
+.caso-body p{font-size:13px;color:var(--text-secondary);line-height:1.75;margin-bottom:10px}
+.caso-body p strong{color:var(--text-primary)}
 .caso-results{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .caso-r{background:rgba(26,122,50,0.07);border:1px solid rgba(26,122,50,0.2);border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--gm)}
 
@@ -616,6 +627,58 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   .glos-grid{grid-template-columns:repeat(2,1fr)}
   .casos-list{gap:28px}
 }
+
+/* ─── NEW SECTIONS CSS ─── */
+
+/* Trilha Operacional */
+#trilha{background:var(--bg-secondary)}
+.trail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:24px}
+.trail-step{background:var(--bg-card);border:1px solid var(--border-card);border-radius:12px;padding:16px;position:relative;transition:all 0.3s}
+.trail-step:hover{border-color:var(--border-card-hover);background:var(--bg-card-hover);transform:translateY(-2px)}
+.trail-step h3{font-family:var(--fd);font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.trail-step h3::before{content:attr(data-step);width:24px;height:24px;background:var(--gm);color:var(--lime);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:12px;font-weight:600}
+.trail-step p{font-size:12px;color:var(--text-secondary);line-height:1.5}
+.trail-step[data-step="7"]{grid-column:1/-1;border-left:3px solid var(--gi)}
+
+/* Ecossistema */
+#ecossistema{background:var(--bg-secondary)}
+.eco-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+.eco-module{background:var(--bg-card);border:1px solid var(--border-card);border-radius:14px;padding:20px;transition:all 0.3s;position:relative}
+.eco-module:hover{border-color:var(--border-card-hover);background:var(--bg-card-hover);transform:translateY(-2px)}
+.eco-module::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--lime),var(--gi));border-radius:14px 14px 0 0;opacity:0;transition:opacity 0.3s}
+.eco-module:hover::before{opacity:1}
+.eco-module h3{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.eco-module p{font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:12px}
+.eco-tags{display:flex;flex-wrap:wrap;gap:6px}
+.eco-tag{background:rgba(170,255,0,0.1);border:1px solid rgba(170,255,0,0.2);color:var(--lime);font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;font-family:var(--fm)}
+
+/* Tecnologia e Governança */
+#governanca{background:var(--bg-secondary)}
+.gov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:24px}
+.gov-card{background:var(--bg-card);border:1px solid var(--border-card);border-radius:14px;padding:20px;transition:all 0.3s;position:relative}
+.gov-card:hover{border-color:var(--border-card-hover);background:var(--bg-card-hover);transform:translateY(-2px)}
+.gov-card::after{content:'';position:absolute;top:-1px;right:-1px;bottom:-1px;left:-1px;background:linear-gradient(45deg,transparent,var(--glow-green),transparent);border-radius:14px;opacity:0;transition:opacity 0.3s;z-index:-1}
+.gov-card:hover::after{opacity:0.5}
+.gov-card h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.gov-card p{font-size:13px;color:var(--text-secondary);line-height:1.5}
+
+/* Segmentos */
+#segmentos{background:var(--bg-secondary)}
+.seg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+.seg-card{background:var(--bg-card);border:1px solid var(--border-card);border-radius:14px;padding:20px;transition:all 0.3s;display:flex;flex-direction:column}
+.seg-card:hover{border-color:var(--border-card-hover);background:var(--bg-card-hover);transform:translateY(-2px)}
+.seg-card h3{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.seg-card p{font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:16px;flex-grow:1}
+.seg-cta{display:inline-flex;align-items:center;gap:6px;color:var(--lime);text-decoration:none;font-size:12px;font-weight:600;transition:all 0.2s}
+.seg-cta:hover{color:var(--gi);transform:translateX(2px)}
+
+/* Mobile Responsive for New Sections */
+@media(max-width:639px){
+  .trail-grid{grid-template-columns:1fr}
+  .eco-grid{grid-template-columns:1fr}
+  .gov-grid{grid-template-columns:1fr}
+  .seg-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -673,11 +736,11 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
   </div>
 
   <h1 class="h1 hero-title reveal" style="transition-delay:.08s">
-    Tem dinheiro no lixo.<br><span class="accent">A CicloBem faz ele chegar a quem merece.</span>
+    Infraestrutura ESG para transformar<br><span class="accent">resíduos em ativos rastreáveis.</span>
   </h1>
 
   <p class="sub hero-sub reveal" style="transition-delay:.14s">
-    Cada quilo reciclado gera crédito real — distribuído automaticamente via Pix para cidadãos, cooperativas, catadores e prefeituras. Tudo rastreado, verificado e auditável. Da coleta ao crédito de carbono, cada ator da cadeia recebe sua parte.
+    Rastreabilidade, logística reversa e monetização da economia circular em uma plataforma operacional integrada.
   </p>
   <p class="hero-anchor reveal" style="transition-delay:.18s">
     <strong>Piloto de Validação Concluído com Sucesso no Rio de Janeiro</strong> — 13 Eco Pontos operaram por 24 meses, processando ~290 toneladas de resíduos e distribuindo ~R$345 mil em renda para a comunidade. Agora, expansão 100% privada via B2B e Franquias.
@@ -728,6 +791,105 @@ a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,sele
     <div class="mpill"><em>📊</em> Relatórios Mensais de Impacto</div>
   </div>
 </div>
+
+<!-- ─── TRILHA OPERACIONAL ─── -->
+<section id="trilha">
+  <span class="stag lt">Fluxo Operacional</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Do resíduo ao ativo.<br><span class="accent">Cada etapa rastreada.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Coleta → Pesagem → Triagem → Lote → Rastreabilidade → Monetização → Relatório ESG</p>
+  <div class="trail-grid reveal" style="transition-delay:.15s">
+    <div class="trail-step"><h3 data-step="1">Coleta</h3><p>Cidadãos levam recicláveis aos Eco Pontos</p></div>
+    <div class="trail-step"><h3 data-step="2">Pesagem</h3><p>Automação com registro por material</p></div>
+    <div class="trail-step"><h3 data-step="3">Triagem</h3><p>Cooperativas separam e qualificam</p></div>
+    <div class="trail-step"><h3 data-step="4">Lote</h3><p>Formação de lotes comerciais</p></div>
+    <div class="trail-step"><h3 data-step="5">Rastreabilidade</h3><p>Registro digital auditável</p></div>
+    <div class="trail-step"><h3 data-step="6">Monetização</h3><p>Pagamento via Pix em segundos</p></div>
+    <div class="trail-step" style="grid-column:1/-1"><h3 data-step="7">Relatório ESG</h3><p>Dados de impacto para auditores e stakeholders</p></div>
+  </div>
+</section>
+
+<!-- ─── ECOSSISTEMA ─── -->
+<section id="ecossistema">
+  <span class="stag">Plataforma Integrada</span>
+  <h2 class="h2 reveal">Ecossistema operacional<br><span class="accent-g">de ponta a ponta.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Hardware, software e financeira em uma única plataforma.</p>
+  <div class="eco-grid reveal" style="transition-delay:.15s">
+    <div class="eco-module">
+      <h3>📍 CicloPonto</h3>
+      <p>Totens de coleta com pesagem automatizada e identificação por QR Code.</p>
+      <div class="eco-tags"><span class="eco-tag">IoT</span><span class="eco-tag">Automação</span></div>
+    </div>
+    <div class="eco-module">
+      <h3>📱 App CicloBem</h3>
+      <p>Carteira digital, extrato de ganhos e mapa de pontos em tempo real.</p>
+      <div class="eco-tags"><span class="eco-tag">Mobile</span><span class="eco-tag">Pix</span></div>
+    </div>
+    <div class="eco-module">
+      <h3>🏦 CicloBank</h3>
+      <p>Infraestrutura financeira BaaS com conta digital e pagamentos instantâneos.</p>
+      <div class="eco-tags"><span class="eco-tag">BaaS</span><span class="eco-tag">Financeira</span></div>
+    </div>
+    <div class="eco-module">
+      <h3>📊 Dashboard ESG</h3>
+      <p>Painel de gestão com relatórios de massa, impacto e compliance automático.</p>
+      <div class="eco-tags"><span class="eco-tag">Analytics</span><span class="eco-tag">PNRS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TECNOLOGIA E GOVERNANÇA ─── -->
+<section id="governanca">
+  <span class="stag lt">Camada Técnica</span>
+  <h2 class="h2 reveal" style="color:var(--wh)">Tecnologia e<br><span class="accent">governança de dados.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Registro auditável, pagamentos automatizados e relatórios ESG.</p>
+  <div class="gov-grid reveal" style="transition-delay:.15s">
+    <div class="gov-card">
+      <h3>🔎 Rastreabilidade Digital</h3>
+      <p>Cada kg de material é registrado com hash auditável — rastreabilidade completa da origem ao destino.</p>
+    </div>
+    <div class="gov-card">
+      <h3>💸 Pagamentos Automáticos</h3>
+      <p>Liquidação via Pix em segundos — sem intermediários, sem atrasos para cooperativas e cidadãos.</p>
+    </div>
+    <div class="gov-card">
+      <h3>📊 Relatórios ESG</h3>
+      <p>Dados de massa e impacto gerados automaticamente — prontos para auditores e stakeholders.</p>
+    </div>
+    <div class="gov-card">
+      <h3>🏛️ Compliance PNRS</h3>
+      <p>Relatórios mensais de massas prontos para o TCU — compliance automático com a Política Nacional de Resíduos Sólidos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PARA QUEM É ─── -->
+<section id="segmentos">
+  <span class="stag">Segmentos</span>
+  <h2 class="h2 reveal">Soluções para<br><span class="accent-g">cada perfil.</span></h2>
+  <p class="sub reveal" style="transition-delay:.08s;margin-top:10px">Cidadãos, prefeituras, empresas ESG e cooperativas.</p>
+  <div class="seg-grid reveal" style="transition-delay:.15s">
+    <div class="seg-card">
+      <h3>👤 Cidadãos</h3>
+      <p>Descarte reciclável e receba créditos na hora via Pix. Saque ou use em parceiros.</p>
+      <a href="#trilha" class="seg-cta">Como funciona →</a>
+    </div>
+    <div class="seg-card">
+      <h3>🏛️ Prefeituras</h3>
+      <p>Compliance PNRS automático, redução de 40% no custo e relatórios prontos para o TCU.</p>
+      <a href="#closing" class="seg-cta">Falar com especialista →</a>
+    </div>
+    <div class="seg-card">
+      <h3>🌿 Empresas ESG</h3>
+      <p>Créditos de carbono verificados com rastreabilidade completa para relatórios de sustentabilidade.</p>
+      <a href="#closing" class="seg-cta">Solicitar proposta →</a>
+    </div>
+    <div class="seg-card">
+      <h3>🤝 Cooperativas</h3>
+      <p>Pagamento automático via Pix, acesso a compradores B2B e gestão simplificada.</p>
+      <a href="#closing" class="seg-cta">Parcerias →</a>
+    </div>
+  </div>
+</section>
 
 <!-- ─── COMO FUNCIONA ─── -->
 <section id="como">
