@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>CicloBem | Infraestrutura da Economia Circular</title>
+<meta name="description" content="Tecnologia, rastreabilidade e logística reversa para transformar resíduos recicláveis em ativos rastreáveis.">
+<meta name="keywords" content="economia circular, reciclagem, rastreabilidade, logística reversa, ESG, tecnologia, infraestrutura">
+<meta name="author" content="CicloBem">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.ciclobem.com.br/connect">
+
+<!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ciclobem.com.br/connect">
+<meta property="og:title" content="CicloBem | Infraestrutura da Economia Circular">
+<meta property="og:description" content="Tecnologia, rastreabilidade e logística reversa para transformar resíduos recicláveis em ativos rastreáveis.">
+<meta property="og:image" content="https://www.ciclobem.com.br/ciclobem_og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="CicloBem">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://www.ciclobem.com.br/connect">
+<meta name="twitter:title" content="CicloBem | Infraestrutura da Economia Circular">
+<meta name="twitter:description" content="Tecnologia, rastreabilidade e logística reversa para transformar resíduos recicláveis em ativos rastreáveis.">
+<meta name="twitter:image" content="https://www.ciclobem.com.br/ciclobem_og.png">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1628'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='18' fill='%23aaff00'%3ECB%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0a1628">
+
+<!-- Async Google Fonts (preload + swap) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"></noscript>
+
+<style>
+:root{
+  --gd:#0a3d1a;--gm:#1a7a32;--gi:#2ea84a;--gl:#4ecb6a;
+  --lime:#aaff00;--ld:rgba(170,255,0,0.1);--lb:rgba(170,255,0,0.25);
+  --nv:#0a1628;--wh:#ffffff;
+  --fd:'Syne', sans-serif;--fb:'DM Sans', sans-serif;--fm:'JetBrains Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:linear-gradient(135deg, #0a1628 0%, #0d2040 50%, #0a3d1a 100%);
+  color:var(--wh);
+  font-family:var(--fb);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+.connect-container{
+  max-width:480px;
+  margin:0 auto;
+  padding:20px 16px;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+/* Logo */
+.logo{
+  width:120px;
+  height:120px;
+  margin:0 auto 32px;
+  background:rgba(170,255,0,0.08);
+  border-radius:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(170,255,0,0.2);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.logo img{
+  width:80px;
+  height:80px;
+  object-fit:contain;
+}
+
+/* Hero */
+.hero-title{
+  font-family:var(--fd);
+  font-weight:800;
+  font-size:28px;
+  line-height:1.2;
+  margin-bottom:16px;
+  background:linear-gradient(135deg, var(--wh) 0%, var(--lime) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-sub{
+  font-size:16px;
+  line-height:1.6;
+  color:rgba(255,255,255,0.7);
+  margin-bottom:40px;
+  font-weight:400;
+}
+
+/* Botões */
+.buttons-grid{
+  display:grid;
+  gap:16px;
+  margin-bottom:48px;
+  width:100%;
+}
+
+.connect-btn{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(170,255,0,0.3);
+  color:var(--wh);
+  text-decoration:none;
+  padding:18px 24px;
+  border-radius:16px;
+  font-family:var(--fd);
+  font-weight:600;
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  position:relative;
+  overflow:hidden;
+}
+
+.connect-btn::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(170,255,0,0.1), transparent);
+  transition:left 0.5s;
+}
+
+.connect-btn:hover::before{
+  left:100%;
+}
+
+.connect-btn:hover{
+  background:rgba(170,255,0,0.1);
+  border-color:var(--lime);
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(170,255,0,0.2);
+}
+
+.connect-btn:active{
+  transform:translateY(0);
+}
+
+/* Cards */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+  gap:16px;
+  margin-bottom:48px;
+  width:100%;
+}
+
+.service-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(170,255,0,0.15);
+  border-radius:16px;
+  padding:20px 16px;
+  text-align:center;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover{
+  background:rgba(170,255,0,0.05);
+  border-color:rgba(170,255,0,0.3);
+  transform:translateY(-4px);
+}
+
+.service-icon{
+  font-size:24px;
+  margin-bottom:12px;
+  display:block;
+}
+
+.service-title{
+  font-family:var(--fd);
+  font-weight:600;
+  font-size:14px;
+  line-height:1.3;
+  color:var(--wh);
+}
+
+/* QR Code */
+.qr-section{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(170,255,0,0.2);
+  border-radius:20px;
+  padding:32px 24px;
+  margin-bottom:32px;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  width:100%;
+}
+
+.qr-container{
+  background:var(--wh);
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:20px;
+  display:inline-block;
+}
+
+#qr-code{
+  width:200px;
+  height:200px;
+  display:block;
+}
+
+.qr-text{
+  font-size:14px;
+  color:rgba(255,255,255,0.8);
+  font-weight:500;
+}
+
+/* Frase Final */
+.final-statement{
+  font-family:var(--fd);
+  font-weight:700;
+  font-size:20px;
+  line-height:1.4;
+  color:var(--lime);
+  margin-bottom:24px;
+  text-align:center;
+}
+
+/* Responsividade */
+@media (max-width:375px){
+  .hero-title{font-size:24px;}
+  .hero-sub{font-size:14px;}
+  .connect-btn{font-size:15px;padding:16px 20px;}
+  .services-grid{grid-template-columns:repeat(2, 1fr);}
+}
+
+@media (max-width:320px){
+  .hero-title{font-size:22px;}
+  .connect-btn{font-size:14px;padding:14px 18px;}
+  .service-card{padding:16px 12px;}
+  .service-title{font-size:13px;}
+}
+
+/* Animações */
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.fade-in-up{
+  animation:fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Loading states */
+.loading{opacity:0.6;pointer-events:none;}
+</style>
+</head>
+<body>
+
+<div class="connect-container">
+  
+  <!-- Logo -->
+  <div class="logo fade-in-up">
+    <img src="ciclobem_logo_top_1.png" alt="CicloBem">
+  </div>
+  
+  <!-- Hero -->
+  <h1 class="hero-title fade-in-up" style="animation-delay:0.1s">
+    Infraestrutura da economia circular rastreável
+  </h1>
+  
+  <p class="hero-sub fade-in-up" style="animation-delay:0.2s">
+    Tecnologia, logística reversa e rastreabilidade para transformar resíduos recicláveis em ativos rastreáveis.
+  </p>
+  
+  <!-- Botões -->
+  <div class="buttons-grid fade-in-up" style="animation-delay:0.3s">
+    <a href="https://www.ciclobem.com.br" target="_blank" rel="noopener" class="connect-btn">
+      🌐 Conheça a CicloBem
+    </a>
+    <a href="https://instagram.com/ciclobem" target="_blank" rel="noopener" class="connect-btn">
+      📸 Instagram Oficial
+    </a>
+    <a href="https://www.linkedin.com/company/ciclobem" target="_blank" rel="noopener" class="connect-btn">
+      💼 LinkedIn
+    </a>
+    <a href="https://wa.me/5521995500927" target="_blank" rel="noopener" class="connect-btn">
+      💬 Fale com a CicloBem
+    </a>
+  </div>
+  
+  <!-- Cards O Que Fazemos -->
+  <div class="services-grid fade-in-up" style="animation-delay:0.4s">
+    <div class="service-card">
+      <span class="service-icon">📊</span>
+      <div class="service-title">Rastreabilidade Operacional</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔄</span>
+      <div class="service-title">Logística Reversa</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🌿</span>
+      <div class="service-title">Dados ESG</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">♻️</span>
+      <div class="service-title">Gestão de Resíduos</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🏗️</span>
+      <div class="service-title">Infraestrutura para Cooperativas</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🧠</span>
+      <div class="service-title">Inteligência Operacional</div>
+    </div>
+  </div>
+  
+  <!-- QR Code -->
+  <div class="qr-section fade-in-up" style="animation-delay:0.5s">
+    <div class="qr-container">
+      <canvas id="qr-code"></canvas>
+    </div>
+    <div class="qr-text">Escaneie e conecte-se à CicloBem</div>
+  </div>
+  
+  <!-- Frase Final -->
+  <div class="final-statement fade-in-up" style="animation-delay:0.6s">
+    A economia circular precisa de infraestrutura real.
+  </div>
+  
+</div>
+
+<!-- QR Code Generator -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+<script>
+// Generate QR Code
+QRCode.toCanvas(document.getElementById('qr-code'), 'https://www.ciclobem.com.br/connect', {
+  width: 200,
+  height: 200,
+  margin: 2,
+  color: {
+    dark: '#0a1628',
+    light: '#ffffff'
+  }
+}, function (error) {
+  if (error) console.error(error);
+});
+
+// Analytics e tracking
+document.querySelectorAll('.connect-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    // Simple tracking - could be enhanced with Google Analytics
+    const label = this.textContent.trim();
+    console.log('Connect button clicked:', label);
+  });
+});
+
+// Performance optimization
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => {
+    // Preload critical resources
+    const preloadLink = document.createElement('link');
+    preloadLink.rel = 'preload';
+    preloadLink.href = 'ciclobem_logo_top_1.png';
+    preloadLink.as = 'image';
+    document.head.appendChild(preloadLink);
+  });
+}
+</script>
+
+</body>
+</html>
