@@ -1,7 +1,7 @@
 {
-  "name": "CicloBem — Infraestrutura Tecnologica para Economia Circular Rastreavel",
+  "name": "CicloBem — Infraestrutura Tecnológica para Economia Circular Rastreável",
   "short_name": "CicloBem",
-  "description": "Plataforma operacional que conecta coleta, rastreabilidade, gestao e impacto social da reciclagem.",
+  "description": "Plataforma operacional que conecta coleta, rastreabilidade, gestão e impacto social da reciclagem.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a1628",
