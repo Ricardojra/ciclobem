@@ -332,6 +332,26 @@ footer{background:#060e1c;border-top:1px solid rgba(255,255,255,0.05);padding:48
 .hero-connector{width:1px;height:12px;background:linear-gradient(to bottom,rgba(170,255,0,0.2),rgba(170,255,0,0.05));margin:0 auto}
 @media(max-width:960px){.hero-visual{display:none}}
 
+/* ─── SITE IMAGE CARDS ─── */
+.site-img{position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(170,255,0,0.12);background:rgba(255,255,255,0.03);box-shadow:0 16px 48px rgba(0,0,0,0.25)}
+.site-img img{display:block;width:100%;height:100%;object-fit:cover}
+.site-img-caption{position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(to top,rgba(10,22,40,0.85),transparent);font-size:12px;color:rgba(255,255,255,0.7);line-height:1.5}
+
+/* Hero image */
+.hero-photo{position:absolute;right:24px;top:50%;transform:translateY(-50%);width:480px;height:320px;z-index:1}
+@media(max-width:1100px){.hero-photo{width:380px;height:253px;right:16px}}
+@media(max-width:960px){.hero-photo{position:relative;right:auto;top:auto;transform:none;width:100%;height:auto;max-height:300px;margin-top:32px}}
+
+/* Proof photo */
+.proof-photo{margin-top:28px;max-height:400px}
+.proof-photo img{max-height:400px}
+
+/* Section photo layouts */
+.section-with-photo{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-top:32px}
+.section-with-photo .section-photo{max-height:360px}
+.section-with-photo .section-photo img{max-height:360px}
+@media(max-width:768px){.section-with-photo{grid-template-columns:1fr;gap:20px}}
+
 /* ─── LGPD MODAL ─── */
 .lgpd-modal{display:none;position:fixed;inset:0;z-index:2001;background:rgba(10,22,40,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto}
 .lgpd-modal.open{display:flex}
@@ -430,16 +450,11 @@ footer{background:#060e1c;border-top:1px solid rgba(255,255,255,0.05);padding:48
       <div class="hero-metric"><div class="hero-metric-num">4.000+</div><div class="hero-metric-label">Beneficiários</div></div>
     </div>
   </div>
-  <div class="hero-visual">
-    <div class="hero-visual-inner">
-      <div class="hero-chip"><div class="hero-chip-icon green">&#9737;</div><div><h4>CicloPonto</h4><p>Coleta, pesagem e evidência</p></div></div>
-      <div class="hero-connector"></div>
-      <div class="hero-chip"><div class="hero-chip-icon lime">&#9783;</div><div><h4>Plataforma CicloBem</h4><p>Dados, estoque e rastreabilidade</p></div></div>
-      <div class="hero-connector"></div>
-      <div class="hero-chip"><div class="hero-chip-icon gold">&#9741;</div><div><h4>Conta Digital CicloBem</h4><p>Saldo, QR Code e histórico</p></div></div>
-      <div class="hero-connector"></div>
-      <div class="hero-chip"><div class="hero-chip-icon blue">&#9881;</div><div><h4>Relatórios e Indicadores</h4><p>ESG, prestação de contas e impacto</p></div></div>
-    </div>
+  <div class="hero-photo site-img">
+    <picture>
+      <source srcset="ciclobem1.webp" type="image/webp">
+      <img src="ciclobem1.png" alt="Cidadã entregando recicláveis para operador CicloBem em ponto de coleta" width="1672" height="941" decoding="async" fetchpriority="high">
+    </picture>
   </div>
 </section>
 
@@ -469,6 +484,14 @@ footer{background:#060e1c;border-top:1px solid rgba(255,255,255,0.05);padding:48
         <h3>Base para a plataforma</h3>
         <p>Os dados e processos validados em campo fundamentam a arquitetura da plataforma tecnológica em implantação, garantindo aderência à realidade operacional.</p>
       </div>
+    </div>
+
+    <div class="proof-photo site-img reveal" style="transition-delay:.22s">
+      <picture>
+        <source srcset="ciclobem2.webp" type="image/webp">
+        <img src="ciclobem2.png" alt="Eco Ponto CicloBem com participação comunitária e registro de recicláveis" width="1672" height="941" loading="lazy" decoding="async">
+      </picture>
+      <div class="site-img-caption">Experiência operacional em Eco Pontos no Rio de Janeiro — base prática para a evolução da plataforma CicloBem.</div>
     </div>
   </div>
 </section>
@@ -605,6 +628,18 @@ footer{background:#060e1c;border-top:1px solid rgba(255,255,255,0.05);padding:48
         <span class="status-badge status-implementing">Em implantação</span>
       </div>
     </div>
+    <div class="section-with-photo reveal" style="transition-delay:.22s">
+      <div>
+        <h3 class="h3" style="margin-bottom:12px">A jornada do cidadão</h3>
+        <p class="sub">A Conta Digital CicloBem aproxima o cidadão da operação, permitindo identificação por QR Code, acompanhamento de histórico e participação em programas de reciclagem remunerada.</p>
+      </div>
+      <div class="section-photo site-img">
+        <picture>
+          <source srcset="ciclobem3.webp" type="image/webp">
+          <img src="ciclobem3.png" alt="Conta Digital CicloBem com QR Code e histórico de coletas no celular" width="1672" height="941" loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -725,6 +760,19 @@ footer{background:#060e1c;border-top:1px solid rgba(255,255,255,0.05);padding:48
       <div class="tech-card">
         <h3>Integrações futuras</h3>
         <p>A plataforma foi pensada para evoluir com parceiros de pagamento, automação, inteligência operacional e certificações, quando aplicável.</p>
+      </div>
+    </div>
+
+    <div class="section-with-photo reveal" style="transition-delay:.22s">
+      <div class="section-photo site-img">
+        <picture>
+          <source srcset="ciclobem4.webp" type="image/webp">
+          <img src="ciclobem4.png" alt="Equipe analisando dados e relatórios de impacto da operação CicloBem" width="1672" height="941" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div>
+        <h3 class="h3" style="margin-bottom:12px">Dados para decisão</h3>
+        <p class="sub">Dados operacionais organizados ajudam empresas, prefeituras e operadores a acompanhar desempenho, impacto e prestação de contas.</p>
       </div>
     </div>
   </div>
