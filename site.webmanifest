@@ -1,7 +1,7 @@
 {
-  "name": "CicloBem — Infraestrutura Financeira da Economia Circular",
+  "name": "CicloBem — Infraestrutura Tecnologica para Economia Circular Rastreavel",
   "short_name": "CicloBem",
-  "description": "Tokenizamos resíduos recicláveis, geramos créditos ambientais e distribuímos renda via Blockchain.",
+  "description": "Plataforma operacional que conecta coleta, rastreabilidade, gestao e impacto social da reciclagem.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a1628",

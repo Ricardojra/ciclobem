@@ -3,66 +3,46 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.ciclobem.com.br/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://www.ciclobem.com.br/ciclobem_logo_top_1.png</image:loc>
-      <image:title>Logo CicloBem — Infraestrutura Financeira da Economia Circular</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.ciclobem.com.br/cicloponto.png</image:loc>
-      <image:title>CicloPonto instalado em comunidade no Rio de Janeiro — estação de coleta seletiva automatizada</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.ciclobem.com.br/Centro_Triagem.jpeg</image:loc>
-      <image:title>Centro de triagem de resíduos recicláveis — operação de economia circular CicloBem</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.ciclobem.com.br/mini_ciclobem.png</image:loc>
-      <image:title>Mini CicloPonto CicloBem instalado em shopping — totem compacto de coleta seletiva</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.ciclobem.com.br/cartao_ciclobem.png</image:loc>
-      <image:title>Cartão CicloBem — conta digital para recicladores com Pix e microcrédito</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.ciclobem.com.br/container.png</image:loc>
-      <image:title>CicloPonto modular em container — solução de coleta seletiva para shoppings e empresas ESG</image:title>
+      <image:title>Logo CicloBem — Infraestrutura Tecnologica para Economia Circular Rastreavel</image:title>
     </image:image>
     <image:image>
       <image:loc>https://www.ciclobem.com.br/ciclobem_og.png</image:loc>
-      <image:title>CicloBem — Open Graph social sharing image</image:title>
+      <image:title>CicloBem — Open Graph image</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.ciclobem.com.br/#como</loc>
+    <loc>https://www.ciclobem.com.br/#sobre</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ciclobem.com.br/#beneficios</loc>
+    <loc>https://www.ciclobem.com.br/#plataforma</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.ciclobem.com.br/#produto</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.ciclobem.com.br/#solucoes</loc>
     <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ciclobem.com.br/#impacto</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ciclobem.com.br/#investidor</loc>
+    <loc>https://www.ciclobem.com.br/#tecnologia</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.ciclobem.com.br/#closing</loc>
+    <loc>https://www.ciclobem.com.br/#contato</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
 </urlset>
