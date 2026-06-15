@@ -1,0 +1,14 @@
+# Backups and drafts
+*.backup.html
+*.backup.css.html
+backup_site_*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+*.swp
+*.swo
+*~
