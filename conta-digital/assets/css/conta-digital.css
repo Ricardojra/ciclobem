@@ -1,0 +1,265 @@
+:root {
+  --bg: #0a1628;
+  --bg-elevated: #111e33;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --text: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --lime: #aaff00;
+  --lime-dark: #8ccc00;
+  --danger: #ff5a5a;
+  --success: #2dd67b;
+  --border: rgba(170, 255, 0, 0.12);
+  --radius: 12px;
+  --spacing: 16px;
+  --font: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.conta-digital-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.conta-digital-loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--text-muted);
+  padding: 40px;
+  text-align: center;
+}
+
+.conta-digital-loading__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(170, 255, 0, 0.2);
+  border-top-color: var(--lime);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.conta-digital-root {
+  flex: 1;
+  padding: 24px;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.conta-digital-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  z-index: 1000;
+}
+
+.conta-digital-toast--success {
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.conta-digital-toast--error {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.conta-digital-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 40px;
+}
+
+.conta-digital-auth__logo {
+  text-align: center;
+}
+
+.conta-digital-auth__logo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+}
+
+.conta-digital-auth__logo p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.conta-digital-auth__title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.conta-digital-auth__description {
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+  margin: 0;
+}
+
+.cb-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cb-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cb-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.cb-input {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 14px 16px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.cb-input:focus {
+  border-color: var(--lime);
+  box-shadow: 0 0 0 2px rgba(170, 255, 0, 0.1);
+}
+
+.cb-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.cb-input--error {
+  border-color: var(--danger);
+}
+
+.cb-button {
+  background: var(--lime);
+  color: #0a1628;
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  text-align: center;
+}
+
+.cb-button:hover {
+  background: var(--lime-dark);
+}
+
+.cb-button:disabled {
+  background: rgba(170, 255, 0, 0.3);
+  color: rgba(10, 22, 40, 0.5);
+  cursor: not-allowed;
+}
+
+.cb-button--secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.cb-button--secondary:hover {
+  background: var(--bg-card);
+}
+
+.cb-button--full {
+  width: 100%;
+}
+
+.cb-form-error, .cb-form-success {
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px;
+  display: none;
+}
+
+.cb-form-error {
+  background: rgba(255, 90, 90, 0.1);
+  color: var(--danger);
+  border: 1px solid rgba(255, 90, 90, 0.3);
+}
+
+.cb-form-success {
+  background: rgba(45, 214, 123, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(45, 214, 123, 0.3);
+}
+
+.conta-digital-auth__footer {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.conta-digital-auth__footer a {
+  color: var(--lime);
+  text-decoration: none;
+}
+
+.conta-digital-auth__links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cb-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.cb-error {
+  color: var(--danger);
+  text-align: center;
+  padding: 20px;
+}
+
+@media (max-width: 420px) {
+  .conta-digital-root {
+    padding: 20px;
+  }
+  .conta-digital-auth {
+    padding-top: 24px;
+  }
+}
