@@ -61,7 +61,7 @@ html, body {
 
 .conta-digital-root {
   flex: 1;
-  padding: 24px;
+  padding: 24px 24px 120px;
   max-width: 480px;
   width: 100%;
   margin: 0 auto;
@@ -100,6 +100,13 @@ html, body {
 
 .conta-digital-auth__logo {
   text-align: center;
+}
+
+.conta-digital-auth__logo img {
+  display: block;
+  margin: 0 auto 16px;
+  height: 44px;
+  width: auto;
 }
 
 .conta-digital-auth__logo h1 {

@@ -8,6 +8,7 @@
   const ContaDigitalAtivar = {
     init(params) {
       this.token = params.token || '';
+      if (CicloBem.menu) CicloBem.menu.hide();
       this.render();
       this.bindEvents();
     },

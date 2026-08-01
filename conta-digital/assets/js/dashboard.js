@@ -9,6 +9,7 @@
     init() {
       this.render();
       this.loadData();
+      if (window.CicloBem.menu) window.CicloBem.menu.render('dashboard');
     },
 
     render() {
@@ -17,7 +18,7 @@
 
       root.innerHTML = `
         <div class="conta-digital-dashboard">
-          <div class="dashboard-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+          <div class="dashboard-header" style="position:sticky;top:0;z-index:101;background:var(--bg-elevated,#111e33);border-bottom:1px solid var(--border,#1e3a5f);padding:20px 24px;margin:-24px -24px 24px;display:flex;justify-content:space-between;align-items:center;">
             <h1 style="font-size:22px;margin:0;">Conta CicloBem</h1>
             <button id="dashboard-logout" class="cb-button cb-button--secondary" style="padding:8px 14px;font-size:13px;">Sair</button>
           </div>
@@ -61,11 +62,29 @@
         ]);
 
         if (saldoRes.ok && saldoRes.data) {
-          saldoEl.textContent = `R$ ${(saldoRes.data.saldo / 100).toFixed(2).replace('.', ',')}`;
+          const saldoRaw = saldoRes.data.saldo;
+          let saldoValor = 0;
+          if (typeof saldoRaw === 'number') {
+            saldoValor = saldoRaw / 100;
+          } else if (saldoRaw && typeof saldoRaw === 'object') {
+            saldoValor = (
+              parseFloat(saldoRaw.gerado || 0) +
+              parseFloat(saldoRaw.em_processamento || 0) +
+              parseFloat(saldoRaw.pago || 0)
+            );
+          } else {
+            saldoValor = parseFloat(saldoRaw) || 0;
+          }
+          saldoEl.textContent = `R$ ${saldoValor.toFixed(2).replace('.', ',')}`;
         }
 
         if (resumoRes.ok && resumoRes.data) {
-          coletasEl.textContent = resumoRes.data.total_coletas || 0;
+          const totalColetas =
+            resumoRes.data.saldo?.total_coletas ||
+            resumoRes.data.total_coletas ||
+            resumoRes.data.coletas ||
+            0;
+          coletasEl.textContent = totalColetas;
         }
 
         if (historicoRes.ok && historicoRes.data && historicoRes.data.coletas) {
@@ -74,8 +93,11 @@
             historicoEl.textContent = 'Nenhuma coleta registrada ainda.';
           } else {
             historicoEl.innerHTML = coletas.map(c => {
-              const data = new Date(c.created_at).toLocaleDateString('pt-BR');
-              const valor = (c.valor_total || 0).toFixed(2).replace('.', ',');
+              const dateObj = c.created_at ? new Date(c.created_at) : null;
+              const data = (dateObj && !isNaN(dateObj.getTime()))
+                ? dateObj.toLocaleDateString('pt-BR')
+                : 'Data não disponível';
+              const valor = (parseFloat(c.valor_total) || 0).toFixed(2).replace('.', ',');
               return `<div style="padding:10px 0;border-bottom:1px solid var(--border);">${data} — ${c.material_nome || 'Material'} — R$ ${valor}</div>`;
             }).join('');
           }

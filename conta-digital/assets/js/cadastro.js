@@ -25,6 +25,7 @@
   const ContaDigitalCadastro = {
     init(params) {
       this.params = params || {};
+      if (CicloBem.menu) CicloBem.menu.hide();
       this.render();
       this.bindEvents();
     },

@@ -7,6 +7,7 @@
 
   const ContaDigitalLogin = {
     init() {
+      if (CicloBem.menu) CicloBem.menu.hide();
       this.render();
       this.bindEvents();
     },
@@ -18,6 +19,10 @@
       root.innerHTML = `
         <div class="conta-digital-auth">
           <div class="conta-digital-auth__logo">
+            <picture>
+              <source srcset="../../ciclobem-logo.webp" type="image/webp">
+              <img src="../../ciclobem-logo.png" alt="CicloBem" width="363" height="88" style="height:44px;width:auto">
+            </picture>
             <h1>Conta CicloBem</h1>
             <p>Acesse suas coletas, saldo e extrato.</p>
           </div>
@@ -68,7 +73,9 @@
 
       try {
         if (!email || !senha) throw new Error('Preencha e-mail e senha.');
-        await CicloBem.auth.login(email, senha);
+        CicloBem.auth.clearAuth();
+        const result = await CicloBem.auth.login(email, senha);
+        console.log('[LOGIN] token received:', result?.token ? 'ok' : 'missing');
         CicloBem.router.navigate('dashboard');
       } catch (error) {
         errorDiv.textContent = error.message || 'Credenciais inválidas.';

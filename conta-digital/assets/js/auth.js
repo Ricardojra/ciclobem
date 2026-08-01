@@ -10,6 +10,7 @@
     if (response.ok) {
       CicloBem.storage.setToken(response.data.token);
       CicloBem.storage.setUser(response.data.user);
+      console.log('[AUTH] token set:', response.data.token ? 'ok' : 'missing');
       CicloBem.logger.info('Login successful', { email });
       return response.data;
     } else {

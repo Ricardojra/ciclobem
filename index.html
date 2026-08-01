@@ -140,6 +140,8 @@ img,video,iframe{max-width:100%;height:auto;display:block}
 .nav-links a:hover,.nav-links a:focus{color:var(--lime);background:var(--ld)}
 .nav-cta{background:var(--lime);color:var(--nv);font-weight:700;border-radius:8px;padding:10px 18px;font-size:13px;text-decoration:none;transition:all 0.2s}
 .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(170,255,0,0.3)}
+.nav-account{background:transparent;color:var(--lime);font-weight:600;border:1px solid var(--lime);border-radius:8px;padding:10px 18px;font-size:13px;text-decoration:none;transition:all 0.2s}
+.nav-account:hover{background:var(--ld);transform:translateY(-1px);box-shadow:0 4px 16px rgba(170,255,0,0.15)}
 .nav-mobile-btn{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
 .nav-mobile-btn span{display:block;width:22px;height:2px;background:var(--wh);border-radius:2px;transition:all 0.3s}
 
@@ -148,6 +150,8 @@ img,video,iframe{max-width:100%;height:auto;display:block}
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:16px;font-weight:500;padding:14px 16px;border-radius:10px;transition:all 0.2s}
 .mobile-menu a:hover,.mobile-menu a:focus{color:var(--lime);background:var(--ld)}
+.mobile-menu .nav-account{color:var(--lime);border:1px solid var(--lime);text-align:center}
+.mobile-menu .nav-account:hover{background:var(--ld);box-shadow:0 4px 16px rgba(170,255,0,0.15)}
 
 /* ─── UTILS ─── */
 .container{max-width:1120px;margin:0 auto;padding:0 24px}
@@ -422,6 +426,7 @@ footer{background:#060e1c;border-top:1px solid rgba(255,255,255,0.05);padding:48
       <a href="#solucoes">Soluções</a>
       <a href="#impacto">Impacto</a>
       <a href="#tecnologia">Tecnologia</a>
+      <a href="/conta-digital/" class="nav-account">Conta</a>
       <a href="#contato" class="nav-cta">Fale Conosco</a>
     </div>
     <button class="nav-mobile-btn" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMobileMenu()">
@@ -437,7 +442,8 @@ footer{background:#060e1c;border-top:1px solid rgba(255,255,255,0.05);padding:48
   <a href="#solucoes" onclick="closeMobileMenu()">Soluções</a>
   <a href="#impacto" onclick="closeMobileMenu()">Impacto</a>
   <a href="#tecnologia" onclick="closeMobileMenu()">Tecnologia</a>
-  <a href="#contato" onclick="closeMobileMenu()">Contato</a>
+  <a href="/conta-digital/" class="nav-account" onclick="closeMobileMenu()">Conta Digital</a>
+  <a href="#contato" class="nav-cta" onclick="closeMobileMenu()">Fale Conosco</a>
 </div>
 
 <!-- ─── HERO ─── -->

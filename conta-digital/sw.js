@@ -1,4 +1,4 @@
-const CACHE_NAME = 'conta-ciclobem-v1';
+const CACHE_NAME = 'conta-ciclobem-v2';
 const APP_SHELL = [
   '/conta-digital/',
   '/conta-digital/index.html',
@@ -14,6 +14,10 @@ const APP_SHELL = [
   '/conta-digital/assets/js/login.js',
   '/conta-digital/assets/js/cadastro.js',
   '/conta-digital/assets/js/dashboard.js',
+  '/conta-digital/assets/js/qrcode.js',
+  '/conta-digital/assets/js/perfil.js',
+  '/conta-digital/assets/js/resgatar.js',
+  '/conta-digital/assets/js/menu.js',
   '/conta-digital/assets/js/bootstrap.js',
   '/conta-digital/icons/icon-192x192.png',
   '/conta-digital/icons/icon-512x512.png'
@@ -25,11 +29,13 @@ const NEVER_CACHE = [
   '/conta-digital/',
   '/conta-digital/ativar',
   '/conta-digital/login',
-  '/conta-digital/cadastro'
+  '/conta-digital/cadastro',
+  '/conta-digital/assets/js/env.js',
+  '/conta-digital/sw.js'
 ];
 
 self.addEventListener('install', (event) => {
-  if (self.location.hostname === 'localhost') {
+  if (['localhost', '127.0.0.1', '::1'].includes(self.location.hostname)) {
     return self.skipWaiting();
   }
   event.waitUntil(
@@ -63,7 +69,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (self.location.hostname === 'localhost') {
+  if (url.pathname.includes('/env.js') || url.pathname.includes('/sw.js')) {
+    return;
+  }
+
+  if (['localhost', '127.0.0.1', '::1'].includes(self.location.hostname)) {
     return;
   }
 

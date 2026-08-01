@@ -44,7 +44,34 @@
       return;
     }
 
-    if (route === 'login' || (!CicloBem.auth.isAuthenticated() && route !== 'dashboard')) {
+    if (route === 'perfil') {
+      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.perfil) {
+        window.CicloBem.contaDigital.perfil.init();
+      } else {
+        root.innerHTML = '<p class="cb-error">Módulo de perfil não carregado.</p>';
+      }
+      return;
+    }
+
+    if (route === 'qrcode') {
+      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.qrcode) {
+        window.CicloBem.contaDigital.qrcode.init();
+      } else {
+        root.innerHTML = '<p class="cb-error">Módulo de QR Code não carregado.</p>';
+      }
+      return;
+    }
+
+    if (route === 'resgatar') {
+      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.resgatar) {
+        window.CicloBem.contaDigital.resgatar.init();
+      } else {
+        root.innerHTML = '<p class="cb-error">Módulo de resgate não carregado.</p>';
+      }
+      return;
+    }
+
+    if (route === 'login' || (!CicloBem.auth.isAuthenticated() && !['dashboard', 'perfil', 'qrcode', 'resgatar'].includes(route))) {
       if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.login) {
         window.CicloBem.contaDigital.login.init();
       } else {

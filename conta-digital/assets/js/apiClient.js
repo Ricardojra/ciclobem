@@ -19,6 +19,9 @@
     const token = window.CicloBem.storage.getToken();
     if (token) {
       options.headers['Authorization'] = `Bearer ${token}`;
+      console.log('[API] using token:', token.substring(0, 30) + '...');
+    } else {
+      console.log('[API] no token');
     }
 
     if (body !== undefined) {
@@ -43,9 +46,24 @@
         }
       }
 
+      // Se token expirou ou é inválido, limpa a sessão e volta para login
+      if (response.status === 401) {
+        if (window.CicloBem.auth && typeof window.CicloBem.auth.clearAuth === 'function') {
+          window.CicloBem.auth.clearAuth();
+        }
+        if (!window.location.hash.includes('login') && window.CicloBem.router) {
+          window.CicloBem.router.navigate('login');
+        }
+      }
+
       if (!response.ok) {
         const error = (payload && payload.error) || { code: 'REQUEST_FAILED', message: `HTTP ${response.status}` };
         return { ok: false, data: null, error };
+      }
+
+      // Normaliza envelope { success, data, error, meta } do backend
+      if (payload && typeof payload.success === 'boolean') {
+        return { ok: payload.success, data: payload.data, error: payload.error };
       }
 
       return payload && typeof payload.ok === 'boolean'

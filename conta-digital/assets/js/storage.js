@@ -13,7 +13,12 @@
   }
 
   function setToken(token) {
-    window.localStorage.setItem(PREFIX + 'token', token);
+    try {
+      window.localStorage.setItem(PREFIX + 'token', token);
+      console.log('[STORAGE] token saved:', token ? 'ok' : 'missing');
+    } catch (e) {
+      console.error('[STORAGE] failed to save token', e);
+    }
   }
 
   function getUser() {
@@ -26,7 +31,12 @@
   }
 
   function setUser(user) {
-    window.localStorage.setItem(PREFIX + 'user', JSON.stringify(user));
+    try {
+      window.localStorage.setItem(PREFIX + 'user', JSON.stringify(user));
+      console.log('[STORAGE] user saved:', user ? user.email : 'missing');
+    } catch (e) {
+      console.error('[STORAGE] failed to save user', e);
+    }
   }
 
   function clearAuth() {
