@@ -71,8 +71,16 @@
             <p style="color:var(--text);font-size:14px;line-height:1.5;margin:0;">
               1. Informe o valor e sua chave Pix.<br>
               2. A CicloBem processa o pagamento.<br>
-              3. Você recebe na sua conta em até 48h.
+              3. Você recebe na sua conta em até 48h.<br>
+              4. O status do resgate aparece abaixo assim que houver atualização.
             </p>
+          </div>
+
+          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:16px;">
+            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 12px;">Meus resgates</h2>
+            <div id="resgatar-historico" style="display:flex;flex-direction:column;gap:12px;">
+              <p style="color:var(--text-muted);">Carregando...</p>
+            </div>
           </div>
         </div>
       `;
@@ -92,7 +100,76 @@
       form.addEventListener('submit', (e) => { e.preventDefault(); this.handleSubmit(); });
     },
 
+    async loadHistorico() {
+      const container = document.getElementById('resgatar-historico');
+      if (!container) return;
+
+      try {
+        const response = await CicloBem.api.get('/conta-digital/resgates');
+        if (response.ok && response.data) {
+          this.renderHistorico(response.data.resgates || []);
+        } else {
+          container.innerHTML = '<p style="color:var(--text-muted);">Nenhum resgate encontrado.</p>';
+        }
+      } catch (error) {
+        CicloBem.logger.error('Erro ao carregar historico de resgates', error);
+        container.innerHTML = '<p style="color:var(--text-muted);">Erro ao carregar histórico.</p>';
+      }
+    },
+
+    renderHistorico(resgates) {
+      const container = document.getElementById('resgatar-historico');
+      if (!container) return;
+
+      if (!resgates.length) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Você ainda não fez nenhum resgate.</p>';
+        return;
+      }
+
+      const statusClass = {
+        solicitado: 'pendente',
+        aprovado_admin: 'ativo',
+        processando_pix: 'ativo',
+        concluido: 'ativo',
+        rejeitado_admin: 'inativo',
+        falhou: 'inativo'
+      };
+
+      const statusLabel = {
+        solicitado: 'Pendente',
+        aprovado_admin: 'Aprovado',
+        processando_pix: 'Processando',
+        concluido: 'Pago',
+        rejeitado_admin: 'Rejeitado',
+        falhou: 'Falhou'
+      };
+
+      const statusColor = {
+        pendente: '#f5a623',
+        ativo: '#2dd67b',
+        inativo: '#e74c3c'
+      };
+
+      container.innerHTML = resgates.map(r => {
+        const statusKey = statusClass[r.status] || 'pendente';
+        const label = statusLabel[r.status] || r.status;
+        return `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg-elevated,#111e33);border:1px solid var(--border);border-radius:var(--radius);">
+            <div>
+              <p style="margin:0;font-weight:600;">R$ ${(Number(r.valor) || 0).toFixed(2).replace('.', ',')}</p>
+              <p style="margin:4px 0 0;font-size:12px;color:var(--text-muted);">${r.chave_pix}</p>
+              <p style="margin:0;font-size:12px;color:var(--text-muted);">${new Date(r.created_at).toLocaleString('pt-BR')}</p>
+            </div>
+            <span style="padding:6px 10px;border-radius:12px;font-size:12px;font-weight:600;background:${statusColor[statusKey]}20;color:${statusColor[statusKey]};">
+              ${label}
+            </span>
+          </div>
+        `;
+      }).join('');
+    },
+
     async loadData() {
+      await this.loadHistorico();
       const saldoEl = document.getElementById('resgatar-saldo');
       try {
         const saldoRes = await CicloBem.api.get('/conta-digital/saldo');
