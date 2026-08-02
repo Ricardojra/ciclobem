@@ -38,6 +38,11 @@
       });
     });
 
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      console.log('[PWA] Novo service worker ativado. Recarregando...');
+      window.location.reload();
+    });
+
     navigator.serviceWorker.addEventListener('message', (event) => {
       if (event.data && event.data.action === 'reload') {
         window.location.reload();
