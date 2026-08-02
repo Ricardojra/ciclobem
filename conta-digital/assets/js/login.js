@@ -35,7 +35,12 @@
 
             <div class="cb-form-group">
               <label class="cb-label" for="login-senha">Senha</label>
-              <input type="password" id="login-senha" class="cb-input" placeholder="••••••••" required autocomplete="current-password">
+              <div class="cb-input-group">
+                <input type="password" id="login-senha" class="cb-input" placeholder="••••••••" required autocomplete="current-password">
+                <button type="button" id="login-toggle-senha" class="cb-input-toggle" aria-label="Mostrar senha" title="Mostrar senha">
+                  <svg id="login-eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
             </div>
 
             <div class="cb-form-error" id="login-error"></div>
@@ -49,7 +54,7 @@
           </div>
 
           <div class="conta-digital-auth__footer">
-            <a href="#">Esqueci minha senha</a>
+            <a href="#/esqueci-senha">Esqueci minha senha</a>
           </div>
         </div>
       `;
@@ -57,8 +62,17 @@
 
     bindEvents() {
       const form = document.getElementById('login-form');
-      if (!form) return;
-      form.addEventListener('submit', (e) => { e.preventDefault(); this.handleSubmit(); });
+      if (form) form.addEventListener('submit', (e) => { e.preventDefault(); this.handleSubmit(); });
+
+      const toggleBtn = document.getElementById('login-toggle-senha');
+      const senhaInput = document.getElementById('login-senha');n      if (toggleBtn && senhaInput) {
+        toggleBtn.addEventListener('click', () => {
+          const isPassword = senhaInput.type === 'password';
+          senhaInput.type = isPassword ? 'text' : 'password';
+          toggleBtn.setAttribute('aria-label', isPassword ? 'Ocultar senha' : 'Mostrar senha');
+          toggleBtn.title = isPassword ? 'Ocultar senha' : 'Mostrar senha';
+        });
+      }
     },
 
     async handleSubmit() {

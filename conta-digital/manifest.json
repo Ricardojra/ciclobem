@@ -1,7 +1,7 @@
 {
-  "name": "Conta CicloBem",
+  "name": "Conta Digital CicloBem",
   "short_name": "Conta CicloBem",
-  "description": "Acompanhe suas coletas, saldo e impacto na CicloBem.",
+  "description": "Acompanhe suas coletas, QR Code, histórico e saldo operacional na economia circular rastreável.",
   "start_url": "/conta-digital/",
   "display": "standalone",
   "background_color": "#0a1628",

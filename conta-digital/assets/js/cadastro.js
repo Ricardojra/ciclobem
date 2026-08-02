@@ -76,7 +76,7 @@
             <div class="cb-form-group">
               <label class="cb-label" style="display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--text-muted); cursor: pointer;">
                 <input type="checkbox" id="cadastro-termos" required style="width: 18px; height: 18px;">
-                Aceito os Termos de Uso e Política de Privacidade
+                <span>Li e aceito os <a href="termos-de-uso.html" target="_blank" style="color: #2dd67b; margin: 0 4px;">Termos de Uso</a> e a <a href="politica-privacidade.html" target="_blank" style="color: #2dd67b; margin: 0 4px;">Política de Privacidade</a>.</span>
               </label>
             </div>
 

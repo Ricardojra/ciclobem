@@ -26,7 +26,7 @@
       CicloBem.toast = { show: showToast };
       CicloBem.router.init();
       hideLoading();
-      CicloBem.logger.info('Conta Digital PWA inicializada', { version: CicloBem.env.VERSION });
+      CicloBem.logger.info('Conta Digital inicializada', { version: CicloBem.env.VERSION });
     } catch (error) {
       const loading = document.getElementById('conta-digital-loading');
       if (loading) {

@@ -44,6 +44,24 @@
       return;
     }
 
+    if (route === 'esqueci-senha') {
+      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.esqueciSenha) {
+        window.CicloBem.contaDigital.esqueciSenha.init();
+      } else {
+        root.innerHTML = '<p class="cb-error">Módulo de recuperação não carregado.</p>';
+      }
+      return;
+    }
+
+    if (route === 'redefinir-senha') {
+      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.redefinirSenha) {
+        window.CicloBem.contaDigital.redefinirSenha.init(params);
+      } else {
+        root.innerHTML = '<p class="cb-error">Módulo de redefinição não carregado.</p>';
+      }
+      return;
+    }
+
     if (route === 'perfil') {
       if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.perfil) {
         window.CicloBem.contaDigital.perfil.init();

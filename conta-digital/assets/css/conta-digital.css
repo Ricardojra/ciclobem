@@ -177,6 +177,51 @@ html, body {
   border-color: var(--danger);
 }
 
+.cb-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cb-input-group .cb-input {
+  flex: 1;
+  padding-right: 48px;
+}
+
+.cb-input-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cb-input-toggle:hover {
+  color: var(--lime);
+}
+
+#conta-digital-bottom-menu a svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+#conta-digital-bottom-menu a svg path,
+#conta-digital-bottom-menu a svg circle,
+#conta-digital-bottom-menu a svg rect,
+#conta-digital-bottom-menu a svg polyline,
+#conta-digital-bottom-menu a svg line {
+  stroke: currentColor;
+  fill: none;
+}
+
 .cb-button {
   background: var(--lime);
   color: #0a1628;

@@ -9,10 +9,50 @@
     async init() {
       this.render();
       await this.load();
+      this.bindEvents();
       if (window.CicloBem.menu) window.CicloBem.menu.render('perfil');
     },
 
+    bindEvents() {
+      const form = document.getElementById('perfil-chave-pix-form');
+      if (form) form.addEventListener('submit', (e) => { e.preventDefault(); this.salvarChavePix(); });
+    },
+
+    async salvarChavePix() {
+      const input = document.getElementById('perfil-chave-pix');
+      const errorEl = document.getElementById('perfil-chave-pix-error');
+      const successEl = document.getElementById('perfil-chave-pix-success');
+      const chave = input.value.trim();
+
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+
+      if (!chave) {
+        errorEl.textContent = 'Informe uma chave Pix.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      try {
+        const response = await CicloBem.api.patch('/conta-digital/me/chave-pix', { chave_pix: chave });
+
+        if (response.ok) {
+          successEl.textContent = 'Chave Pix salva com sucesso.';
+          successEl.style.display = 'block';
+          if (this.currentUser) this.currentUser.chave_pix = chave;
+        } else {
+          errorEl.textContent = response.error?.message || 'Erro ao salvar chave Pix.';
+          errorEl.style.display = 'block';
+        }
+      } catch (error) {
+        errorEl.textContent = 'Erro ao conectar com o servidor.';
+        errorEl.style.display = 'block';
+        CicloBem.logger.error('Salvar chave Pix error', error);
+      }
+    },
+
     render() {
+      this.currentUser = null;
       const root = document.getElementById('conta-digital-root');
       if (!root) return;
 
@@ -28,6 +68,19 @@
             <div id="perfil-dados" style="display:flex;flex-direction:column;gap:12px;">
               <p style="color:var(--text-muted);">Carregando...</p>
             </div>
+          </div>
+
+          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 12px;">Chave Pix</h2>
+            <form id="perfil-chave-pix-form" class="cb-form" style="display:flex;flex-direction:column;gap:12px;">
+              <div class="cb-form-group" style="margin:0;">
+                <label class="cb-label" for="perfil-chave-pix">Sua chave Pix para resgates</label>
+                <input type="text" id="perfil-chave-pix" class="cb-input" placeholder="CPF, e-mail, celular ou chave aleatória" required>
+              </div>
+              <div class="cb-form-error" id="perfil-chave-pix-error" style="color:var(--danger);font-size:14px;display:none;"></div>
+              <div class="cb-form-success" id="perfil-chave-pix-success" style="color:var(--success);font-size:14px;display:none;"></div>
+              <button type="submit" class="cb-button cb-button--full" id="perfil-chave-pix-submit">Salvar chave Pix</button>
+            </form>
           </div>
 
           <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
@@ -62,6 +115,7 @@
         }
 
         const user = response.data.cliente || response.data.user || response.data.perfil || response.data;
+        this.currentUser = user;
         const statusMap = {
           ativo: 'Ativo',
           inativo: 'Inativo',
@@ -99,6 +153,9 @@
             <span style="color:var(--text);font-weight:500;">${user.telefone || '-'}</span>
           </div>
         `;
+
+        const chaveInput = document.getElementById('perfil-chave-pix');
+        if (chaveInput) chaveInput.value = user.chave_pix || '';
 
         statusEl.innerHTML = `
           <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">

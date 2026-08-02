@@ -10,7 +10,23 @@
       this.render();
       this.bindEvents();
       await this.loadData();
+      await this.carregarChavePix();
       if (window.CicloBem.menu) window.CicloBem.menu.render('resgatar');
+    },
+
+    async carregarChavePix() {
+      try {
+        const response = await CicloBem.api.get('/conta-digital/me');
+        if (response.ok && response.data) {
+          const user = response.data.cliente || response.data;
+          const chaveInput = document.getElementById('resgatar-chave');
+          if (chaveInput && user.chave_pix) {
+            chaveInput.value = user.chave_pix;
+          }
+        }
+      } catch (error) {
+        CicloBem.logger.error('Erro ao carregar chave Pix', error);
+      }
     },
 
     render() {
@@ -122,6 +138,9 @@
         errorDiv.style.display = 'block';
         return;
       }
+
+      const confirmar = confirm(`Confirma o resgate de R$ ${parseFloat(valor).toFixed(2).replace('.', ',')} para a chave Pix:\n\n${chavePix}\n\nVerifique se a chave está correta. Não é possível desfazer essa operação.`);
+      if (!confirmar) return;
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Solicitando...';
