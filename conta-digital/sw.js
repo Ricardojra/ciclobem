@@ -1,4 +1,4 @@
-const CACHE_NAME = 'conta-ciclobem-v2';
+const CACHE_NAME = 'conta-ciclobem-v3';
 const APP_SHELL = [
   '/conta-digital/',
   '/conta-digital/index.html',
