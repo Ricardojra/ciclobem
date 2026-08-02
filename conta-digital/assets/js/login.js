@@ -65,7 +65,8 @@
       if (form) form.addEventListener('submit', (e) => { e.preventDefault(); this.handleSubmit(); });
 
       const toggleBtn = document.getElementById('login-toggle-senha');
-      const senhaInput = document.getElementById('login-senha');n      if (toggleBtn && senhaInput) {
+      const senhaInput = document.getElementById('login-senha');
+      if (toggleBtn && senhaInput) {
         toggleBtn.addEventListener('click', () => {
           const isPassword = senhaInput.type === 'password';
           senhaInput.type = isPassword ? 'text' : 'password';
