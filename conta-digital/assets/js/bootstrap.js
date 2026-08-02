@@ -20,6 +20,48 @@
     if (root) root.style.display = 'block';
   }
 
+  function handleServiceWorkerUpdate(reg) {
+    if (!reg) return;
+
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      if (!newWorker) return;
+
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          console.log('[PWA] Nova versão disponível');
+
+          if (window.confirm('Uma nova versão da Conta Digital CicloBem está disponível. Deseja atualizar agora?')) {
+            newWorker.postMessage({ action: 'skipWaiting' });
+          }
+        }
+      });
+    });
+
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data && event.data.action === 'reload') {
+        window.location.reload();
+      }
+    });
+
+    setInterval(() => {
+      console.log('[PWA] Verificando atualização do service worker');
+      reg.update();
+    }, 60000);
+  }
+
+  async function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) return null;
+    try {
+      const reg = await navigator.serviceWorker.register('sw.js');
+      handleServiceWorkerUpdate(reg);
+      return reg;
+    } catch (err) {
+      console.warn('[PWA] Service worker não registrado:', err);
+      return null;
+    }
+  }
+
   function init() {
     try {
       if (!CicloBem.env) throw new Error('Configuração não carregada.');
@@ -37,8 +79,10 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', () => {
+      registerServiceWorker().finally(init);
+    });
   } else {
-    init();
+    registerServiceWorker().finally(init);
   }
 })();

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'conta-ciclobem-v4';
+const CACHE_NAME = 'conta-ciclobem-v5';
 const APP_SHELL = [
   '/conta-digital/',
   '/conta-digital/index.html',
@@ -17,6 +17,8 @@ const APP_SHELL = [
   '/conta-digital/assets/js/qrcode.js',
   '/conta-digital/assets/js/perfil.js',
   '/conta-digital/assets/js/resgatar.js',
+  '/conta-digital/assets/js/esqueci-senha.js',
+  '/conta-digital/assets/js/redefinir-senha.js',
   '/conta-digital/assets/js/menu.js',
   '/conta-digital/assets/js/bootstrap.js',
   '/conta-digital/icons/icon-192x192.png',
@@ -26,21 +28,35 @@ const APP_SHELL = [
 const NEVER_CACHE = [
   '/api/',
   '/auth/',
-  '/conta-digital/',
-  '/conta-digital/ativar',
-  '/conta-digital/login',
-  '/conta-digital/cadastro',
-  '/conta-digital/assets/js/env.js',
-  '/conta-digital/sw.js'
+  '/conta-digital/assets/js/env.js'
 ];
 
+function shouldCache(url) {
+  if (url.pathname.includes('/env.js')) return false;
+  if (url.pathname.includes('/sw.js')) return false;
+  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/auth/')) return false;
+  if (url.pathname.startsWith('/conta-digital/ativar') || url.pathname.startsWith('/conta-digital/login') || url.pathname.startsWith('/conta-digital/cadastro')) return false;
+  return url.pathname.startsWith('/conta-digital/');
+}
+
 self.addEventListener('install', (event) => {
-  if (['localhost', '127.0.0.1', '::1'].includes(self.location.hostname)) {
-    return self.skipWaiting();
-  }
+  console.log('[SW] Instalando nova versão:', CACHE_NAME);
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting())
+      .catch((err) => {
+        console.error('[SW] Falha ao pre-cache:', err);
+        self.skipWaiting();
+      })
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.action === 'skipWaiting') {
+    console.log('[SW] skipWaiting recebido');
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('activate', (event) => {
@@ -49,6 +65,7 @@ self.addEventListener('activate', (event) => {
       Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('[SW] Limpando cache antigo:', key);
             return caches.delete(key);
           }
         })
@@ -65,7 +82,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (url.pathname.startsWith('/api/') || url.pathname.includes('/conta-digital/ativar')) {
+  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/auth/')) {
     return;
   }
 
@@ -73,7 +90,22 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (['localhost', '127.0.0.1', '::1'].includes(self.location.hostname)) {
+  if (url.pathname === '/conta-digital/' || url.pathname === '/conta-digital/index.html') {
+    event.respondWith(
+      fetch(request, { cache: 'no-store' })
+        .then((response) => {
+          if (response && response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  if (!shouldCache(url)) {
     return;
   }
 
