@@ -298,7 +298,7 @@ body{
   <!-- Botões -->
   <div class="buttons-grid fade-in-up" style="animation-delay:0.3s">
     <a href="https://www.ciclobem.com.br/conta-digital/" target="_blank" rel="noopener" class="connect-btn">
-      👤 Conta Digital
+      👤 Conta CicloBem
     </a>
     <a href="https://www.ciclobem.com.br" target="_blank" rel="noopener" class="connect-btn">
       🌐 Conheça a CicloBem
@@ -357,36 +357,36 @@ body{
   
 </div>
 
-<!-- QR Code Generator -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+<!-- QR Code Generator (local, sem chamadas externas) -->
+<script src="qrcode-generator.js"></script>
 <script>
-// Generate QR Code
-QRCode.toCanvas(document.getElementById('qr-code'), 'https://www.ciclobem.com.br/connect', {
-  width: 200,
-  height: 200,
-  margin: 2,
-  color: {
-    dark: '#0a1628',
-    light: '#ffffff'
-  }
-}, function (error) {
-  if (error) console.error(error);
-});
+// Generate QR Code locally
+(function () {
+  var container = document.getElementById('qr-code');
+  if (!container || typeof QRCode === 'undefined') return;
 
-// Analytics e tracking
-document.querySelectorAll('.connect-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    // Simple tracking - could be enhanced with Google Analytics
-    const label = this.textContent.trim();
-    console.log('Connect button clicked:', label);
+  var wrapper = document.createElement('div');
+  wrapper.id = 'qr-code-local';
+  wrapper.style.width = '200px';
+  wrapper.style.height = '200px';
+  container.parentNode.replaceChild(wrapper, container);
+
+  new QRCode(wrapper, {
+    text: 'https://www.ciclobem.com.br/connect',
+    width: 200,
+    height: 200,
+    colorDark: '#0a1628',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
   });
-});
+})();
 
+// Analytics e tracking não registram dados pessoais no console.
 // Performance optimization
 if ('requestIdleCallback' in window) {
   requestIdleCallback(() => {
     // Preload critical resources
-    const preloadLink = document.createElement('link');
+    var preloadLink = document.createElement('link');
     preloadLink.rel = 'preload';
     preloadLink.href = 'ciclobem-logo.png';
     preloadLink.as = 'image';

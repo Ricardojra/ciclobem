@@ -3,12 +3,12 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.ciclobem.com.br/</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://www.ciclobem.com.br/ciclobem_logo_top_1.png</image:loc>
-      <image:title>Logo CicloBem — Infraestrutura Tecnologica para Economia Circular Rastreavel</image:title>
+      <image:title>Logo CicloBem — Infraestrutura Tecnológica para Economia Circular Rastreável</image:title>
     </image:image>
     <image:image>
       <image:loc>https://www.ciclobem.com.br/ciclobem_og.png</image:loc>
@@ -17,66 +17,30 @@
   </url>
   <url>
     <loc>https://www.ciclobem.com.br/conta-digital/</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://www.ciclobem.com.br/og-ciclobem.png</image:loc>
-      <image:title>Conta Digital CicloBem</image:title>
+      <image:title>Conta CicloBem</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://www.ciclobem.com.br/empresas.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ciclobem.com.br/prefeituras.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ciclobem.com.br/franquias.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <loc>https://www.ciclobem.com.br/parcerias-b2b/</loc>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ciclobem.com.br/#sobre</loc>
-    <lastmod>2026-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.ciclobem.com.br/#plataforma</loc>
-    <lastmod>2026-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.ciclobem.com.br/#solucoes</loc>
-    <lastmod>2026-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.ciclobem.com.br/#impacto</loc>
-    <lastmod>2026-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.ciclobem.com.br/#tecnologia</loc>
-    <lastmod>2026-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.ciclobem.com.br/#contato</loc>
-    <lastmod>2026-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
 </urlset>
