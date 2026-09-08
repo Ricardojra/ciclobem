@@ -19,6 +19,10 @@
       root.innerHTML = `
         <div class="conta-digital-auth">
           <div class="conta-digital-auth__logo">
+            <picture>
+              <source srcset="../../ciclobem-logo.webp" type="image/webp">
+              <img src="../../ciclobem-logo.png" alt="CicloBem" width="363" height="88" style="height:44px;width:auto">
+            </picture>
             <h1>Recuperar acesso</h1>
             <p>Informe seu e-mail cadastrado. Enviaremos instruções para redefinir sua senha.</p>
           </div>

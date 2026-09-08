@@ -6,7 +6,7 @@
 
   function getToken() {
     try {
-      return window.localStorage.getItem(PREFIX + 'token') || null;
+      return window.sessionStorage.getItem(PREFIX + 'token') || null;
     } catch (e) {
       return null;
     }
@@ -14,16 +14,15 @@
 
   function setToken(token) {
     try {
-      window.localStorage.setItem(PREFIX + 'token', token);
-      console.log('[STORAGE] token saved:', token ? 'ok' : 'missing');
+      window.sessionStorage.setItem(PREFIX + 'token', token);
     } catch (e) {
-      console.error('[STORAGE] failed to save token', e);
+      console.error('[STORAGE] failed to save token');
     }
   }
 
   function getUser() {
     try {
-      const raw = window.localStorage.getItem(PREFIX + 'user');
+      const raw = window.sessionStorage.getItem(PREFIX + 'user');
       return raw ? JSON.parse(raw) : null;
     } catch (e) {
       return null;
@@ -32,14 +31,16 @@
 
   function setUser(user) {
     try {
-      window.localStorage.setItem(PREFIX + 'user', JSON.stringify(user));
-      console.log('[STORAGE] user saved:', user ? user.email : 'missing');
+      const sessionUser = user ? { id: user.id, nome: user.nome, tipo: user.tipo, status: user.status } : null;
+      window.sessionStorage.setItem(PREFIX + 'user', JSON.stringify(sessionUser));
     } catch (e) {
-      console.error('[STORAGE] failed to save user', e);
+      console.error('[STORAGE] failed to save user');
     }
   }
 
   function clearAuth() {
+    window.sessionStorage.removeItem(PREFIX + 'token');
+    window.sessionStorage.removeItem(PREFIX + 'user');
     window.localStorage.removeItem(PREFIX + 'token');
     window.localStorage.removeItem(PREFIX + 'user');
   }

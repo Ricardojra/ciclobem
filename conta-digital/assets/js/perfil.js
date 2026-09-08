@@ -39,7 +39,11 @@
         if (response.ok) {
           successEl.textContent = 'Chave Pix salva com sucesso.';
           successEl.style.display = 'block';
-          if (this.currentUser) this.currentUser.chave_pix = chave;
+          if (this.currentUser) {
+            this.currentUser.chave_pix_mascarada = response.data.chave_pix_mascarada;
+            this.currentUser.chave_pix_configurada = response.data.chave_pix_configurada;
+          }
+          input.value = '';
         } else {
           errorEl.textContent = response.error?.message || 'Erro ao salvar chave Pix.';
           errorEl.style.display = 'block';
@@ -123,7 +127,7 @@
           bloqueado: 'Bloqueado'
         };
 
-        const cpf = user.cpf_mascarado || user.cpf || '-';
+        const cpf = user.cpf_mascarado || '-';
 
         const formatDate = (raw) => {
           if (!raw) return '-';
@@ -142,7 +146,7 @@
           </div>
           <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">
             <span style="color:var(--text-muted);">E-mail</span>
-            <span style="color:var(--text);font-weight:500;">${user.email || '-'}</span>
+            <span style="color:var(--text);font-weight:500;">${user.email_mascarado || '-'}</span>
           </div>
           <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">
             <span style="color:var(--text-muted);">CPF</span>
@@ -150,12 +154,15 @@
           </div>
           <div style="display:flex;justify-content:space-between;">
             <span style="color:var(--text-muted);">Telefone</span>
-            <span style="color:var(--text);font-weight:500;">${user.telefone || '-'}</span>
+            <span style="color:var(--text);font-weight:500;">${user.telefone_mascarado || '-'}</span>
           </div>
         `;
 
         const chaveInput = document.getElementById('perfil-chave-pix');
-        if (chaveInput) chaveInput.value = user.chave_pix || '';
+        if (chaveInput) {
+          chaveInput.value = '';
+          chaveInput.placeholder = user.chave_pix_mascarada || 'CPF, e-mail, celular ou chave aleatória';
+        }
 
         statusEl.innerHTML = `
           <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">

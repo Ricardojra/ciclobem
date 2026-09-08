@@ -4,8 +4,22 @@
   window.CicloBem = window.CicloBem || {};
   window.CicloBem.contaDigital = window.CicloBem.contaDigital || {};
   const CicloBem = window.CicloBem;
+  const formatMoney = (cents) => {
+    if (!Number.isSafeInteger(cents)) return 'Indisponível';
+    const absolute = Math.abs(cents);
+    return `R$ ${cents < 0 ? '-' : ''}${Math.floor(absolute / 100)},${String(absolute % 100).padStart(2, '0')}`;
+  };
+  const parseMoneyToCents = (value) => {
+    const match = String(value || '').trim().replace(',', '.').match(/^(\d+)(?:\.(\d{1,2}))?$/);
+    if (!match) return null;
+    const cents = Number(match[1]) * 100 + Number((match[2] || '').padEnd(2, '0'));
+    return Number.isSafeInteger(cents) ? cents : null;
+  };
 
   const ContaDigitalResgatar = {
+    availableBalanceCents: null,
+    balanceStatus: 'UNAVAILABLE',
+    pendingRequestKey: null,
     async init() {
       this.render();
       this.bindEvents();
@@ -20,8 +34,9 @@
         if (response.ok && response.data) {
           const user = response.data.cliente || response.data;
           const chaveInput = document.getElementById('resgatar-chave');
-          if (chaveInput && user.chave_pix) {
-            chaveInput.value = user.chave_pix;
+          if (chaveInput) {
+            chaveInput.value = user.chave_pix_mascarada || 'Nenhuma chave cadastrada';
+            chaveInput.dataset.configured = user.chave_pix_configurada ? 'true' : 'false';
           }
         }
       } catch (error) {
@@ -41,7 +56,7 @@
           </div>
 
           <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Saldo disponível</h2>
+            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Disponível para resgate</h2>
             <p id="resgatar-saldo" style="font-size:28px;font-weight:700;color:var(--lime);margin:0;">R$ --</p>
           </div>
 
@@ -55,8 +70,8 @@
               </div>
 
               <div class="cb-form-group">
-                <label class="cb-label" for="resgatar-chave">Chave Pix</label>
-                <input type="text" id="resgatar-chave" class="cb-input" placeholder="CPF, e-mail, celular ou chave aleatória" required>
+                <label class="cb-label" for="resgatar-chave">Chave Pix cadastrada</label>
+                <input type="text" id="resgatar-chave" class="cb-input" value="Carregando..." readonly>
               </div>
 
               <div class="cb-form-error" id="resgatar-error" style="color:var(--danger);margin:12px 0;font-size:14px;display:none;"></div>
@@ -71,16 +86,8 @@
             <p style="color:var(--text);font-size:14px;line-height:1.5;margin:0;">
               1. Informe o valor e sua chave Pix.<br>
               2. A CicloBem processa o pagamento.<br>
-              3. Você recebe na sua conta em até 48h.<br>
-              4. O status do resgate aparece abaixo assim que houver atualização.
+              3. Você recebe na sua conta em até 48h.
             </p>
-          </div>
-
-          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:16px;">
-            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 12px;">Meus resgates</h2>
-            <div id="resgatar-historico" style="display:flex;flex-direction:column;gap:12px;">
-              <p style="color:var(--text-muted);">Carregando...</p>
-            </div>
           </div>
         </div>
       `;
@@ -100,94 +107,17 @@
       form.addEventListener('submit', (e) => { e.preventDefault(); this.handleSubmit(); });
     },
 
-    async loadHistorico() {
-      const container = document.getElementById('resgatar-historico');
-      if (!container) return;
-
-      try {
-        const response = await CicloBem.api.get('/conta-digital/resgates');
-        if (response.ok && response.data) {
-          this.renderHistorico(response.data.resgates || []);
-        } else {
-          container.innerHTML = '<p style="color:var(--text-muted);">Nenhum resgate encontrado.</p>';
-        }
-      } catch (error) {
-        CicloBem.logger.error('Erro ao carregar historico de resgates', error);
-        container.innerHTML = '<p style="color:var(--text-muted);">Erro ao carregar histórico.</p>';
-      }
-    },
-
-    renderHistorico(resgates) {
-      const container = document.getElementById('resgatar-historico');
-      if (!container) return;
-
-      if (!resgates.length) {
-        container.innerHTML = '<p style="color:var(--text-muted);">Você ainda não fez nenhum resgate.</p>';
-        return;
-      }
-
-      const statusClass = {
-        solicitado: 'pendente',
-        aprovado_admin: 'ativo',
-        processando_pix: 'ativo',
-        concluido: 'ativo',
-        rejeitado_admin: 'inativo',
-        falhou: 'inativo'
-      };
-
-      const statusLabel = {
-        solicitado: 'Pendente',
-        aprovado_admin: 'Aprovado',
-        processando_pix: 'Processando',
-        concluido: 'Pago',
-        rejeitado_admin: 'Rejeitado',
-        falhou: 'Falhou'
-      };
-
-      const statusColor = {
-        pendente: '#f5a623',
-        ativo: '#2dd67b',
-        inativo: '#e74c3c'
-      };
-
-      container.innerHTML = resgates.map(r => {
-        const statusKey = statusClass[r.status] || 'pendente';
-        const label = statusLabel[r.status] || r.status;
-        return `
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg-elevated,#111e33);border:1px solid var(--border);border-radius:var(--radius);">
-            <div>
-              <p style="margin:0;font-weight:600;">R$ ${(Number(r.valor) || 0).toFixed(2).replace('.', ',')}</p>
-              <p style="margin:4px 0 0;font-size:12px;color:var(--text-muted);">${r.chave_pix}</p>
-              <p style="margin:0;font-size:12px;color:var(--text-muted);">${new Date(r.created_at).toLocaleString('pt-BR')}</p>
-            </div>
-            <span style="padding:6px 10px;border-radius:12px;font-size:12px;font-weight:600;background:${statusColor[statusKey]}20;color:${statusColor[statusKey]};">
-              ${label}
-            </span>
-          </div>
-        `;
-      }).join('');
-    },
-
     async loadData() {
-      await this.loadHistorico();
       const saldoEl = document.getElementById('resgatar-saldo');
       try {
         const saldoRes = await CicloBem.api.get('/conta-digital/saldo');
-        if (saldoRes.ok && saldoRes.data) {
-          const saldoRaw = saldoRes.data.saldo;
-          let saldoValor = 0;
-          if (typeof saldoRaw === 'number') {
-            saldoValor = saldoRaw / 100;
-          } else if (saldoRaw && typeof saldoRaw === 'object') {
-            saldoValor = (
-              parseFloat(saldoRaw.gerado || 0) +
-              parseFloat(saldoRaw.em_processamento || 0) +
-              parseFloat(saldoRaw.pago || 0)
-            );
-          } else {
-            saldoValor = parseFloat(saldoRaw) || 0;
-          }
-          saldoEl.textContent = `R$ ${saldoValor.toFixed(2).replace('.', ',')}`;
+        if (saldoRes.ok && saldoRes.data && saldoRes.data.saldo) {
+          const saldo = saldoRes.data.saldo;
+          this.availableBalanceCents = saldo.withdrawable_balance_cents;
+          this.balanceStatus = saldo.balance_status;
+          saldoEl.textContent = formatMoney(this.availableBalanceCents);
+          const submitBtn = document.getElementById('resgatar-submit');
+          if (submitBtn) submitBtn.disabled = this.balanceStatus !== 'AVAILABLE' || this.availableBalanceCents <= 0;
         }
       } catch (error) {
         CicloBem.logger.error('Erro ao carregar saldo', error);
@@ -198,40 +128,56 @@
       const submitBtn = document.getElementById('resgatar-submit');
       const errorDiv = document.getElementById('resgatar-error');
       const successDiv = document.getElementById('resgatar-success');
-      const valor = document.getElementById('resgatar-valor').value;
-      const chavePix = document.getElementById('resgatar-chave').value.trim();
+      const valorCentavos = parseMoneyToCents(document.getElementById('resgatar-valor').value);
+      const chavePixMascarada = document.getElementById('resgatar-chave');
 
       errorDiv.style.display = 'none';
       successDiv.style.display = 'none';
 
-      if (!valor || parseFloat(valor) <= 0) {
+      if (!valorCentavos || valorCentavos <= 0) {
         errorDiv.textContent = 'Informe um valor maior que zero.';
         errorDiv.style.display = 'block';
         return;
       }
 
-      if (!chavePix) {
-        errorDiv.textContent = 'Informe uma chave Pix.';
+      if (this.balanceStatus !== 'AVAILABLE' || !Number.isSafeInteger(this.availableBalanceCents)) {
+        errorDiv.textContent = 'Saldo temporariamente indisponível para reconciliação.';
         errorDiv.style.display = 'block';
         return;
       }
 
-      const confirmar = confirm(`Confirma o resgate de R$ ${parseFloat(valor).toFixed(2).replace('.', ',')} para a chave Pix:\n\n${chavePix}\n\nVerifique se a chave está correta. Não é possível desfazer essa operação.`);
+      if (valorCentavos > this.availableBalanceCents) {
+        errorDiv.textContent = 'Saldo insuficiente para este resgate.';
+        errorDiv.style.display = 'block';
+        return;
+      }
+
+      if (!chavePixMascarada || chavePixMascarada.dataset.configured !== 'true') {
+        errorDiv.textContent = 'Cadastre uma chave Pix no perfil antes de solicitar o resgate.';
+        errorDiv.style.display = 'block';
+        return;
+      }
+
+      const projectedBalance = this.availableBalanceCents - valorCentavos;
+      const confirmar = confirm(`Valor: ${formatMoney(valorCentavos)}\nChave Pix: ${chavePixMascarada.value}\nDisponível antes: ${formatMoney(this.availableBalanceCents)}\nValor solicitado: ${formatMoney(valorCentavos)}\nDisponível projetado após reserva: ${formatMoney(projectedBalance)}\n\nConfirmar solicitação de resgate?`);
       if (!confirmar) return;
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Solicitando...';
+      this.pendingRequestKey = this.pendingRequestKey || crypto.randomUUID();
 
       try {
         const response = await CicloBem.api.post('/conta-digital/resgatar-pix', {
-          valor: parseFloat(valor),
-          chave_pix: chavePix
+          valor: `${Math.floor(valorCentavos / 100)}.${String(valorCentavos % 100).padStart(2, '0')}`,
+          idempotency_key: this.pendingRequestKey
         });
 
         if (response.ok) {
-          successDiv.textContent = `Resgate solicitado com sucesso. Código: ${response.data.payment_request.idempotency_key}`;
+          successDiv.textContent = 'Resgate solicitado. Acompanhe o status nesta tela.';
           successDiv.style.display = 'block';
+          this.pendingRequestKey = null;
           document.getElementById('resgatar-form').reset();
+          await this.carregarChavePix();
           await this.loadData();
         } else {
           errorDiv.textContent = response.error?.message || 'Erro ao solicitar resgate.';
@@ -242,7 +188,7 @@
         errorDiv.style.display = 'block';
         CicloBem.logger.error('Resgate error', error);
       } finally {
-        submitBtn.disabled = false;
+        submitBtn.disabled = this.balanceStatus !== 'AVAILABLE' || this.availableBalanceCents <= 0;
         submitBtn.textContent = 'Solicitar resgate';
       }
     }

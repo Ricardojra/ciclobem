@@ -10,8 +10,8 @@
     if (response.ok) {
       CicloBem.storage.setToken(response.data.token);
       CicloBem.storage.setUser(response.data.user);
-      console.log('[AUTH] token set:', response.data.token ? 'ok' : 'missing');
-      CicloBem.logger.info('Login successful', { email });
+      // Dados de autenticação não são registrados no console.
+      CicloBem.logger.info('Login successful');
       return response.data;
     } else {
       CicloBem.logger.warn('Login failed', { code: response.error?.code });

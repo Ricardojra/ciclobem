@@ -1,4 +1,4 @@
-const CACHE_NAME = 'conta-ciclobem-7a5209e07a92';
+const CACHE_NAME = 'conta-ciclobem-db6cf40b488d';
 const APP_SHELL = [
     '/conta-digital/',
     '/conta-digital/index.html',
@@ -16,12 +16,15 @@ const APP_SHELL = [
     '/conta-digital/assets/js/login.js',
     '/conta-digital/assets/js/menu.js',
     '/conta-digital/assets/js/perfil.js',
+    '/conta-digital/assets/js/qrcode-generator.js',
     '/conta-digital/assets/js/qrcode.js',
     '/conta-digital/assets/js/redefinir-senha.js',
     '/conta-digital/assets/js/resgatar.js',
     '/conta-digital/assets/js/router.js',
     '/conta-digital/assets/js/storage.js',
+    '/conta-digital/icons/icon-192.png',
     '/conta-digital/icons/icon-192x192.png',
+    '/conta-digital/icons/icon-512.png',
     '/conta-digital/icons/icon-512x512.png'
 ];
 

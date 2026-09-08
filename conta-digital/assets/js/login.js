@@ -64,16 +64,34 @@
       const form = document.getElementById('login-form');
       if (form) form.addEventListener('submit', (e) => { e.preventDefault(); this.handleSubmit(); });
 
-      const toggleBtn = document.getElementById('login-toggle-senha');
-      const senhaInput = document.getElementById('login-senha');
-      if (toggleBtn && senhaInput) {
-        toggleBtn.addEventListener('click', () => {
-          const isPassword = senhaInput.type === 'password';
-          senhaInput.type = isPassword ? 'text' : 'password';
-          toggleBtn.setAttribute('aria-label', isPassword ? 'Ocultar senha' : 'Mostrar senha');
-          toggleBtn.title = isPassword ? 'Ocultar senha' : 'Mostrar senha';
-        });
-      }
+      this.bindPasswordToggle('login-toggle-senha', 'login-senha', 'Mostrar senha', 'Ocultar senha');
+    },
+
+    bindPasswordToggle(buttonId, inputId, showLabel, hideLabel) {
+      const button = document.getElementById(buttonId);
+      const input = document.getElementById(inputId);
+      if (!button || !input) return;
+
+      const eyeOpen = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+      const eyeOff = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94l9.88 9.88zM9.9 9.9A3 3 0 0 0 12 15a3 3 0 0 0 2.9-2.9l-5-5zM22 12s-4-8-11-8a18.45 18.45 0 0 0-5.06 5.94L3 3l18 18"/></svg>';
+
+      button.type = 'button';
+      button.setAttribute('aria-pressed', 'false');
+      button.setAttribute('aria-label', showLabel);
+      button.title = showLabel;
+      button.innerHTML = eyeOpen;
+
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const wasFocused = document.activeElement === input;
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        button.setAttribute('aria-pressed', String(show));
+        button.setAttribute('aria-label', show ? hideLabel : showLabel);
+        button.title = show ? hideLabel : showLabel;
+        button.innerHTML = show ? eyeOff : eyeOpen;
+        if (wasFocused) input.focus();
+      });
     },
 
     async handleSubmit() {
@@ -89,8 +107,8 @@
       try {
         if (!email || !senha) throw new Error('Preencha e-mail e senha.');
         CicloBem.auth.clearAuth();
-        const result = await CicloBem.auth.login(email, senha);
-        console.log('[LOGIN] token received:', result?.token ? 'ok' : 'missing');
+        await CicloBem.auth.login(email, senha);
+        // Dados de autenticação não são registrados no console.
         CicloBem.router.navigate('dashboard');
       } catch (error) {
         errorDiv.textContent = error.message || 'Credenciais inválidas.';

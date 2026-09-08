@@ -4,6 +4,14 @@
   window.CicloBem = window.CicloBem || {};
   window.CicloBem.contaDigital = window.CicloBem.contaDigital || {};
   const CicloBem = window.CicloBem;
+  const formatMoney = (cents) => {
+    if (!Number.isSafeInteger(cents)) return 'Indisponível';
+    const absolute = Math.abs(cents);
+    return `R$ ${cents < 0 ? '-' : ''}${Math.floor(absolute / 100)},${String(absolute % 100).padStart(2, '0')}`;
+  };
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  }[char]));
 
   const ContaDigitalDashboard = {
     init() {
@@ -23,9 +31,23 @@
             <button id="dashboard-logout" class="cb-button cb-button--secondary" style="padding:8px 14px;font-size:13px;">Sair</button>
           </div>
 
-          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Saldo disponível</h2>
-            <p id="dashboard-saldo" style="font-size:32px;font-weight:700;color:var(--lime);margin:0;">R$ --</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;">
+            <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+              <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Ganhos com reciclagem</h2>
+              <p id="dashboard-ganhos" style="font-size:24px;font-weight:700;margin:0;">R$ --</p>
+            </div>
+            <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+              <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Disponível para resgate</h2>
+              <p id="dashboard-saldo" style="font-size:24px;font-weight:700;color:var(--lime);margin:0;">R$ --</p>
+            </div>
+            <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+              <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Em processamento</h2>
+              <p id="dashboard-pendente" style="font-size:24px;font-weight:700;margin:0;">R$ --</p>
+            </div>
+            <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+              <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Já resgatado / pago</h2>
+              <p id="dashboard-pago" style="font-size:24px;font-weight:700;margin:0;">R$ --</p>
+            </div>
           </div>
 
           <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
@@ -50,7 +72,10 @@
     },
 
     async loadData() {
+      const ganhosEl = document.getElementById('dashboard-ganhos');
       const saldoEl = document.getElementById('dashboard-saldo');
+      const pendenteEl = document.getElementById('dashboard-pendente');
+      const pagoEl = document.getElementById('dashboard-pago');
       const coletasEl = document.getElementById('dashboard-coletas');
       const historicoEl = document.getElementById('dashboard-historico');
 
@@ -61,21 +86,12 @@
           CicloBem.api.get('/conta-digital/historico')
         ]);
 
-        if (saldoRes.ok && saldoRes.data) {
-          const saldoRaw = saldoRes.data.saldo;
-          let saldoValor = 0;
-          if (typeof saldoRaw === 'number') {
-            saldoValor = saldoRaw / 100;
-          } else if (saldoRaw && typeof saldoRaw === 'object') {
-            saldoValor = (
-              parseFloat(saldoRaw.gerado || 0) +
-              parseFloat(saldoRaw.em_processamento || 0) +
-              parseFloat(saldoRaw.pago || 0)
-            );
-          } else {
-            saldoValor = parseFloat(saldoRaw) || 0;
-          }
-          saldoEl.textContent = `R$ ${saldoValor.toFixed(2).replace('.', ',')}`;
+        if (saldoRes.ok && saldoRes.data && saldoRes.data.saldo) {
+          const saldo = saldoRes.data.saldo;
+          ganhosEl.textContent = formatMoney(saldo.total_recycling_earnings_cents);
+          saldoEl.textContent = formatMoney(saldo.withdrawable_balance_cents);
+          pendenteEl.textContent = formatMoney(saldo.pending_redemptions_cents);
+          pagoEl.textContent = formatMoney(saldo.paid_redemptions_cents);
         }
 
         if (resumoRes.ok && resumoRes.data) {
@@ -93,12 +109,18 @@
             historicoEl.textContent = 'Nenhuma coleta registrada ainda.';
           } else {
             historicoEl.innerHTML = coletas.map(c => {
-              const dateObj = c.created_at ? new Date(c.created_at) : null;
-              const data = (dateObj && !isNaN(dateObj.getTime()))
-                ? dateObj.toLocaleDateString('pt-BR')
-                : 'Data não disponível';
-              const valor = (parseFloat(c.valor_total) || 0).toFixed(2).replace('.', ',');
-              return `<div style="padding:10px 0;border-bottom:1px solid var(--border);">${data} — ${c.material_nome || 'Material'} — R$ ${valor}</div>`;
+              const dateObj = c.date_time ? new Date(c.date_time) : null;
+              const data = dateObj && !isNaN(dateObj.getTime())
+                ? dateObj.toLocaleString('pt-BR')
+                : 'Registro histórico sem data identificada';
+              const materiais = (c.itens || []).map(item => item.material).filter(Boolean);
+              const material = materiais.length
+                ? materiais.join(', ')
+                : 'Registro histórico sem material identificado';
+              const quantidade = c.quantity == null ? 'Quantidade não informada' : `${c.quantity} ${c.unit || ''}`.trim();
+              const origem = c.source_name || c.source_type || 'Origem histórica não identificada';
+              const status = c.status_pagamento || c.status_operacional || 'Status não informado';
+              return `<div style="padding:10px 0;border-bottom:1px solid var(--border);"><strong>${escapeHtml(material)}</strong><br><span>${escapeHtml(data)} · ${escapeHtml(quantidade)} · ${escapeHtml(origem)} · ${escapeHtml(status)}</span><br><span>${formatMoney(c.credited_value_cents)}</span></div>`;
             }).join('');
           }
         }

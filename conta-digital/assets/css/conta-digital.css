@@ -173,6 +173,16 @@ html, body {
   color: rgba(255, 255, 255, 0.3);
 }
 
+.cb-input:-webkit-autofill,
+.cb-input:-webkit-autofill:hover,
+.cb-input:-webkit-autofill:focus,
+.cb-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-elevated) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  caret-color: var(--text) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .cb-input--error {
   border-color: var(--danger);
 }
@@ -193,18 +203,36 @@ html, body {
   right: 8px;
   top: 50%;
   transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--lime);
   cursor: pointer;
-  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.1s;
 }
 
-.cb-input-toggle:hover {
-  color: var(--lime);
+.cb-input-toggle:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.cb-input-toggle:hover,
+.cb-input-toggle:focus-visible {
+  color: #ffffff;
+  background: var(--bg);
+  border-color: var(--lime);
+}
+
+.cb-input-toggle:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
 }
 
 #conta-digital-bottom-menu a svg {

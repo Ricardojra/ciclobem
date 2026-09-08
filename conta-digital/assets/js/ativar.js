@@ -20,6 +20,10 @@
       root.innerHTML = `
         <div class="conta-digital-auth">
           <div class="conta-digital-auth__logo">
+            <picture>
+              <source srcset="../../ciclobem-logo.webp" type="image/webp">
+              <img src="../../ciclobem-logo.png" alt="CicloBem" width="363" height="88" style="height:44px;width:auto">
+            </picture>
             <h1>Criar senha</h1>
             <p>Complete seu cadastro e acesse sua Conta CicloBem.</p>
           </div>
@@ -32,13 +36,23 @@
 
             <div class="cb-form-group">
               <label class="cb-label" for="ativar-senha">Senha</label>
-              <input type="password" id="ativar-senha" class="cb-input" placeholder="Mínimo 8 caracteres" required minlength="8" autocomplete="new-password">
+              <div class="cb-input-group">
+                <input type="password" id="ativar-senha" class="cb-input" placeholder="Mínimo 8 caracteres" required minlength="8" autocomplete="new-password">
+                <button type="button" id="ativar-toggle-senha" class="cb-input-toggle" aria-label="Mostrar senha" title="Mostrar senha">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
               <span class="cb-hint">Mínimo 8 caracteres, com letras e números.</span>
             </div>
 
             <div class="cb-form-group">
               <label class="cb-label" for="ativar-confirmacao">Confirmar senha</label>
-              <input type="password" id="ativar-confirmacao" class="cb-input" placeholder="Digite novamente" required minlength="8" autocomplete="new-password">
+              <div class="cb-input-group">
+                <input type="password" id="ativar-confirmacao" class="cb-input" placeholder="Digite novamente" required minlength="8" autocomplete="new-password">
+                <button type="button" id="ativar-toggle-confirmacao" class="cb-input-toggle" aria-label="Mostrar senha" title="Mostrar senha">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
             </div>
 
             <div class="cb-form-group">
@@ -72,6 +86,36 @@
           e.target.value = v.slice(0, 14);
         });
       }
+
+      const eyeOpen = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+      const eyeOff = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94l9.88 9.88zM9.9 9.9A3 3 0 0 0 12 15a3 3 0 0 0 2.9-2.9l-5-5zM22 12s-4-8-11-8a18.45 18.45 0 0 0-5.06 5.94L3 3l18 18"/></svg>';
+
+      const bindPasswordToggle = (buttonId, inputId, showLabel, hideLabel) => {
+        const button = document.getElementById(buttonId);
+        const input = document.getElementById(inputId);
+        if (!button || !input) return;
+
+        button.type = 'button';
+        button.setAttribute('aria-pressed', 'false');
+        button.setAttribute('aria-label', showLabel);
+        button.title = showLabel;
+        button.innerHTML = eyeOpen;
+
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          const wasFocused = document.activeElement === input;
+          const show = input.type === 'password';
+          input.type = show ? 'text' : 'password';
+          button.setAttribute('aria-pressed', String(show));
+          button.setAttribute('aria-label', show ? hideLabel : showLabel);
+          button.title = show ? hideLabel : showLabel;
+          button.innerHTML = show ? eyeOff : eyeOpen;
+          if (wasFocused) input.focus();
+        });
+      };
+
+      bindPasswordToggle('ativar-toggle-senha', 'ativar-senha', 'Mostrar senha', 'Ocultar senha');
+      bindPasswordToggle('ativar-toggle-confirmacao', 'ativar-confirmacao', 'Mostrar confirmação de senha', 'Ocultar confirmação de senha');
 
       const form = document.getElementById('ativar-form');
       if (!form) return;

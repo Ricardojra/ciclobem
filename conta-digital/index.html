@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Conta Digital CicloBem | QR Code, histórico e saldo operacional</title>
-  <meta name="description" content="A Conta Digital CicloBem é a interface do cidadão para acompanhar coletas, acessar QR Code, consultar histórico e visualizar saldo operacional na economia circular rastreável.">
+  <title>Conta CicloBem — Carteira de Créditos Operacionais</title>
+  <meta name="description" content="A Conta CicloBem é a interface do cidadão para acompanhar coletas, acessar QR Code, consultar histórico e visualizar saldo de créditos operacionais. Não é conta bancária ou serviço financeiro independente.">
   <meta name="keywords" content="conta digital, cidadão, reciclagem, economia circular, QR Code, saldo operacional, coletas, CicloBem">
   <meta name="author" content="CicloBem">
   <meta name="robots" content="index, follow">
@@ -13,8 +13,8 @@
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.ciclobem.com.br/conta-digital/">
-  <meta property="og:title" content="Conta Digital CicloBem | QR Code, histórico e saldo operacional">
-  <meta property="og:description" content="A interface do cidadão para acompanhar coletas, acessar QR Code, consultar histórico e visualizar saldo operacional na economia circular rastreável.">
+  <meta property="og:title" content="Conta CicloBem — Carteira de Créditos Operacionais">
+  <meta property="og:description" content="Interface do cidadão para acompanhar coletas, QR Code, histórico e saldo de créditos operacionais. Não é conta bancária.">
   <meta property="og:image" content="https://www.ciclobem.com.br/og-ciclobem.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,15 +23,15 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://www.ciclobem.com.br/conta-digital/">
-  <meta name="twitter:title" content="Conta Digital CicloBem | QR Code, histórico e saldo operacional">
-  <meta name="twitter:description" content="Acompanhe coletas, QR Code, histórico e saldo operacional na economia circular rastreável.">
+  <meta name="twitter:title" content="Conta CicloBem — Carteira de Créditos Operacionais">
+  <meta name="twitter:description" content="Acompanhe coletas, QR Code, histórico e saldo de créditos operacionais.">
   <meta name="twitter:image" content="https://www.ciclobem.com.br/og-ciclobem.png">
 
   <meta name="theme-color" content="#0a1628">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="manifest.json?v=93496d211e5a">
+  <link rel="manifest" href="manifest.json?v=635aa8b31983">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1628'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='18' fill='%23aaff00'%3ECB%3C/text%3E%3C/svg%3E">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/conta-digital.css?v=31d03ab17ce6">
+  <link rel="stylesheet" href="assets/css/conta-digital.css?v=30ade7310e8f">
 </head>
 <body>
   <div id="conta-digital-app" class="conta-digital-app">
@@ -51,23 +51,24 @@
     <div id="conta-digital-toast" class="conta-digital-toast" style="display: none;"></div>
   </div>
 
-  <script src="assets/js/env.js?v=a59736fbd4d2"></script>
-  <script src="assets/js/storage.js?v=9aa1976be20c"></script>
-  <script src="assets/js/logger.js?v=894764742c39"></script>
-  <script src="assets/js/apiClient.js?v=489b16bf40e4"></script>
-  <script src="assets/js/auth.js?v=b86463a3ef7a"></script>
-  <script src="assets/js/router.js?v=9edc2f8a4f19"></script>
-  <script src="assets/js/ativar.js?v=f2280c20250b"></script>
-  <script src="assets/js/login.js?v=9fb4fba2b551"></script>
-  <script src="assets/js/cadastro.js?v=019ef3a671b3"></script>
-  <script src="assets/js/dashboard.js?v=fc973744e1de"></script>
-  <script src="assets/js/qrcode.js?v=7364ab6495fc"></script>
-  <script src="assets/js/perfil.js?v=19125998c63d"></script>
-  <script src="assets/js/resgatar.js?v=e6e04b1455d3"></script>
-  <script src="assets/js/esqueci-senha.js?v=5e59fa808cc8"></script>
-  <script src="assets/js/redefinir-senha.js?v=988be121efa8"></script>
-  <script src="assets/js/menu.js?v=7e07547278ca"></script>
-  <script src="assets/js/bootstrap.js?v=2783f79cfc6b"></script>
+  <script src="assets/js/env.js?v=0fdde93-env"></script>
+  <script src="assets/js/storage.js?v=0fdde93-storage"></script>
+  <script src="assets/js/logger.js?v=0fdde93-logger"></script>
+  <script src="assets/js/apiClient.js?v=0fdde93-apiClient"></script>
+  <script src="assets/js/auth.js?v=0fdde93-auth"></script>
+  <script src="assets/js/router.js?v=0fdde93-router"></script>
+  <script src="assets/js/ativar.js?v=0fdde93-ativar"></script>
+  <script src="assets/js/login.js?v=0fdde93-login"></script>
+  <script src="assets/js/cadastro.js?v=0fdde93-cadastro"></script>
+  <script src="assets/js/dashboard.js?v=0fdde93-dashboard"></script>
+  <script src="assets/js/qrcode.js?v=0fdde93-qrcode"></script>
+  <script src="assets/js/perfil.js?v=0fdde93-perfil"></script>
+  <script src="assets/js/qrcode-generator.js?v=0fdde93-qrgen"></script>
+  <script src="assets/js/resgatar.js?v=0fdde93-resgatar"></script>
+  <script src="assets/js/esqueci-senha.js?v=0fdde93-esqueci"></script>
+  <script src="assets/js/redefinir-senha.js?v=0fdde93-redefinir"></script>
+  <script src="assets/js/menu.js?v=0fdde93-menu"></script>
+  <script src="assets/js/bootstrap.js?v=0fdde93-bootstrap"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});

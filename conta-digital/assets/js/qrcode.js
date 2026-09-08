@@ -24,7 +24,7 @@
           </div>
 
           <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;text-align:center;">
-            <p style="color:var(--text-muted);margin:0 0 16px;">Apresente este QR Code na máquina CicloBem para identificação rápida.</p>
+            <p style="color:var(--text-muted);margin:0 0 16px;">Apresente este QR Code no ponto de coleta CicloBem para identificação rápida.</p>
             <div id="qrcode-container" style="display:flex;justify-content:center;align-items:center;min-height:240px;">
               <p style="color:var(--text-muted);">Carregando...</p>
             </div>
@@ -34,9 +34,9 @@
           <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
             <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Como usar</h2>
             <p style="color:var(--text);font-size:14px;line-height:1.5;margin:0;">
-              1. Aproxime o celular do leitor da CicloBem.<br>
-              2. A máquina reconhece automaticamente o seu cadastro.<br>
-              3. Faça a coleta e acompanhe o saldo.
+              1. Aproxime o celular do leitor do ponto de coleta.<br>
+              2. O QR Code é lido e sua coleta é vinculada à conta.<br>
+              3. Créditos e resgates são administrados pela Plataforma CicloBem.
             </p>
           </div>
         </div>
@@ -63,21 +63,32 @@
           return;
         }
 
-        const { qr, cliente } = response.data;
-        const qrValue = qr.payload || qr.token;
+        const { qr } = response.data;
+        const qrValue = qr && (qr.payload || qr.token);
 
-        container.innerHTML = `
-          <div style="background:#fff;border-radius:12px;padding:16px;display:inline-block;">
-            <img
-              src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrValue)}"
-              alt="QR Code"
-              style="width:220px;height:220px;display:block;"
-              onerror="this.style.display='none'; this.parentElement.innerHTML += '<p style=\\'color:#000;\\'>Código: ${qrValue}</p>'"
-            />
-          </div>
-        `;
+        if (!qrValue) {
+          container.innerHTML = '<p class="cb-error">Identificador não disponível.</p>';
+          return;
+        }
 
-        tokenEl.textContent = `Código: ${qr.token}`;
+        container.innerHTML = '<div style="background:#fff;border-radius:12px;padding:16px;display:inline-block;" id="qrcode-canvas"></div>';
+
+        if (typeof QRCode === 'undefined') {
+          container.innerHTML = '<p class="cb-error">Gerador de QR Code não carregado.</p>';
+          return;
+        }
+
+        new QRCode(document.getElementById('qrcode-canvas'), {
+          text: qrValue,
+          width: 220,
+          height: 220,
+          colorDark: '#0a1628',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // O valor bruto do identificador não é exibido abaixo do QR Code.
+        tokenEl.textContent = '';
       } catch (error) {
         container.innerHTML = '<p class="cb-error">Erro ao carregar QR Code.</p>';
         CicloBem.logger.error('QR Code load error', error);

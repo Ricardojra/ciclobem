@@ -31,7 +31,7 @@
         if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
           console.log('[PWA] Nova versão disponível');
 
-          if (window.confirm('Uma nova versão da Conta Digital CicloBem está disponível. Deseja atualizar agora?')) {
+          if (window.confirm('Uma nova versão da Conta CicloBem está disponível. Deseja atualizar agora?')) {
             newWorker.postMessage({ action: 'skipWaiting' });
           }
         }
@@ -73,7 +73,7 @@
       CicloBem.toast = { show: showToast };
       CicloBem.router.init();
       hideLoading();
-      CicloBem.logger.info('Conta Digital inicializada', { version: CicloBem.env.VERSION });
+      CicloBem.logger.info('Conta CicloBem inicializada', { version: CicloBem.env.VERSION });
     } catch (error) {
       const loading = document.getElementById('conta-digital-loading');
       if (loading) {

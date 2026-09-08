@@ -19,9 +19,7 @@
     const token = window.CicloBem.storage.getToken();
     if (token) {
       options.headers['Authorization'] = `Bearer ${token}`;
-      console.log('[API] using token:', token.substring(0, 30) + '...');
-    } else {
-      console.log('[API] no token');
+      // Tokens e dados de autenticação nunca são registrados no console.
     }
 
     if (body !== undefined) {
@@ -59,6 +57,11 @@
       if (!response.ok) {
         const error = (payload && payload.error) || { code: 'REQUEST_FAILED', message: `HTTP ${response.status}` };
         return { ok: false, data: null, error };
+      }
+
+      // Sinaliza quando a API pública está identificada como ambiente de desenvolvimento.
+      if (payload && payload.data && payload.data.environment === 'development') {
+        CicloBem.logger.warn('API pública em ambiente de desenvolvimento — bloqueio de produção');
       }
 
       // Normaliza envelope { success, data, error, meta } do backend
