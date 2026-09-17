@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Conta CicloBem — Carteira de Créditos Operacionais</title>
   <meta name="description" content="A Conta CicloBem é a interface do cidadão para acompanhar coletas, acessar QR Code, consultar histórico e visualizar saldo de créditos operacionais. Não é conta bancária ou serviço financeiro independente.">
   <meta name="keywords" content="conta digital, cidadão, reciclagem, economia circular, QR Code, saldo operacional, coletas, CicloBem">
@@ -27,23 +27,27 @@
   <meta name="twitter:description" content="Acompanhe coletas, QR Code, histórico e saldo de créditos operacionais.">
   <meta name="twitter:image" content="https://www.ciclobem.com.br/og-ciclobem.png">
 
-  <meta name="theme-color" content="#0a1628">
+  <meta name="theme-color" content="#00B277">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="manifest.json?v=635aa8b31983">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1628'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='18' fill='%23aaff00'%3ECB%3C/text%3E%3C/svg%3E">
+  <meta name="apple-mobile-web-app-title" content="Conta CicloBem">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2300B277'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='18' fill='%23ffffff'%3ECB%3C/text%3E%3C/svg%3E">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/conta-digital.css?v=30ade7310e8f">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/conta-digital.css">
 </head>
 <body>
   <div id="conta-digital-app" class="conta-digital-app">
     <div class="conta-digital-loading" id="conta-digital-loading">
+      <img class="conta-digital-loading__brand" src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="198" height="48">
       <div class="conta-digital-loading__spinner"></div>
       <p>Carregando Conta CicloBem...</p>
     </div>
@@ -51,24 +55,30 @@
     <div id="conta-digital-toast" class="conta-digital-toast" style="display: none;"></div>
   </div>
 
-  <script src="assets/js/env.js?v=0fdde93-env"></script>
-  <script src="assets/js/storage.js?v=0fdde93-storage"></script>
-  <script src="assets/js/logger.js?v=0fdde93-logger"></script>
-  <script src="assets/js/apiClient.js?v=0fdde93-apiClient"></script>
-  <script src="assets/js/auth.js?v=0fdde93-auth"></script>
-  <script src="assets/js/router.js?v=0fdde93-router"></script>
-  <script src="assets/js/ativar.js?v=0fdde93-ativar"></script>
-  <script src="assets/js/login.js?v=0fdde93-login"></script>
-  <script src="assets/js/cadastro.js?v=0fdde93-cadastro"></script>
-  <script src="assets/js/dashboard.js?v=0fdde93-dashboard"></script>
-  <script src="assets/js/qrcode.js?v=0fdde93-qrcode"></script>
-  <script src="assets/js/perfil.js?v=0fdde93-perfil"></script>
-  <script src="assets/js/qrcode-generator.js?v=0fdde93-qrgen"></script>
-  <script src="assets/js/resgatar.js?v=0fdde93-resgatar"></script>
-  <script src="assets/js/esqueci-senha.js?v=0fdde93-esqueci"></script>
-  <script src="assets/js/redefinir-senha.js?v=0fdde93-redefinir"></script>
-  <script src="assets/js/menu.js?v=0fdde93-menu"></script>
-  <script src="assets/js/bootstrap.js?v=0fdde93-bootstrap"></script>
+  <script src="assets/js/env.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/logger.js"></script>
+  <script src="assets/js/money.js"></script>
+  <script src="assets/js/apiClient.js"></script>
+  <script src="assets/js/webauthn.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/router.js"></script>
+  <script src="assets/js/ajuda.js"></script>
+  <script src="assets/js/ativar.js"></script>
+  <script src="assets/js/login.js"></script>
+  <script src="assets/js/cadastro.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/atividades.js"></script>
+  <script src="assets/js/impacto.js"></script>
+  <script src="assets/js/qrcode.js"></script>
+  <script src="assets/js/seguranca.js"></script>
+  <script src="assets/js/perfil.js"></script>
+  <script src="assets/js/qrcode-generator.js"></script>
+  <script src="assets/js/resgatar.js"></script>
+  <script src="assets/js/esqueci-senha.js"></script>
+  <script src="assets/js/redefinir-senha.js"></script>
+  <script src="assets/js/menu.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});

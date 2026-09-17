@@ -1,18 +1,10 @@
-:root {
-  --bg: #0a1628;
-  --bg-elevated: #111e33;
-  --bg-card: rgba(255, 255, 255, 0.04);
-  --text: #ffffff;
-  --text-muted: rgba(255, 255, 255, 0.6);
-  --lime: #aaff00;
-  --lime-dark: #8ccc00;
-  --danger: #ff5a5a;
-  --success: #2dd67b;
-  --border: rgba(170, 255, 0, 0.12);
-  --radius: 12px;
-  --spacing: 16px;
-  --font: 'Inter', sans-serif;
-}
+/**
+ * CICLOBEM-CONTA-DIGITAL-DESIGN-SYSTEM-01 — app shell + screens
+ *
+ * Base reset, app shell, auth screens and screen-specific layout.
+ * Component classes live in components.css; tokens in styles/tokens.css.
+ * Light-first theme — Conta is the citizen-facing product.
+ */
 
 * {
   box-sizing: border-box;
@@ -21,325 +13,304 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+a { color: var(--color-text-brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+img { max-width: 100%; }
+
+/* ==================================================================
+ * App shell
+ * ================================================================== */
 .conta-digital-app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
+.conta-digital-root {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-6)
+    calc(var(--nav-height) + var(--space-8) + env(safe-area-inset-bottom, 0px));
+}
+
+/* Splash / boot loading (§33) */
 .conta-digital-loading {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  color: var(--text-muted);
-  padding: 40px;
+  gap: var(--space-4);
+  color: var(--color-text-secondary);
+  padding: var(--space-10);
   text-align: center;
 }
-
+.conta-digital-loading__brand { height: 48px; width: auto; }
 .conta-digital-loading__spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(170, 255, 0, 0.2);
-  border-top-color: var(--lime);
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--color-brand-soft);
+  border-top-color: var(--color-brand-primary);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 0.9s linear infinite;
 }
-
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-.conta-digital-root {
-  flex: 1;
-  padding: 24px 24px 120px;
-  max-width: 480px;
-  width: 100%;
-  margin: 0 auto;
-}
-
+/* Toast */
 .conta-digital-toast {
   position: fixed;
-  bottom: 24px;
+  bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 12px 20px;
-  border-radius: var(--radius);
-  font-size: 14px;
+  max-width: calc(100vw - 2 * var(--space-6));
+  background: var(--color-brand-ink);
+  color: var(--color-text-inverse);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-small);
+  box-shadow: var(--shadow-lg);
   z-index: 1000;
 }
+.conta-digital-toast--success { background: var(--color-brand-strong); }
+.conta-digital-toast--error { background: var(--color-error); }
 
-.conta-digital-toast--success {
-  border-color: var(--success);
-  color: var(--success);
-}
-
-.conta-digital-toast--error {
-  border-color: var(--danger);
-  color: var(--danger);
-}
-
+/* ==================================================================
+ * Auth screens (login / cadastro / ativar / recuperar / redefinir)
+ * ================================================================== */
 .conta-digital-auth {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding-top: 40px;
+  gap: var(--space-6);
+  padding-top: var(--space-8);
 }
 
 .conta-digital-auth__logo {
   text-align: center;
 }
-
 .conta-digital-auth__logo img {
   display: block;
-  margin: 0 auto 16px;
-  height: 44px;
+  margin: 0 auto var(--space-4);
+  height: 48px;
   width: auto;
 }
-
 .conta-digital-auth__logo h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 16px 0 8px;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+  margin: var(--space-4) 0 var(--space-2);
 }
-
 .conta-digital-auth__logo p {
-  color: var(--text-muted);
-  font-size: 14px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   margin: 0;
 }
 
 .conta-digital-auth__title {
-  font-size: 22px;
-  font-weight: 600;
-  margin: 0 0 8px;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--space-2);
   text-align: center;
 }
-
 .conta-digital-auth__description {
-  color: var(--text-muted);
-  font-size: 14px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   text-align: center;
   margin: 0;
-}
-
-.cb-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.cb-form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.cb-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
-.cb-input {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text);
-  padding: 14px 16px;
-  font-size: 16px;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.cb-input:focus {
-  border-color: var(--lime);
-  box-shadow: 0 0 0 2px rgba(170, 255, 0, 0.1);
-}
-
-.cb-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.cb-input:-webkit-autofill,
-.cb-input:-webkit-autofill:hover,
-.cb-input:-webkit-autofill:focus,
-.cb-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px var(--bg-elevated) inset !important;
-  -webkit-text-fill-color: var(--text) !important;
-  caret-color: var(--text) !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-.cb-input--error {
-  border-color: var(--danger);
-}
-
-.cb-input-group {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.cb-input-group .cb-input {
-  flex: 1;
-  padding-right: 48px;
-}
-
-.cb-input-toggle {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  color: var(--lime);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.1s;
-}
-
-.cb-input-toggle:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
-.cb-input-toggle:hover,
-.cb-input-toggle:focus-visible {
-  color: #ffffff;
-  background: var(--bg);
-  border-color: var(--lime);
-}
-
-.cb-input-toggle:focus-visible {
-  outline: 2px solid var(--lime);
-  outline-offset: 2px;
-}
-
-#conta-digital-bottom-menu a svg {
-  display: block;
-  width: 24px;
-  height: 24px;
-}
-
-#conta-digital-bottom-menu a svg path,
-#conta-digital-bottom-menu a svg circle,
-#conta-digital-bottom-menu a svg rect,
-#conta-digital-bottom-menu a svg polyline,
-#conta-digital-bottom-menu a svg line {
-  stroke: currentColor;
-  fill: none;
-}
-
-.cb-button {
-  background: var(--lime);
-  color: #0a1628;
-  border: none;
-  border-radius: var(--radius);
-  padding: 14px 20px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  text-align: center;
-}
-
-.cb-button:hover {
-  background: var(--lime-dark);
-}
-
-.cb-button:disabled {
-  background: rgba(170, 255, 0, 0.3);
-  color: rgba(10, 22, 40, 0.5);
-  cursor: not-allowed;
-}
-
-.cb-button--secondary {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.cb-button--secondary:hover {
-  background: var(--bg-card);
-}
-
-.cb-button--full {
-  width: 100%;
-}
-
-.cb-form-error, .cb-form-success {
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  font-size: 13px;
-  display: none;
-}
-
-.cb-form-error {
-  background: rgba(255, 90, 90, 0.1);
-  color: var(--danger);
-  border: 1px solid rgba(255, 90, 90, 0.3);
-}
-
-.cb-form-success {
-  background: rgba(45, 214, 123, 0.1);
-  color: var(--success);
-  border: 1px solid rgba(45, 214, 123, 0.3);
-}
-
-.conta-digital-auth__footer {
-  text-align: center;
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-.conta-digital-auth__footer a {
-  color: var(--lime);
-  text-decoration: none;
 }
 
 .conta-digital-auth__links {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 8px;
+  gap: var(--space-3);
+}
+.conta-digital-auth__footer {
+  text-align: center;
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+}
+.conta-digital-auth__footer a {
+  color: var(--color-text-brand);
+  font-weight: var(--font-weight-medium);
 }
 
-.cb-hint {
-  font-size: 12px;
-  color: var(--text-muted);
+/* Install banner (§33) — only rendered when the browser offers it */
+.cb-install-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-brand-soft);
+  border: 1px solid rgba(0, 143, 95, 0.2);
+  border-radius: var(--radius-md);
+}
+.cb-install-banner__text {
+  flex: 1;
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-tight);
+}
+.cb-install-banner__text strong {
+  display: block;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-small);
+}
+
+/* ==================================================================
+ * Home (§22): greeting → balance → actions → impact → recent
+ * ================================================================== */
+.cb-home__greeting {
+  margin-bottom: var(--space-4);
+}
+.cb-home__greeting h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.cb-home__greeting p {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  margin: 2px 0 0;
+}
+
+.cb-balance-hero .cb-amount { margin: var(--space-1) 0 var(--space-4); }
+.cb-balance-hero__stats {
+  display: flex;
+  gap: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+.cb-balance-hero .cb-stat__label { color: rgba(255, 255, 255, 0.68); }
+.cb-balance-hero .cb-stat__value { color: var(--color-text-inverse); }
+
+.cb-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+.cb-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 88px;
+  padding: var(--space-4);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: box-shadow var(--motion-fast), transform var(--motion-fast);
+}
+.cb-action:hover { box-shadow: var(--shadow-md); text-decoration: none; }
+.cb-action:active { transform: scale(0.98); }
+.cb-action:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+.cb-action__icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-soft);
+  color: var(--color-brand-strong);
+}
+.cb-action--primary .cb-action__icon {
+  background: var(--color-brand-primary);
+  color: var(--color-text-inverse);
+}
+
+/* ==================================================================
+ * QR screen (§29)
+ * ================================================================== */
+.cb-qr-card { text-align: center; }
+.cb-qr-card__frame {
+  display: inline-flex;
+  padding: var(--space-4);
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.cb-qr-card__hint {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-body);
+}
+
+/* ==================================================================
+ * Shared page helpers
+ * ================================================================== */
+.cb-page { display: flex; flex-direction: column; gap: var(--space-4); }
+.cb-page__lead {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  margin: 0;
 }
 
 .cb-error {
-  color: var(--danger);
+  color: var(--color-error);
   text-align: center;
-  padding: 20px;
+  padding: var(--space-5);
 }
 
+/* Stack spacing inside screens */
+.conta-digital-dashboard { display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* tx rows render spans — block context required for ellipsis truncation */
+.cb-tx-row__title,
+.cb-tx-row__meta { display: block; }
+
+/* ==================================================================
+ * Responsive (§45) + desktop (§74)
+ * ================================================================== */
 @media (max-width: 420px) {
-  .conta-digital-root {
-    padding: 20px;
+  .conta-digital-root { padding-left: var(--space-5); padding-right: var(--space-5); }
+  .cb-header {
+    margin-left: calc(-1 * var(--space-5));
+    margin-right: calc(-1 * var(--space-5));
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
   }
-  .conta-digital-auth {
-    padding-top: 24px;
+  .conta-digital-auth { padding-top: var(--space-6); }
+}
+
+@media (min-width: 768px) {
+  /* Desktop: centered mobile-width column; cards never stretch wide */
+  .cb-nav {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: var(--content-max-width);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    border-left: 1px solid var(--color-border);
+    border-right: 1px solid var(--color-border);
   }
 }

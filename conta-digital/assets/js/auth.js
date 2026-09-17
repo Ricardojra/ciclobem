@@ -5,12 +5,17 @@
   const CicloBem = window.CicloBem;
 
   async function login(email, password) {
+    // TRANSPORT-COMPAT-01: o backend canônico emite cookie HttpOnly; o
+    // backend homologado em produção retorna { token, user }. Quando um
+    // token Bearer é emitido ele é guardado em sessionStorage (nunca
+    // localStorage) e anexado pelo apiClient.
     const response = await CicloBem.api.post('/auth/login', { email, password });
 
     if (response.ok) {
-      CicloBem.storage.setToken(response.data.token);
+      if (response.data && typeof response.data.token === 'string' && response.data.token) {
+        CicloBem.storage.setSessionToken(response.data.token);
+      }
       CicloBem.storage.setUser(response.data.user);
-      // Dados de autenticação não são registrados no console.
       CicloBem.logger.info('Login successful');
       return response.data;
     } else {
@@ -21,9 +26,7 @@
 
   async function logout() {
     try {
-      if (CicloBem.storage.getToken()) {
-        await CicloBem.api.post('/auth/logout');
-      }
+      await CicloBem.api.post('/auth/logout');
     } catch (error) {
       CicloBem.logger.warn('Logout API call failed', error);
     } finally {
@@ -32,18 +35,10 @@
     }
   }
 
+  // Hint otimista para o router; o servidor continua sendo a autoridade
+  // (/auth/me valida a sessão real a cada carregamento protegido).
   function isAuthenticated() {
-    const token = CicloBem.storage.getToken();
-    const user = CicloBem.storage.getUser();
-    if (token && !token.includes('.')) {
-      clearAuth();
-      return false;
-    }
-    return !!(token && user);
-  }
-
-  function getToken() {
-    return CicloBem.storage.getToken();
+    return !!CicloBem.storage.getUser();
   }
 
   function getUser() {
@@ -60,10 +55,25 @@
       CicloBem.storage.setUser(response.data.user);
       return response.data.user;
     } else {
-      if (response.error?.code === 'TOKEN_INVALID' || response.error?.code === 'TOKEN_REQUIRED') {
+      if (response.error?.code === 'TOKEN_INVALID' ||
+          response.error?.code === 'TOKEN_REQUIRED' ||
+          response.error?.code === 'UNAUTHENTICATED' ||
+          response.error?.code === 'SESSION_EXPIRED' ||
+          response.error?.code === 'SESSION_REVOKED') {
         clearAuth();
       }
       throw new Error(response.error?.message || 'Falha ao carregar usuário.');
+    }
+  }
+
+  // Autoridade do servidor: resolve a sessão real via /auth/me.
+  // Retorna o usuário canônico ou null — nunca lança. O router usa isto
+  // para proteger rotas (o hint em sessionStorage não decide acesso).
+  async function checkSession() {
+    try {
+      return await loadCurrentUser();
+    } catch (e) {
+      return null;
     }
   }
 
@@ -71,9 +81,9 @@
     login,
     logout,
     isAuthenticated,
-    getToken,
     getUser,
     clearAuth,
-    loadCurrentUser
+    loadCurrentUser,
+    checkSession
   };
 })();

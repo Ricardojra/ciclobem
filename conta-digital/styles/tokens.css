@@ -1,0 +1,148 @@
+/**
+ * CICLOBEM-CONTA-DIGITAL-DESIGN-SYSTEM-01 — design tokens
+ *
+ * Single source of truth for the Conta CicloBem visual language:
+ * LIGHT / PREMIUM / HUMAN / MOBILE-FIRST / FINANCIAL TRUST.
+ *
+ * Brand green family is shared with the CicloBem ecosystem
+ * (frontend/shared/styles/tokens.css: #00B277 / #18E39A / #008F5F).
+ * Surfaces are light-first — Conta is the citizen product, visually
+ * distinct from the dark CCC/CicloMachine operator interfaces.
+ *
+ * Components must consume semantic tokens, never raw hex values.
+ */
+:root {
+  /* ------------------------------------------------------------------
+   * Brand
+   * ------------------------------------------------------------------ */
+  --color-brand-primary: #00B277;   /* CicloBem green (shared palette) */
+  --color-brand-strong: #008F5F;    /* deep green — emphasis, press */
+  --color-brand-soft: #E3F6EE;      /* soft green tint — soft surfaces */
+  --color-brand-ink: #0E1B2C;       /* deep navy ink — brand dark anchor */
+  --color-accent: #E8A400;          /* brand yellow accent (logo "Bem") */
+  --color-accent-soft: #FDF3D7;     /* soft amber tint */
+
+  /* ------------------------------------------------------------------
+   * Surfaces (light-first)
+   * ------------------------------------------------------------------ */
+  --color-bg-page: #F4F7F5;         /* warm off-white page */
+  --color-bg-surface: #FFFFFF;      /* cards, sheets, nav */
+  --color-bg-muted: #EDF1EE;        /* recessed/track areas */
+  --color-bg-brand: var(--color-brand-ink); /* branded dark surface (splash band) */
+
+  /* ------------------------------------------------------------------
+   * Text — WCAG-checked against surfaces below
+   * ------------------------------------------------------------------ */
+  --color-text-primary: #0E1B2C;    /* on white/page — 15.8:1 */
+  --color-text-secondary: #4B5D6E;  /* on white — 6.7:1 */
+  --color-text-tertiary: #7A8896;   /* captions/hints on white — 4.1:1 */
+  --color-text-inverse: #FFFFFF;    /* on brand-ink/brand-primary */
+  --color-text-brand: #00714B;      /* green text on light — 4.9:1 */
+
+  /* ------------------------------------------------------------------
+   * Borders
+   * ------------------------------------------------------------------ */
+  --color-border: #E1E8E4;
+  --color-border-strong: #C9D4CE;
+  --color-border-focus: var(--color-brand-primary);
+
+  /* ------------------------------------------------------------------
+   * Semantic states
+   * ------------------------------------------------------------------ */
+  --color-success: #00714B;         /* text-grade green on light */
+  --color-success-soft: #E3F6EE;
+  --color-warning: #946200;         /* amber text on light — 4.7:1 */
+  --color-warning-soft: #FDF3D7;
+  --color-error: #C92A1D;           /* red on light — 5.3:1 */
+  --color-error-soft: #FCEBE9;
+  --color-info: #175CD3;
+  --color-info-soft: #EAF1FD;
+
+  /* ------------------------------------------------------------------
+   * Financial semantics (§9) — never color alone; pair with sign/icon
+   * ------------------------------------------------------------------ */
+  --color-credit: #00714B;          /* entradas / créditos */
+  --color-debit: #C92A1D;           /* resgates / débitos */
+  --color-pending: #946200;         /* em processamento */
+
+  /* ------------------------------------------------------------------
+   * Typography (§10) — Inter is the approved stack, system fallbacks
+   * ------------------------------------------------------------------ */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-size-display: 30px;
+  --font-size-h1: 22px;
+  --font-size-h2: 17px;
+  --font-size-h3: 15px;
+  --font-size-body: 15px;
+  --font-size-small: 13px;
+  --font-size-caption: 12px;
+  --font-size-amount: 30px;         /* financial amounts */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.2;
+  --line-height-body: 1.5;
+
+  /* ------------------------------------------------------------------
+   * Spacing scale (§12) — deliberate 4pt-based system
+   * ------------------------------------------------------------------ */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* ------------------------------------------------------------------
+   * Radius (§13)
+   * ------------------------------------------------------------------ */
+  --radius-sm: 8px;                 /* small controls, chips */
+  --radius-md: 12px;                /* inputs, small cards */
+  --radius-lg: 16px;                /* cards */
+  --radius-xl: 20px;                /* financial hero card */
+  --radius-pill: 999px;             /* pills, badges, tabs */
+
+  /* ------------------------------------------------------------------
+   * Shadows (§14) — subtle, premium financial product
+   * ------------------------------------------------------------------ */
+  --shadow-sm: 0 1px 2px rgba(14, 27, 44, 0.06);
+  --shadow-md: 0 2px 10px rgba(14, 27, 44, 0.07);
+  --shadow-lg: 0 10px 28px rgba(14, 27, 44, 0.12);
+  --shadow-brand: 0 6px 18px rgba(0, 143, 95, 0.22);
+
+  /* ------------------------------------------------------------------
+   * Layout
+   * ------------------------------------------------------------------ */
+  --content-max-width: 480px;       /* mobile-first column; desktop centers */
+  --nav-height: 64px;
+
+  /* ------------------------------------------------------------------
+   * Motion (§48)
+   * ------------------------------------------------------------------ */
+  --motion-fast: 120ms;
+  --motion-normal: 200ms;
+  --motion-ease: ease;
+
+  /* ------------------------------------------------------------------
+   * Legacy aliases — kept so any un-refactored inline style resolves to
+   * the light theme instead of the removed dark palette (§59).
+   * New code must NOT use these names.
+   * ------------------------------------------------------------------ */
+  --bg: var(--color-bg-page);
+  --bg-elevated: var(--color-bg-surface);
+  --bg-card: var(--color-bg-surface);
+  --text: var(--color-text-primary);
+  --text-muted: var(--color-text-secondary);
+  --lime: var(--color-brand-primary);
+  --lime-dark: var(--color-brand-strong);
+  --danger: var(--color-error);
+  --success: var(--color-success);
+  --border: var(--color-border);
+  --radius: var(--radius-md);
+  --spacing: var(--space-4);
+  --font: var(--font-family);
+}

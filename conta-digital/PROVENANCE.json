@@ -1,0 +1,13 @@
+{
+  "frontend": "conta-digital",
+  "canonical_source_of_truth": "github.com/Ricardojra/ciclobem-sistema.git canonical/conta-digital-01 frontend/conta-digital",
+  "imported_from_repo": "github.com/Ricardojra/ciclobem.git",
+  "imported_from_branch": "main",
+  "imported_from_commit": "89d4acec299d3f400fe5ee90e0657e924f7069cf",
+  "import_method": "git subtree split (conta-digital/) + subtree add (16 commits preserved)",
+  "import_gate": "CICLOBEM-CONTA-DIGITAL-FRONTEND-CANONICAL-IMPORT-01",
+  "source_hash_verified": "MATCH_PRESERVED_SOURCE (frontend-sha256-manifest.txt, LF-normalized)",
+  "legacy_deploy_source_until_cutover": "C:/CICLOBEM SITE conta-digital via ciclobem.git",
+  "version": "1.0.0",
+  "recorded_at": "2026-09-14"
+}

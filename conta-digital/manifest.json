@@ -1,23 +1,39 @@
 {
+  "id": "/conta-digital/",
   "name": "Conta CicloBem — Carteira de Créditos Operacionais",
   "short_name": "Conta CicloBem",
   "description": "Acompanhe suas coletas, QR Code, histórico e saldo de créditos operacionais.",
   "start_url": "/conta-digital/",
+  "scope": "/conta-digital/",
   "display": "standalone",
-  "background_color": "#0a1628",
-  "theme_color": "#0a1628",
+  "background_color": "#F4F7F5",
+  "theme_color": "#00B277",
   "lang": "pt-BR",
   "orientation": "portrait",
   "icons": [
     {
       "src": "icons/icon-192x192.png?v=2",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "icons/icon-512x512.png?v=2",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

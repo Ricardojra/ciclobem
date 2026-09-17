@@ -13,13 +13,19 @@
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      credentials: 'same-origin'
+      // Cookie de sessão HttpOnly é a credencial canônica; incluir também
+      // em origens cruzadas confiadas (API e app podem diferir de origem).
+      credentials: 'include'
     };
 
-    const token = window.CicloBem.storage.getToken();
-    if (token) {
-      options.headers['Authorization'] = `Bearer ${token}`;
-      // Tokens e dados de autenticação nunca são registrados no console.
+    // TRANSPORT-COMPAT-01: quando o backend emite Bearer JWT (modelo
+    // homologado em produção), anexa o token da sessão. Com o backend
+    // canônico (cookie HttpOnly) este header simplesmente não existe.
+    const sessionToken = window.CicloBem.storage && window.CicloBem.storage.getSessionToken
+      ? window.CicloBem.storage.getSessionToken()
+      : null;
+    if (sessionToken) {
+      options.headers['Authorization'] = `Bearer ${sessionToken}`;
     }
 
     if (body !== undefined) {

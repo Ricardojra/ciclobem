@@ -4,14 +4,49 @@
   window.CicloBem = window.CicloBem || {};
   window.CicloBem.contaDigital = window.CicloBem.contaDigital || {};
   const CicloBem = window.CicloBem;
-  const formatMoney = (cents) => {
-    if (!Number.isSafeInteger(cents)) return 'Indisponível';
-    const absolute = Math.abs(cents);
-    return `R$ ${cents < 0 ? '-' : ''}${Math.floor(absolute / 100)},${String(absolute % 100).padStart(2, '0')}`;
-  };
+  const formatMoney = CicloBem.money.formatCentsBRL;
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (char) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
   }[char]));
+
+  const ICON_PIX = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 3-3 3-3-3 3-3z"/><path d="M2 12l3-3 3 3-3 3-3-3z"/><path d="M22 12l-3-3-3 3 3 3 3-3z"/><path d="M12 22l-3-3 3-3 3 3-3 3z"/></svg>';
+  const ICON_QR = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>';
+  const ICON_CREDIT = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/><polyline points="1 20 1 14 7 14"/></svg>';
+  const ICON_DEBIT = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>';
+
+  function firstName(user) {
+    const nome = user && user.nome ? String(user.nome).trim() : '';
+    return nome ? nome.split(/\s+/)[0] : '';
+  }
+
+  function txIsDebit(c) {
+    const type = c.type || '';
+    return type.indexOf('DEBIT') === 0 || type === 'CREDIT_REFUND' || type === 'ADJUSTMENT';
+  }
+
+  function txTitle(c) {
+    const type = c.type || '';
+    if (type === 'DEBIT_REDEMPTION') return 'Resgate';
+    if (type === 'CREDIT_REFUND') return 'Estorno';
+    if (type === 'ADJUSTMENT') return 'Ajuste';
+    const materiais = (c.itens || []).map((item) => item.material).filter(Boolean);
+    return materiais.length ? materiais.join(', ') : 'Crédito por reciclagem';
+  }
+
+  function txMeta(c) {
+    const d = c.date_time ? new Date(c.date_time) : null;
+    const data = d && !isNaN(d.getTime()) ? d.toLocaleString('pt-BR') : 'Sem data identificada';
+    return `${data} · ${c.source_name || 'CicloBem'}`;
+  }
+
+  function txDisplayAmount(c, isDebit) {
+    const raw = c.amount_cents ?? c.credited_value_cents;
+    const cents = Number(raw);
+    const formatted = formatMoney(Number.isSafeInteger(cents) ? cents : null);
+    if (!Number.isSafeInteger(cents)) return formatted;
+    if (isDebit) return cents > 0 ? `-${formatted}` : formatted;
+    return cents > 0 ? `+${formatted}` : formatted;
+  }
 
   const ContaDigitalDashboard = {
     init() {
@@ -23,59 +58,68 @@
     render() {
       const root = document.getElementById('conta-digital-root');
       if (!root) return;
+      const user = CicloBem.auth.getUser();
+      const nome = firstName(user);
 
       root.innerHTML = `
-        <div class="conta-digital-dashboard">
-          <div class="dashboard-header" style="position:sticky;top:0;z-index:101;background:var(--bg-elevated,#111e33);border-bottom:1px solid var(--border,#1e3a5f);padding:20px 24px;margin:-24px -24px 24px;display:flex;justify-content:space-between;align-items:center;">
-            <h1 style="font-size:22px;margin:0;">Conta CicloBem</h1>
-            <button id="dashboard-logout" class="cb-button cb-button--secondary" style="padding:8px 14px;font-size:13px;">Sair</button>
+        <div class="cb-page">
+          <div class="cb-home__greeting">
+            <h1>${nome ? `Olá, ${escapeHtml(nome)}` : 'Olá'}</h1>
+            <p>Mais que uma conta. Um futuro mais circular.</p>
           </div>
 
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;">
-            <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-              <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Ganhos com reciclagem</h2>
-              <p id="dashboard-ganhos" style="font-size:24px;font-weight:700;margin:0;">R$ --</p>
+          <section class="cb-card cb-card--financial cb-balance-hero" aria-label="Saldo">
+            <p class="cb-card__label">Disponível para resgate</p>
+            <p class="cb-amount cb-amount--on-dark" id="dashboard-saldo"><span class="cb-skeleton cb-skeleton--amount"></span></p>
+            <div class="cb-balance-hero__stats">
+              <div class="cb-stat">
+                <p class="cb-stat__label">Ganhos reciclando</p>
+                <p class="cb-stat__value" id="dashboard-ganhos">—</p>
+              </div>
+              <div class="cb-stat">
+                <p class="cb-stat__label">Coletas</p>
+                <p class="cb-stat__value" id="dashboard-coletas">—</p>
+              </div>
+              <div class="cb-stat">
+                <p class="cb-stat__label">Em processamento</p>
+                <p class="cb-stat__value cb-stat__value--pending" id="dashboard-pendente">—</p>
+              </div>
             </div>
-            <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-              <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Disponível para resgate</h2>
-              <p id="dashboard-saldo" style="font-size:24px;font-weight:700;color:var(--lime);margin:0;">R$ --</p>
-            </div>
-            <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-              <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Em processamento</h2>
-              <p id="dashboard-pendente" style="font-size:24px;font-weight:700;margin:0;">R$ --</p>
-            </div>
-            <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-              <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Já resgatado / pago</h2>
-              <p id="dashboard-pago" style="font-size:24px;font-weight:700;margin:0;">R$ --</p>
-            </div>
+          </section>
+
+          <div class="cb-actions">
+            <a href="#/resgatar" class="cb-action cb-action--primary">
+              <span class="cb-action__icon">${ICON_PIX}</span>
+              Resgatar
+            </a>
+            <a href="#/qrcode" class="cb-action">
+              <span class="cb-action__icon">${ICON_QR}</span>
+              Meu QR
+            </a>
           </div>
 
-          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 8px;">Total de coletas</h2>
-            <p id="dashboard-coletas" style="font-size:24px;font-weight:600;margin:0;">--</p>
-          </div>
+          <section class="cb-card cb-card--impact" id="dashboard-impacto-card" style="display:none;">
+            <p class="cb-card__label">Seu impacto</p>
+            <p class="cb-stat__value cb-stat__value--credit" id="dashboard-impacto" style="margin:0;">—</p>
+            <p class="cb-hint" style="margin:var(--space-1) 0 0;" id="dashboard-impacto-sub"></p>
+          </section>
 
-          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 12px;">Últimas coletas</h2>
-            <div id="dashboard-historico" style="color:var(--text-muted);">Carregando...</div>
-          </div>
+          <section class="cb-section">
+            <h2 class="cb-section__title">Atividades recentes</h2>
+            <div class="cb-card cb-card--flat" id="dashboard-historico" aria-live="polite">
+              <div class="cb-skeleton cb-skeleton--row"></div>
+              <div class="cb-skeleton cb-skeleton--row"></div>
+            </div>
+            <a href="#/atividades" class="cb-button cb-button--ghost cb-button--full" style="margin-top:var(--space-2);">Ver todas as atividades</a>
+          </section>
         </div>
       `;
-
-      const logoutBtn = document.getElementById('dashboard-logout');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-          await CicloBem.auth.logout();
-          CicloBem.router.navigate('login');
-        });
-      }
     },
 
     async loadData() {
       const ganhosEl = document.getElementById('dashboard-ganhos');
       const saldoEl = document.getElementById('dashboard-saldo');
       const pendenteEl = document.getElementById('dashboard-pendente');
-      const pagoEl = document.getElementById('dashboard-pago');
       const coletasEl = document.getElementById('dashboard-coletas');
       const historicoEl = document.getElementById('dashboard-historico');
 
@@ -88,45 +132,77 @@
 
         if (saldoRes.ok && saldoRes.data && saldoRes.data.saldo) {
           const saldo = saldoRes.data.saldo;
+          const trustworthy = saldo.balance_status === 'AVAILABLE' && saldo.financial_reconciliation_check === true;
+          saldoEl.textContent = trustworthy ? formatMoney(saldo.withdrawable_balance_cents) : 'Indisponível';
           ganhosEl.textContent = formatMoney(saldo.total_recycling_earnings_cents);
-          saldoEl.textContent = formatMoney(saldo.withdrawable_balance_cents);
           pendenteEl.textContent = formatMoney(saldo.pending_redemptions_cents);
-          pagoEl.textContent = formatMoney(saldo.paid_redemptions_cents);
+        } else {
+          saldoEl.textContent = 'Indisponível';
+          ganhosEl.textContent = 'Indisponível';
+          pendenteEl.textContent = 'Indisponível';
         }
 
         if (resumoRes.ok && resumoRes.data) {
           const totalColetas =
             resumoRes.data.saldo?.total_coletas ||
+            resumoRes.data.impacto?.total_coletas ||
             resumoRes.data.total_coletas ||
-            resumoRes.data.coletas ||
-            0;
-          coletasEl.textContent = totalColetas;
+            null;
+          coletasEl.textContent = totalColetas == null ? 'Indisponível' : totalColetas;
+
+          const impacto = resumoRes.data.impacto;
+          if (impacto && (Number(impacto.kg_reciclados) > 0 || Number(impacto.total_coletas) > 0)) {
+            const card = document.getElementById('dashboard-impacto-card');
+            const val = document.getElementById('dashboard-impacto');
+            const sub = document.getElementById('dashboard-impacto-sub');
+            if (card && val) {
+              const kg = Number(impacto.kg_reciclados);
+              val.textContent = Number.isFinite(kg)
+                ? `${kg.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} kg reciclados`
+                : 'Impacto disponível';
+              if (sub) {
+                const co2 = Number(impacto.co2_estimado_kg);
+                sub.textContent = Number.isFinite(co2) && co2 > 0
+                  ? `≈ ${co2.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} kg de CO₂ evitados (estimativa)`
+                  : '';
+              }
+              card.style.display = 'block';
+            }
+          }
+        } else {
+          coletasEl.textContent = 'Indisponível';
         }
 
-        if (historicoRes.ok && historicoRes.data && historicoRes.data.coletas) {
+        if (historicoRes.ok && historicoRes.data && Array.isArray(historicoRes.data.coletas)) {
           const coletas = historicoRes.data.coletas.slice(0, 5);
           if (coletas.length === 0) {
-            historicoEl.textContent = 'Nenhuma coleta registrada ainda.';
+            historicoEl.innerHTML = `
+              <div class="cb-state">
+                <div class="cb-state__icon">${ICON_CREDIT}</div>
+                <p class="cb-state__title">Nenhuma atividade ainda</p>
+                <p class="cb-state__text">Recicle e seus créditos aparecem aqui.</p>
+              </div>`;
           } else {
-            historicoEl.innerHTML = coletas.map(c => {
-              const dateObj = c.date_time ? new Date(c.date_time) : null;
-              const data = dateObj && !isNaN(dateObj.getTime())
-                ? dateObj.toLocaleString('pt-BR')
-                : 'Registro histórico sem data identificada';
-              const materiais = (c.itens || []).map(item => item.material).filter(Boolean);
-              const material = materiais.length
-                ? materiais.join(', ')
-                : 'Registro histórico sem material identificado';
-              const quantidade = c.quantity == null ? 'Quantidade não informada' : `${c.quantity} ${c.unit || ''}`.trim();
-              const origem = c.source_name || c.source_type || 'Origem histórica não identificada';
-              const status = c.status_pagamento || c.status_operacional || 'Status não informado';
-              return `<div style="padding:10px 0;border-bottom:1px solid var(--border);"><strong>${escapeHtml(material)}</strong><br><span>${escapeHtml(data)} · ${escapeHtml(quantidade)} · ${escapeHtml(origem)} · ${escapeHtml(status)}</span><br><span>${formatMoney(c.credited_value_cents)}</span></div>`;
+            historicoEl.innerHTML = coletas.map((c) => {
+              const isDebit = txIsDebit(c);
+              return `
+                <a href="#/atividades" class="cb-tx-row" style="text-decoration:none;color:inherit;">
+                  <span class="cb-tx-row__icon cb-tx-row__icon--${isDebit ? 'debit' : 'credit'}">${isDebit ? ICON_DEBIT : ICON_CREDIT}</span>
+                  <span class="cb-tx-row__body">
+                    <span class="cb-tx-row__title">${escapeHtml(txTitle(c))}</span>
+                    <span class="cb-tx-row__meta">${escapeHtml(txMeta(c))}</span>
+                  </span>
+                  <span class="cb-tx-row__amount cb-tx-row__amount--${isDebit ? 'debit' : 'credit'}">${escapeHtml(txDisplayAmount(c, isDebit))}</span>
+                </a>
+              `;
             }).join('');
           }
+        } else {
+          historicoEl.innerHTML = '<p class="cb-hint" style="text-align:center;padding:var(--space-4);">Histórico indisponível no momento.</p>';
         }
       } catch (error) {
-        if (saldoEl) saldoEl.textContent = 'R$ --';
-        if (historicoEl) historicoEl.textContent = 'Erro ao carregar dados.';
+        if (saldoEl) saldoEl.textContent = 'Indisponível';
+        if (historicoEl) historicoEl.innerHTML = '<p class="cb-hint" style="text-align:center;padding:var(--space-4);">Erro ao carregar dados.</p>';
         CicloBem.logger.error('Dashboard load error', error);
       }
     }

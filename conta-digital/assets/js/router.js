@@ -19,90 +19,102 @@
     window.location.hash = `/${route}`;
   }
 
-  function dispatch() {
+  // Rotas públicas: não exigem sessão.
+  const PUBLIC_ROUTES = {
+    'ativar': ['ativar', 'Módulo de ativação não carregado.'],
+    'cadastro': ['cadastro', 'Módulo de cadastro não carregado.'],
+    'esqueci-senha': ['esqueciSenha', 'Módulo de recuperação não carregado.'],
+    'redefinir-senha': ['redefinirSenha', 'Módulo de redefinição não carregado.'],
+    'ajuda': ['ajuda', 'Módulo de ajuda não carregado.']
+  };
+
+  // Rotas protegidas: exigem sessão canônica validada pelo servidor.
+  const PROTECTED_MODULES = {
+    'perfil': ['perfil', 'Módulo de perfil não carregado.'],
+    'qrcode': ['qrcode', 'Módulo de QR Code não carregado.'],
+    'resgatar': ['resgatar', 'Módulo de resgate não carregado.'],
+    'atividades': ['atividades', 'Módulo de atividades não carregado.'],
+    'impacto': ['impacto', 'Módulo de impacto não carregado.'],
+    'seguranca': ['seguranca', 'Módulo de segurança não carregado.']
+  };
+
+  function renderChecking(root) {
+    // AUTH_CHECKING: não piscar login/home antes da resposta do servidor.
+    root.innerHTML = `
+      <div class="conta-digital-auth">
+        <div class="conta-digital-auth__logo">
+          <p>Verificando sessão...</p>
+        </div>
+      </div>`;
+  }
+
+  function renderModule(root, moduleName, errorMsg, params) {
+    const module = window.CicloBem.contaDigital && window.CicloBem.contaDigital[moduleName];
+    if (module) {
+      module.init(params);
+    } else {
+      root.innerHTML = `<p class="cb-error">${errorMsg}</p>`;
+    }
+  }
+
+  async function dispatch() {
     const { route, params } = parseHash();
     const root = document.getElementById('conta-digital-root');
     if (!root) return;
 
     root.innerHTML = '';
 
-    if (route === 'ativar') {
-      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.ativar) {
-        window.CicloBem.contaDigital.ativar.init(params);
-      } else {
-        root.innerHTML = '<p class="cb-error">Módulo de ativação não carregado.</p>';
-      }
+    // Públicas: renderizam direto, sem consultar a sessão.
+    if (PUBLIC_ROUTES[route]) {
+      const [moduleName, errorMsg] = PUBLIC_ROUTES[route];
+      renderModule(root, moduleName, errorMsg, params);
       return;
     }
 
-    if (route === 'cadastro') {
-      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.cadastro) {
-        window.CicloBem.contaDigital.cadastro.init(params);
-      } else {
-        root.innerHTML = '<p class="cb-error">Módulo de cadastro não carregado.</p>';
-      }
+    // AUTH_CHECKING: resolve a sessão no servidor antes de decidir
+    // qualquer tela autenticada — sessionStorage não é autoridade.
+    renderChecking(root);
+
+    let user = null;
+    try {
+      user = await CicloBem.auth.checkSession();
+    } catch (e) {
+      user = null;
+    }
+
+    // hash pode ter mudado enquanto /auth/me estava em voo — re-dispatch
+    if (route !== parseHash().route) {
+      dispatch();
       return;
     }
 
-    if (route === 'esqueci-senha') {
-      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.esqueciSenha) {
-        window.CicloBem.contaDigital.esqueciSenha.init();
-      } else {
-        root.innerHTML = '<p class="cb-error">Módulo de recuperação não carregado.</p>';
+    if (route === 'login') {
+      if (user) {
+        navigate('dashboard');
+        return;
       }
+      root.innerHTML = '';
+      renderModule(root, 'login', 'Módulo de login não carregado.');
       return;
     }
 
-    if (route === 'redefinir-senha') {
-      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.redefinirSenha) {
-        window.CicloBem.contaDigital.redefinirSenha.init(params);
-      } else {
-        root.innerHTML = '<p class="cb-error">Módulo de redefinição não carregado.</p>';
-      }
+    if (!user) {
+      // UNAUTHENTICATED: qualquer rota protegida cai no login.
+      root.innerHTML = '';
+      renderModule(root, 'login', 'Módulo de login não carregado.');
       return;
     }
 
-    if (route === 'perfil') {
-      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.perfil) {
-        window.CicloBem.contaDigital.perfil.init();
-      } else {
-        root.innerHTML = '<p class="cb-error">Módulo de perfil não carregado.</p>';
-      }
+    if (PROTECTED_MODULES[route]) {
+      const [moduleName, errorMsg] = PROTECTED_MODULES[route];
+      root.innerHTML = '';
+      renderModule(root, moduleName, errorMsg);
       return;
     }
 
-    if (route === 'qrcode') {
-      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.qrcode) {
-        window.CicloBem.contaDigital.qrcode.init();
-      } else {
-        root.innerHTML = '<p class="cb-error">Módulo de QR Code não carregado.</p>';
-      }
-      return;
-    }
-
-    if (route === 'resgatar') {
-      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.resgatar) {
-        window.CicloBem.contaDigital.resgatar.init();
-      } else {
-        root.innerHTML = '<p class="cb-error">Módulo de resgate não carregado.</p>';
-      }
-      return;
-    }
-
-    if (route === 'login' || (!CicloBem.auth.isAuthenticated() && !['dashboard', 'perfil', 'qrcode', 'resgatar'].includes(route))) {
-      if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.login) {
-        window.CicloBem.contaDigital.login.init();
-      } else {
-        root.innerHTML = '<p class="cb-error">Módulo de login não carregado.</p>';
-      }
-      return;
-    }
-
-    if (window.CicloBem.contaDigital && window.CicloBem.contaDigital.dashboard) {
-      window.CicloBem.contaDigital.dashboard.init();
-    } else {
-      root.innerHTML = '<p class="cb-error">Módulo do dashboard não carregado.</p>';
-    }
+    // home/dashboard/desconhecida → dashboard (default autenticado)
+    root.innerHTML = '';
+    renderModule(root, 'dashboard', 'Módulo do dashboard não carregado.');
   }
 
   function init() {

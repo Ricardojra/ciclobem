@@ -22,8 +22,7 @@
           <div class="conta-digital-auth">
             <div class="conta-digital-auth__logo">
               <picture>
-                <source srcset="../../ciclobem-logo.webp" type="image/webp">
-                <img src="../../ciclobem-logo.png" alt="CicloBem" width="363" height="88" style="height:44px;width:auto">
+                <img src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="198" height="48">
               </picture>
               <h1>Link inválido</h1>
               <p>O link de redefinição está ausente, expirado ou já foi usado.</p>
@@ -40,8 +39,7 @@
         <div class="conta-digital-auth">
           <div class="conta-digital-auth__logo">
             <picture>
-              <source srcset="../../ciclobem-logo.webp" type="image/webp">
-              <img src="../../ciclobem-logo.png" alt="CicloBem" width="363" height="88" style="height:44px;width:auto">
+              <img src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="198" height="48">
             </picture>
             <h1>Criar nova senha</h1>
             <p>Digite a nova senha para acessar sua Conta CicloBem.</p>

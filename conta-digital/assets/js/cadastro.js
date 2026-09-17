@@ -38,8 +38,7 @@
         <div class="conta-digital-auth">
           <div class="conta-digital-auth__logo">
             <picture>
-              <source srcset="../../ciclobem-logo.webp" type="image/webp">
-              <img src="../../ciclobem-logo.png" alt="CicloBem" width="363" height="88" style="height:44px;width:auto">
+              <img src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="198" height="48">
             </picture>
             <h1>Criar conta</h1>
             <p>Cadastre-se para acompanhar suas coletas e saldo.</p>
@@ -202,8 +201,8 @@
 
         if (!response.ok) throw new Error(response.error?.message || 'Não foi possível criar a conta.');
 
-        if (response.data && response.data.token) {
-          CicloBem.storage.setToken(response.data.token);
+        // Sessão emitida via cookie HttpOnly pelo servidor; persistir apenas o perfil mínimo.
+        if (response.data && response.data.user) {
           CicloBem.storage.setUser(response.data.user);
         }
 

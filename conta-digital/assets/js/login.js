@@ -19,10 +19,7 @@
       root.innerHTML = `
         <div class="conta-digital-auth">
           <div class="conta-digital-auth__logo">
-            <picture>
-              <source srcset="../../ciclobem-logo.webp" type="image/webp">
-              <img src="../../ciclobem-logo.png" alt="CicloBem" width="363" height="88" style="height:44px;width:auto">
-            </picture>
+            <img src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="198" height="48">
             <h1>Conta CicloBem</h1>
             <p>Acesse suas coletas, saldo e extrato.</p>
           </div>
@@ -48,6 +45,13 @@
             <button type="submit" class="cb-button cb-button--full" id="login-submit">Entrar</button>
           </form>
 
+          <button type="button" class="cb-button cb-button--secondary cb-button--full" id="login-passkey" style="display:none;margin-top:12px;">
+            Entrar com biometria / Passkey
+          </button>
+          <p id="login-passkey-hint" style="display:none;font-size:12px;color:var(--text-muted);margin:8px 0 0;text-align:center;">
+            A verificação biométrica acontece no seu dispositivo.
+          </p>
+
           <div class="conta-digital-auth__links">
             <a href="#/cadastro" class="cb-button cb-button--secondary cb-button--full">Criar minha conta</a>
             <a href="#/ativar" class="cb-button cb-button--secondary cb-button--full">Ativar conta da máquina</a>
@@ -65,6 +69,35 @@
       if (form) form.addEventListener('submit', (e) => { e.preventDefault(); this.handleSubmit(); });
 
       this.bindPasswordToggle('login-toggle-senha', 'login-senha', 'Mostrar senha', 'Ocultar senha');
+
+      const passkeyBtn = document.getElementById('login-passkey');
+      const passkeyHint = document.getElementById('login-passkey-hint');
+      const passkeysEnabled = CicloBem.env && CicloBem.env.FEATURES && CicloBem.env.FEATURES.passkeys;
+      if (passkeyBtn && passkeysEnabled && CicloBem.webauthn && CicloBem.webauthn.isSupported()) {
+        passkeyBtn.style.display = 'block';
+        if (passkeyHint) passkeyHint.style.display = 'block';
+        passkeyBtn.addEventListener('click', () => this.handlePasskeyLogin(passkeyBtn));
+      }
+    },
+
+    async handlePasskeyLogin(button) {
+      const errorDiv = document.getElementById('login-error');
+      errorDiv.style.display = 'none';
+      button.disabled = true;
+      button.textContent = 'Verificando...';
+      try {
+        CicloBem.auth.clearAuth();
+        const res = await CicloBem.webauthn.loginWithPasskey();
+        if (!res.ok) throw new Error(res.error?.message || 'Falha na autenticação por passkey.');
+        CicloBem.router.navigate('dashboard');
+      } catch (error) {
+        errorDiv.textContent = error.message || 'Falha na autenticação por passkey.';
+        errorDiv.style.display = 'block';
+        CicloBem.logger.error('Login passkey falhou', error);
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Entrar com biometria / Passkey';
+      }
     },
 
     bindPasswordToggle(buttonId, inputId, showLabel, hideLabel) {

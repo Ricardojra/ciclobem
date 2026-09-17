@@ -4,6 +4,15 @@
   window.CicloBem = window.CicloBem || {};
   window.CicloBem.contaDigital = window.CicloBem.contaDigital || {};
   const CicloBem = window.CicloBem;
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  }[char]));
+
+  const ICON_USER = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+  const ICON_SHIELD = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+  const ICON_HELP = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+  const ICON_LOGOUT = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
+  const ICON_PIN = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
 
   const ContaDigitalPerfil = {
     async init() {
@@ -16,6 +25,81 @@
     bindEvents() {
       const form = document.getElementById('perfil-chave-pix-form');
       if (form) form.addEventListener('submit', (e) => { e.preventDefault(); this.salvarChavePix(); });
+
+      const logoutBtn = document.getElementById('perfil-logout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+          await CicloBem.auth.logout();
+          CicloBem.router.navigate('login');
+        });
+      }
+
+      const F = (CicloBem.env && CicloBem.env.FEATURES) || {};
+      const card = document.getElementById('perfil-passkeys-card');
+      if (card && F.passkeys && CicloBem.webauthn && CicloBem.webauthn.isSupported()) {
+        card.style.display = 'block';
+        this.loadPasskeys();
+        const addBtn = document.getElementById('perfil-passkey-add');
+        if (addBtn) addBtn.addEventListener('click', () => this.addPasskey(addBtn));
+      }
+    },
+
+    async loadPasskeys() {
+      const listEl = document.getElementById('perfil-passkeys-list');
+      const res = await CicloBem.webauthn.listPasskeys();
+      if (!listEl) return;
+      if (!res.ok) {
+        listEl.innerHTML = '<p class="cb-hint">Indisponível.</p>';
+        return;
+      }
+      const items = res.data?.passkeys || [];
+      if (items.length === 0) {
+        listEl.innerHTML = '<p class="cb-hint">Nenhuma passkey registrada.</p>';
+        return;
+      }
+      listEl.innerHTML = items.map((p) => `
+        <div class="cb-list-row">
+          <div>
+            <div class="cb-list-row__value" style="text-align:left;">${escapeHtml(p.label || 'Passkey')}</div>
+            <div class="cb-hint">${p.device_type === 'multiDevice' ? 'Sincronizada' : 'Deste dispositivo'}${p.last_used_at ? ' · último uso ' + new Date(p.last_used_at).toLocaleDateString('pt-BR') : ''}</div>
+          </div>
+          <button type="button" class="cb-button cb-button--secondary cb-button--sm perfil-passkey-revoke" data-id="${escapeHtml(p.id)}">Remover</button>
+        </div>
+      `).join('');
+      listEl.querySelectorAll('.perfil-passkey-revoke').forEach((btn) => {
+        btn.addEventListener('click', () => this.revokePasskey(btn.dataset.id));
+      });
+    },
+
+    async addPasskey(button) {
+      const errorEl = document.getElementById('perfil-passkeys-error');
+      errorEl.style.display = 'none';
+      button.disabled = true;
+      button.textContent = 'Aguardando dispositivo...';
+      try {
+        const res = await CicloBem.webauthn.registerPasskey();
+        if (!res.ok) {
+          errorEl.textContent = res.error?.message || 'Erro ao registrar passkey.';
+          errorEl.style.display = 'block';
+          return;
+        }
+        await this.loadPasskeys();
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Adicionar Passkey';
+      }
+    },
+
+    async revokePasskey(id) {
+      const errorEl = document.getElementById('perfil-passkeys-error');
+      errorEl.style.display = 'none';
+      const res = await CicloBem.webauthn.revokePasskey(id);
+      if (!res.ok) {
+        errorEl.textContent = res.error?.message || 'Erro ao remover passkey.';
+        errorEl.style.display = 'block';
+        return;
+      }
+      await this.loadPasskeys();
     },
 
     async salvarChavePix() {
@@ -44,6 +128,7 @@
             this.currentUser.chave_pix_configurada = response.data.chave_pix_configurada;
           }
           input.value = '';
+          input.placeholder = this.currentUser.chave_pix_mascarada || input.placeholder;
         } else {
           errorEl.textContent = response.error?.message || 'Erro ao salvar chave Pix.';
           errorEl.style.display = 'block';
@@ -61,60 +146,89 @@
       if (!root) return;
 
       root.innerHTML = `
-        <div class="conta-digital-dashboard">
-          <div class="dashboard-header" style="position:sticky;top:0;z-index:101;background:var(--bg-elevated,#111e33);border-bottom:1px solid var(--border,#1e3a5f);padding:20px 24px;margin:-24px -24px 24px;display:flex;justify-content:space-between;align-items:center;">
-            <h1 style="font-size:22px;margin:0;">Meu Perfil</h1>
-            <button id="perfil-logout" class="cb-button cb-button--secondary" style="padding:8px 14px;font-size:13px;">Sair</button>
-          </div>
+        <div class="cb-page">
+          <header class="cb-header">
+            <div>
+              <h1 class="cb-header__title">Perfil</h1>
+              <p class="cb-header__sub">Seus dados e preferências da conta.</p>
+            </div>
+          </header>
 
-          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
-            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 12px;">Dados cadastrais</h2>
-            <div id="perfil-dados" style="display:flex;flex-direction:column;gap:12px;">
-              <p style="color:var(--text-muted);">Carregando...</p>
+          <div class="cb-card">
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4);">
+              <span class="cb-list-row__icon" style="width:48px;height:48px;border-radius:var(--radius-pill);background:var(--color-brand-soft);color:var(--color-brand-strong);display:flex;align-items:center;justify-content:center;">${ICON_USER}</span>
+              <div>
+                <p class="cb-card__title" style="margin:0;" id="perfil-nome">—</p>
+                <p class="cb-hint" style="margin:0;" id="perfil-tipo">Conta CicloBem</p>
+              </div>
+            </div>
+            <div class="cb-list" id="perfil-dados">
+              <div class="cb-skeleton cb-skeleton--line"></div>
+              <div class="cb-skeleton cb-skeleton--line"></div>
             </div>
           </div>
 
-          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 12px;">Chave Pix</h2>
-            <form id="perfil-chave-pix-form" class="cb-form" style="display:flex;flex-direction:column;gap:12px;">
-              <div class="cb-form-group" style="margin:0;">
-                <label class="cb-label" for="perfil-chave-pix">Sua chave Pix para resgates</label>
-                <input type="text" id="perfil-chave-pix" class="cb-input" placeholder="CPF, e-mail, celular ou chave aleatória" required>
+          <div class="cb-card">
+            <h2 class="cb-card__title">Chave Pix</h2>
+            <p class="cb-hint" style="margin:0 0 var(--space-3);">Usada para receber seus resgates.</p>
+            <form id="perfil-chave-pix-form" class="cb-form">
+              <div class="cb-form-group">
+                <label class="cb-label" for="perfil-chave-pix">Sua chave Pix</label>
+                <input type="text" id="perfil-chave-pix" class="cb-input" placeholder="CPF, e-mail, celular ou chave aleatória" required autocomplete="off">
               </div>
-              <div class="cb-form-error" id="perfil-chave-pix-error" style="color:var(--danger);font-size:14px;display:none;"></div>
-              <div class="cb-form-success" id="perfil-chave-pix-success" style="color:var(--success);font-size:14px;display:none;"></div>
+              <div class="cb-form-error" id="perfil-chave-pix-error" style="display:none;"></div>
+              <div class="cb-form-success" id="perfil-chave-pix-success" style="display:none;"></div>
               <button type="submit" class="cb-button cb-button--full" id="perfil-chave-pix-submit">Salvar chave Pix</button>
             </form>
           </div>
 
-          <div class="dashboard-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-            <h2 style="font-size:14px;color:var(--text-muted);margin:0 0 12px;">Status da conta</h2>
-            <div id="perfil-status" style="display:flex;flex-direction:column;gap:12px;">
-              <p style="color:var(--text-muted);">Carregando...</p>
+          <div class="cb-card">
+            <h2 class="cb-card__title">Conta</h2>
+            <div class="cb-list">
+              <a href="#/seguranca" class="cb-list-row cb-list-row--link">
+                <span class="cb-list-row__icon">${ICON_SHIELD}</span>
+                <span class="cb-list-row__label" style="color:var(--color-text-primary);font-size:var(--font-size-body);">Segurança</span>
+                <span class="cb-list-row__value">›</span>
+              </a>
+              <a href="#/ajuda" class="cb-list-row cb-list-row--link">
+                <span class="cb-list-row__icon">${ICON_HELP}</span>
+                <span class="cb-list-row__label" style="color:var(--color-text-primary);font-size:var(--font-size-body);">Ajuda</span>
+                <span class="cb-list-row__value">›</span>
+              </a>
+              <div class="cb-list-row">
+                <span class="cb-list-row__icon">${ICON_PIN}</span>
+                <span class="cb-list-row__label" style="color:var(--color-text-primary);font-size:var(--font-size-body);">Locais de coleta</span>
+                <span class="cb-badge">Em breve</span>
+              </div>
+              <button type="button" id="perfil-logout" class="cb-list-row cb-list-row--link" style="width:100%;background:none;border:none;padding:var(--space-3) 0;cursor:pointer;font:inherit;">
+                <span class="cb-list-row__icon" style="color:var(--color-error);">${ICON_LOGOUT}</span>
+                <span class="cb-list-row__label" style="color:var(--color-error);font-size:var(--font-size-body);">Sair da conta</span>
+              </button>
             </div>
+          </div>
+
+          <div class="cb-card" id="perfil-passkeys-card" style="display:none;">
+            <h2 class="cb-card__title">Passkeys (biometria)</h2>
+            <p class="cb-hint" style="margin:0 0 var(--space-3);">
+              A verificação biométrica acontece no seu dispositivo. CicloBem não recebe nem armazena biometria.
+            </p>
+            <div id="perfil-passkeys-list" class="cb-list" style="margin-bottom:var(--space-3);"></div>
+            <div class="cb-form-error" id="perfil-passkeys-error" style="display:none;"></div>
+            <button type="button" class="cb-button cb-button--secondary cb-button--full" id="perfil-passkey-add">Adicionar Passkey</button>
           </div>
         </div>
       `;
-
-      const logoutBtn = document.getElementById('perfil-logout');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-          await CicloBem.auth.logout();
-          CicloBem.router.navigate('login');
-        });
-      }
     },
 
     async load() {
       const dadosEl = document.getElementById('perfil-dados');
-      const statusEl = document.getElementById('perfil-status');
+      const nomeEl = document.getElementById('perfil-nome');
 
       try {
         const response = await CicloBem.api.get('/conta-digital/me');
 
         if (!response.ok || !response.data) {
           dadosEl.innerHTML = '<p class="cb-error">Erro ao carregar perfil.</p>';
-          statusEl.innerHTML = '<p class="cb-error">Erro ao carregar status.</p>';
           return;
         }
 
@@ -127,34 +241,38 @@
           bloqueado: 'Bloqueado'
         };
 
-        const cpf = user.cpf_mascarado || '-';
-
         const formatDate = (raw) => {
           if (!raw) return '-';
-          let fixed = raw;
-          if (typeof raw === 'string' && raw.match(/\.\d{2}Z$/)) {
-            fixed = raw.replace(/\.(\d{2})Z$/, '.490Z');
-          }
-          const d = new Date(fixed);
+          const d = new Date(raw);
           return isNaN(d.getTime()) ? '-' : d.toLocaleDateString('pt-BR');
         };
 
+        if (nomeEl) nomeEl.textContent = user.nome || 'Minha conta';
+
         dadosEl.innerHTML = `
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">
-            <span style="color:var(--text-muted);">Nome</span>
-            <span style="color:var(--text);font-weight:500;">${user.nome || '-'}</span>
+          <div class="cb-list-row">
+            <span class="cb-list-row__label">E-mail</span>
+            <span class="cb-list-row__value">${escapeHtml(user.email_mascarado || '-')}</span>
           </div>
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">
-            <span style="color:var(--text-muted);">E-mail</span>
-            <span style="color:var(--text);font-weight:500;">${user.email_mascarado || '-'}</span>
+          <div class="cb-list-row">
+            <span class="cb-list-row__label">CPF</span>
+            <span class="cb-list-row__value">${escapeHtml(user.cpf_mascarado || '-')}</span>
           </div>
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">
-            <span style="color:var(--text-muted);">CPF</span>
-            <span style="color:var(--text);font-weight:500;">${cpf}</span>
+          <div class="cb-list-row">
+            <span class="cb-list-row__label">Telefone</span>
+            <span class="cb-list-row__value">${escapeHtml(user.telefone_mascarado || '-')}</span>
           </div>
-          <div style="display:flex;justify-content:space-between;">
-            <span style="color:var(--text-muted);">Telefone</span>
-            <span style="color:var(--text);font-weight:500;">${user.telefone_mascarado || '-'}</span>
+          <div class="cb-list-row">
+            <span class="cb-list-row__label">Status</span>
+            <span class="cb-badge cb-badge--success">${escapeHtml(statusMap[user.status] || user.status || '-')}</span>
+          </div>
+          <div class="cb-list-row">
+            <span class="cb-list-row__label">Tipo</span>
+            <span class="cb-list-row__value">${escapeHtml(user.tipo === 'cliente' ? 'Cidadão' : user.tipo || '-')}</span>
+          </div>
+          <div class="cb-list-row">
+            <span class="cb-list-row__label">Cadastro em</span>
+            <span class="cb-list-row__value">${escapeHtml(formatDate(user.created_at))}</span>
           </div>
         `;
 
@@ -163,24 +281,8 @@
           chaveInput.value = '';
           chaveInput.placeholder = user.chave_pix_mascarada || 'CPF, e-mail, celular ou chave aleatória';
         }
-
-        statusEl.innerHTML = `
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">
-            <span style="color:var(--text-muted);">Status</span>
-            <span style="color:var(--lime);font-weight:500;">${statusMap[user.status] || user.status || '-'}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:8px;">
-            <span style="color:var(--text-muted);">Tipo</span>
-            <span style="color:var(--text);font-weight:500;">${user.tipo === 'cliente' ? 'Cidadão' : user.tipo || '-'}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;">
-            <span style="color:var(--text-muted);">Cadastro em</span>
-            <span style="color:var(--text);font-weight:500;">${formatDate(user.created_at)}</span>
-          </div>
-        `;
       } catch (error) {
         dadosEl.innerHTML = '<p class="cb-error">Erro ao carregar perfil.</p>';
-        statusEl.innerHTML = '<p class="cb-error">Erro ao carregar status.</p>';
         CicloBem.logger.error('Perfil load error', error);
       }
     }
