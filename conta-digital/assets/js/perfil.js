@@ -73,7 +73,9 @@
 
     async addPasskey(button) {
       const errorEl = document.getElementById('perfil-passkeys-error');
+      const successEl = document.getElementById('perfil-passkeys-success');
       errorEl.style.display = 'none';
+      if (successEl) successEl.style.display = 'none';
       button.disabled = true;
       button.textContent = 'Aguardando dispositivo...';
       try {
@@ -83,10 +85,11 @@
           errorEl.style.display = 'block';
           return;
         }
+        if (successEl) successEl.style.display = 'block';
         await this.loadPasskeys();
       } finally {
         button.disabled = false;
-        button.textContent = 'Adicionar Passkey';
+        button.textContent = 'Ativar acesso com biometria';
       }
     },
 
@@ -208,13 +211,14 @@
           </div>
 
           <div class="cb-card" id="perfil-passkeys-card" style="display:none;">
-            <h2 class="cb-card__title">Passkeys (biometria)</h2>
+            <h2 class="cb-card__title">Segurança</h2>
             <p class="cb-hint" style="margin:0 0 var(--space-3);">
               A verificação biométrica acontece no seu dispositivo. CicloBem não recebe nem armazena biometria.
             </p>
             <div id="perfil-passkeys-list" class="cb-list" style="margin-bottom:var(--space-3);"></div>
             <div class="cb-form-error" id="perfil-passkeys-error" style="display:none;"></div>
-            <button type="button" class="cb-button cb-button--secondary cb-button--full" id="perfil-passkey-add">Adicionar Passkey</button>
+            <p class="cb-hint" id="perfil-passkeys-success" style="display:none;color:var(--color-success,#2e7d32);margin:0 0 var(--space-3);">Passkey ativada com sucesso.</p>
+            <button type="button" class="cb-button cb-button--secondary cb-button--full" id="perfil-passkey-add">Ativar acesso com biometria</button>
           </div>
         </div>
       `;

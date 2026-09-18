@@ -194,9 +194,10 @@ img { max-width: 100%; }
   font-weight: var(--font-weight-medium);
 }
 
-/* Login brand layout — top brand hero + functional card (§SUBGATE C2).
- * The hero is prepared to host an approved brand image; until one exists
- * it renders an abstract circular brand motif, never a stock photo. */
+/* Login brand layout — approved hero photo + functional card.
+ * Hero asset: assets/img/hero-login.webp (ciclobem3.webp, official site
+ * asset approved by the CTO for the login hero). The soft bottom
+ * gradient blends the photo into the functional card area. */
 .conta-digital-auth--login {
   gap: 0;
   padding-top: 0;
@@ -207,31 +208,11 @@ img { max-width: 100%; }
   height: clamp(88px, 20vh, 160px);
   overflow: hidden;
   background:
-    radial-gradient(circle at 76% 28%, rgba(232, 164, 0, 0.16), transparent 36%),
-    radial-gradient(circle at 24% 72%, rgba(0, 178, 119, 0.18), transparent 44%),
-    linear-gradient(160deg, var(--color-brand-soft) 0%, #F0F7F3 55%, var(--color-bg-page) 100%);
+    linear-gradient(to bottom, transparent 58%, rgba(240, 247, 243, 0.72) 90%, var(--color-bg-page) 100%),
+    url('../img/hero-login.webp') center 34% / cover no-repeat,
+    var(--color-brand-soft);
   border-bottom-left-radius: var(--radius-xl);
   border-bottom-right-radius: var(--radius-xl);
-}
-.conta-digital-auth__hero::before,
-.conta-digital-auth__hero::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-.conta-digital-auth__hero::before {
-  width: 148px;
-  height: 148px;
-  border: 2px solid rgba(0, 143, 95, 0.20);
-}
-.conta-digital-auth__hero::after {
-  width: 96px;
-  height: 96px;
-  border: 2px solid rgba(0, 178, 119, 0.28);
-  border-top-color: rgba(232, 164, 0, 0.55);
 }
 .conta-digital-auth__card {
   display: flex;

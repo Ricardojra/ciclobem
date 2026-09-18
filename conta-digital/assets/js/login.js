@@ -47,7 +47,7 @@
             </form>
 
             <button type="button" class="cb-button cb-button--secondary cb-button--full" id="login-passkey" style="display:none;">
-              Entrar com biometria / Passkey
+              Entrar com biometria
             </button>
             <p id="login-passkey-hint" style="display:none;font-size:12px;color:var(--text-muted);margin:0;text-align:center;">
               A verificação biométrica acontece no seu dispositivo.
@@ -101,7 +101,7 @@
         CicloBem.logger.error('Login passkey falhou', error);
       } finally {
         button.disabled = false;
-        button.textContent = 'Entrar com biometria / Passkey';
+        button.textContent = 'Entrar com biometria';
       }
     },
 

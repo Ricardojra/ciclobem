@@ -16,7 +16,7 @@
   // backend homologado ficam OFF — a UI mostra "Em breve", nunca dado fake.
   // Quando o backend canônico for promovido, basta ligar a flag.
   const FEATURES = {
-    passkeys: false,      // /auth/passkeys/* ausente em produção
+    passkeys: true,       // /auth/passkeys/* no backend pilot (JWT lineage)
     sessions: false,      // /auth/sessions ausente em produção
     impacto: true,        // /conta-digital/resumo.impacto existe e é autoritativo
     locais: false,        // sem endpoint público de locais
@@ -27,7 +27,7 @@
     API_BASE_URL: getApiBaseUrl(),
     APP_NAME: 'Conta CicloBem',
     VERSION: '1.0.0',
-    PWA_CACHE_VERSION: 'ciclobem-conta-static-v5',
+    PWA_CACHE_VERSION: 'ciclobem-conta-static-v7',
     BUILD: 'canonical/conta-digital-01',
     FEATURES,
     debug: isLocalhost

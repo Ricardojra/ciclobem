@@ -13,7 +13,49 @@
   function fmtKg(kg) {
     const n = Number(kg);
     if (!Number.isFinite(n)) return 'Indisponível';
-    return n.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+    return n.toLocaleString('pt-BR', { maximumFractionDigits: 3 });
+  }
+
+  // UNKNOWN !== ZERO: derive truthful weight state from the new contract
+  // (peso_status) or infer it from the legacy shape (0 kg + coletas > 0 = unknown).
+  function deriveImpacto(impacto) {
+    const kg = Number(impacto.kg_reciclados);
+    const totalColetas = Number(impacto.total_coletas);
+    const embalagens = Number(impacto.embalagens_recuperadas);
+    const semPeso = Number(impacto.itens_sem_peso);
+    const pesoStatus = impacto.peso_status
+      || (Number.isFinite(kg) && kg > 0 ? 'measured' : 'unknown');
+    const co2Status = impacto.co2_status
+      || (Number(impacto.co2_estimado_kg) > 0 ? 'estimated' : 'not_estimated');
+    return {
+      pesoStatus,
+      co2Status,
+      kg: Number.isFinite(kg) ? kg : 0,
+      embalagens: Number.isFinite(embalagens) && embalagens > 0 ? embalagens : (Number.isFinite(totalColetas) ? totalColetas : null),
+      totalColetas: Number.isFinite(totalColetas) ? totalColetas : null,
+      semPeso: Number.isFinite(semPeso) ? semPeso : 0
+    };
+  }
+
+  function pesoLabel(d) {
+    if (d.pesoStatus === 'measured') return `${escapeHtml(fmtKg(d.kg))} kg`;
+    if (d.pesoStatus === 'partial') return `${escapeHtml(fmtKg(d.kg))} kg`;
+    return 'Ainda não estimado';
+  }
+
+  function pesoHint(d) {
+    if (d.pesoStatus === 'partial') return `medidos · ${d.semPeso} embalagens ainda não estimadas`;
+    return '';
+  }
+
+  function materialPesoLabel(m) {
+    if (m.peso_status === 'measured' || (m.peso_status == null && Number(m.peso_kg) > 0)) {
+      return `${escapeHtml(fmtKg(m.peso_kg))} kg`;
+    }
+    if (m.peso_status === 'partial' && Number(m.peso_kg) > 0) {
+      return `${escapeHtml(fmtKg(m.peso_kg))} kg medidos`;
+    }
+    return 'peso ainda não estimado';
   }
 
   const ContaDigitalImpacto = {
@@ -46,29 +88,36 @@
       const el = document.getElementById('impacto-content');
       if (!el) return;
 
+      const d = deriveImpacto(impacto);
       const materiais = Array.isArray(impacto.materiais) ? impacto.materiais : [];
       const materiaisHtml = materiais.length
         ? materiais.map((m) => `
             <div class="cb-list-row">
-              <span class="cb-list-row__label">${escapeHtml(m.material || 'Material')}</span>
-              <span class="cb-list-row__value">${escapeHtml(fmtKg(m.peso_kg))} kg</span>
+              <span class="cb-list-row__label">${escapeHtml(m.material || 'Material')}${m.quantidade ? ` · ${m.quantidade} embalagens` : ''}</span>
+              <span class="cb-list-row__value">${materialPesoLabel(m)}</span>
             </div>`).join('')
-        : '<div class="cb-list-row"><span class="cb-list-row__label">Sem detalhamento por material ainda.</span></div>';
+        : '<div class="cb-list-row"><span class="cb-list-row__label">Detalhamento ainda não disponível</span></div>';
+
+      const co2Label = d.co2Status === 'estimated'
+        ? `${escapeHtml(fmtKg(impacto.co2_estimado_kg))} kg`
+        : 'Ainda não estimado';
+      const pesoHintText = pesoHint(d);
 
       el.innerHTML = `
         <div class="cb-card cb-card--impact">
           <div class="cb-stats" style="display:flex;gap:var(--space-6);flex-wrap:wrap;">
             <div class="cb-stat">
+              <p class="cb-stat__label">Embalagens recuperadas</p>
+              <p class="cb-stat__value cb-stat__value--credit">${d.embalagens ?? 'Indisponível'}</p>
+            </div>
+            <div class="cb-stat">
               <p class="cb-stat__label">Material reciclado</p>
-              <p class="cb-stat__value cb-stat__value--credit">${escapeHtml(fmtKg(impacto.kg_reciclados))} kg</p>
+              <p class="cb-stat__value">${pesoLabel(d)}</p>
+              ${pesoHintText ? `<p class="cb-hint" style="margin:0;">${pesoHintText}</p>` : ''}
             </div>
             <div class="cb-stat">
-              <p class="cb-stat__label">Reciclagens</p>
-              <p class="cb-stat__value">${Number.isFinite(Number(impacto.total_coletas)) ? Number(impacto.total_coletas) : 'Indisponível'}</p>
-            </div>
-            <div class="cb-stat">
-              <p class="cb-stat__label">CO₂ evitado (estimativa)</p>
-              <p class="cb-stat__value">${escapeHtml(fmtKg(impacto.co2_estimado_kg))} kg</p>
+              <p class="cb-stat__label">CO₂ evitado</p>
+              <p class="cb-stat__value">${co2Label}</p>
             </div>
           </div>
         </div>
@@ -78,7 +127,7 @@
           <div class="cb-list">${materiaisHtml}</div>
         </div>
 
-        <p class="cb-hint" style="text-align:center;">Valores estimados, calculados pela plataforma CicloBem a partir das suas coletas registradas.</p>
+        <p class="cb-hint" style="text-align:center;">O peso só é contabilizado quando a embalagem tem peso registrado no catálogo. Quando a informação não existe, mostramos como ainda não estimado — nunca como zero.</p>
       `;
     },
 

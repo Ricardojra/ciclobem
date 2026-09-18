@@ -5,8 +5,14 @@
  * The browser talks to a platform authenticator via navigator.credentials.
  * CicloBem only ever sees cryptographic WebAuthn credentials/assertions —
  * biometric verification happens locally on the user's device and no
- * biometric data is transmitted. Session creation remains the canonical
- * HttpOnly-cookie flow; nothing passkey-related is stored in web storage.
+ * biometric data is transmitted or stored.
+ *
+ * Session model: whatever the backend returns. On JWT-lineage backends
+ * (production `1ee95fe` + passkey port) verify returns { token, user } and
+ * the token is persisted through the SAME storage path as password login.
+ * Under a cookie-session backend data.token is absent and nothing extra
+ * is stored. No assertion or credential material is ever written to
+ * browser storage.
  */
 (function () {
   'use strict';
@@ -102,8 +108,8 @@
   };
 
   /**
-   * Username-less passkey login (§24-25): discoverable credential →
-   * server verification → canonical HttpOnly session cookie.
+   * Username-less passkey login: discoverable credential → server
+   * verification → same session contract as password login.
    */
   const loginWithPasskey = async () => {
     const optRes = await CicloBem.api.post('/auth/passkeys/login/options', {});
@@ -128,9 +134,20 @@
       return { ok: false, error: { code: 'PASSKEY_CANCELLED', message: 'Nenhuma credencial selecionada.' } };
     }
 
-    return CicloBem.api.post('/auth/passkeys/login/verify', {
+    const res = await CicloBem.api.post('/auth/passkeys/login/verify', {
       credential: toAssertionJSON(assertion)
     });
+
+    // JWT-lineage backends return { token, user } — persist through the
+    // same storage path as password login (auth.login: setSessionToken +
+    // setUser). Under the canonical cookie model data.token is absent and
+    // this block is a no-op.
+    if (res.ok && res.data && res.data.token) {
+      CicloBem.storage.setSessionToken(res.data.token);
+      CicloBem.storage.setUser(res.data.user);
+      CicloBem.logger.info('Passkey login successful');
+    }
+    return res;
   };
 
   const listPasskeys = () => CicloBem.api.get('/auth/passkeys');

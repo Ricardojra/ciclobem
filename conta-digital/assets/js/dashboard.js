@@ -156,15 +156,36 @@
             const val = document.getElementById('dashboard-impacto');
             const sub = document.getElementById('dashboard-impacto-sub');
             if (card && val) {
+              // UNKNOWN !== ZERO: embalagens/peso medido são verdadeiros;
+              // peso desconhecido nunca vira "0 kg".
               const kg = Number(impacto.kg_reciclados);
-              val.textContent = Number.isFinite(kg)
-                ? `${kg.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} kg reciclados`
-                : 'Impacto disponível';
+              const embalagens = Number(impacto.embalagens_recuperadas);
+              const totalColetas = Number(impacto.total_coletas);
+              const pesoStatus = impacto.peso_status
+                || (Number.isFinite(kg) && kg > 0 ? 'measured' : 'unknown');
+              const itens = Number.isFinite(embalagens) && embalagens > 0 ? embalagens
+                : (Number.isFinite(totalColetas) && totalColetas > 0 ? totalColetas : null);
+              if (pesoStatus === 'measured') {
+                val.textContent = `${kg.toLocaleString('pt-BR', { maximumFractionDigits: 3 })} kg reciclados`;
+              } else if (pesoStatus === 'partial' && itens != null) {
+                val.textContent = `${itens} embalagens recuperadas`;
+              } else if (itens != null) {
+                val.textContent = `${itens} embalagens recuperadas`;
+              } else {
+                val.textContent = 'Impacto disponível';
+              }
               if (sub) {
                 const co2 = Number(impacto.co2_estimado_kg);
-                sub.textContent = Number.isFinite(co2) && co2 > 0
-                  ? `≈ ${co2.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} kg de CO₂ evitados (estimativa)`
-                  : '';
+                const co2Estimated = impacto.co2_status === 'estimated' || (impacto.co2_status == null && Number.isFinite(co2) && co2 > 0);
+                if (co2Estimated && Number.isFinite(co2) && co2 > 0) {
+                  sub.textContent = `≈ ${co2.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} kg de CO₂ evitados (estimativa)`;
+                } else if (pesoStatus === 'partial') {
+                  sub.textContent = `${kg.toLocaleString('pt-BR', { maximumFractionDigits: 3 })} kg medidos · peso do restante ainda não estimado`;
+                } else if (pesoStatus === 'unknown' && itens != null) {
+                  sub.textContent = 'Peso do material ainda não estimado';
+                } else {
+                  sub.textContent = '';
+                }
               }
               card.style.display = 'block';
             }

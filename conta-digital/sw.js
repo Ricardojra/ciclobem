@@ -13,7 +13,7 @@
  * (ciclobem-conta-* / conta-ciclobem-*) are deleted — unrelated origin
  * caches are left untouched.
  */
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v7';
 const CACHE_PREFIXES = ['ciclobem-conta-', 'conta-ciclobem-'];
 const CACHE_NAME = `ciclobem-conta-static-${CACHE_VERSION}`;
 
@@ -28,6 +28,7 @@ const APP_SHELL = [
     '/conta-digital/assets/css/conta-digital.css',
     '/conta-digital/assets/brand/ciclobem-logo-dark.png',
     '/conta-digital/assets/brand/ciclobem-logo.png',
+    '/conta-digital/assets/img/hero-login.webp',
     '/conta-digital/assets/js/ajuda.js',
     '/conta-digital/assets/js/apiClient.js',
     '/conta-digital/assets/js/ativar.js',
