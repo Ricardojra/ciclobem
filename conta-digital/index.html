@@ -33,7 +33,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Conta CicloBem">
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2300B277'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='18' fill='%23ffffff'%3ECB%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F1F6F3'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='16' fill='%2300B277'%3ECB%3C/text%3E%3Ccircle cx='22' cy='20' r='3.5' fill='%23E8A400'/%3E%3C/svg%3E">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -46,10 +46,11 @@
 </head>
 <body>
   <div id="conta-digital-app" class="conta-digital-app">
-    <div class="conta-digital-loading" id="conta-digital-loading">
+    <div class="conta-digital-loading conta-digital-splash" id="conta-digital-loading">
       <img class="conta-digital-loading__brand" src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="198" height="48">
-      <div class="conta-digital-loading__spinner"></div>
-      <p>Carregando Conta CicloBem...</p>
+      <h1 class="conta-digital-splash__title">Conta CicloBem</h1>
+      <p class="conta-digital-splash__tagline">Sua conta digital de créditos da reciclagem.</p>
+      <div class="conta-digital-loading__spinner conta-digital-splash__spinner" aria-hidden="true"></div>
     </div>
     <div id="conta-digital-root" class="conta-digital-root" style="display: none;"></div>
     <div id="conta-digital-toast" class="conta-digital-toast" style="display: none;"></div>

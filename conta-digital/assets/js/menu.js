@@ -19,6 +19,8 @@
   function hideMenu() {
     const existing = document.getElementById('conta-digital-bottom-menu');
     if (existing) existing.remove();
+    const root = document.getElementById('conta-digital-root');
+    if (root) root.classList.remove('conta-digital-root--nav');
   }
 
   function renderMenu(activeRoute) {
@@ -59,6 +61,8 @@
     }).join('');
 
     app.appendChild(menu);
+    const root = document.getElementById('conta-digital-root');
+    if (root) root.classList.add('conta-digital-root--nav');
   }
 
   CicloBem.menu = { render: renderMenu, hide: hideMenu };

@@ -13,11 +13,28 @@
     setTimeout(() => { toast.style.display = 'none'; }, 4000);
   }
 
-  function hideLoading() {
+  // Launch splash: persists through bootstrap + session restore until the
+  // router renders the first real screen — no login/home flash underneath.
+  const SPLASH_MIN_MS = 700;
+  let splashShownAt = 0;
+  let splashDone = false;
+
+  function hideSplash() {
     const loading = document.getElementById('conta-digital-loading');
     const root = document.getElementById('conta-digital-root');
-    if (loading) loading.style.display = 'none';
+    if (splashDone) return;
+    splashDone = true;
     if (root) root.style.display = 'block';
+    if (loading) {
+      loading.classList.add('conta-digital-loading--hidden');
+      setTimeout(() => { loading.style.display = 'none'; }, 250);
+    }
+  }
+
+  function notifyFirstRender() {
+    if (splashDone) return;
+    const wait = Math.max(0, SPLASH_MIN_MS - (Date.now() - splashShownAt));
+    setTimeout(hideSplash, wait);
   }
 
   function handleServiceWorkerUpdate(reg) {
@@ -71,8 +88,9 @@
     try {
       if (!CicloBem.env) throw new Error('Configuração não carregada.');
       CicloBem.toast = { show: showToast };
+      CicloBem.splash = { notifyFirstRender };
+      splashShownAt = Date.now();
       CicloBem.router.init();
-      hideLoading();
       CicloBem.logger.info('Conta CicloBem inicializada', { version: CicloBem.env.VERSION });
     } catch (error) {
       const loading = document.getElementById('conta-digital-loading');

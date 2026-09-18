@@ -17,48 +17,51 @@
       if (!root) return;
 
       root.innerHTML = `
-        <div class="conta-digital-auth">
-          <div class="conta-digital-auth__logo">
-            <img src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="198" height="48">
-            <h1>Conta CicloBem</h1>
-            <p>Acesse suas coletas, saldo e extrato.</p>
-          </div>
+        <div class="conta-digital-auth conta-digital-auth--login">
+          <div class="conta-digital-auth__hero" aria-hidden="true"></div>
 
-          <form class="cb-form" id="login-form">
-            <div class="cb-form-group">
-              <label class="cb-label" for="login-email">E-mail</label>
-              <input type="email" id="login-email" class="cb-input" placeholder="seu@email.com" required autocomplete="email">
-            </div>
+          <div class="conta-digital-auth__card">
+            <img class="conta-digital-auth__card-logo" src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="165" height="40">
+            <h1>Entrar na Conta CicloBem</h1>
+            <p class="conta-digital-auth__card-subtitle">Acesse sua conta de forma rápida, segura e sem complicação.</p>
 
-            <div class="cb-form-group">
-              <label class="cb-label" for="login-senha">Senha</label>
-              <div class="cb-input-group">
-                <input type="password" id="login-senha" class="cb-input" placeholder="••••••••" required autocomplete="current-password">
-                <button type="button" id="login-toggle-senha" class="cb-input-toggle" aria-label="Mostrar senha" title="Mostrar senha">
-                  <svg id="login-eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                </button>
+            <form class="cb-form" id="login-form">
+              <div class="cb-form-group">
+                <label class="cb-label" for="login-email">E-mail</label>
+                <input type="email" id="login-email" class="cb-input" placeholder="seu@email.com" required autocomplete="email">
               </div>
+
+              <div class="cb-form-group">
+                <label class="cb-label" for="login-senha">Senha</label>
+                <div class="cb-input-group">
+                  <input type="password" id="login-senha" class="cb-input" placeholder="••••••••" required autocomplete="current-password">
+                  <button type="button" id="login-toggle-senha" class="cb-input-toggle" aria-label="Mostrar senha" title="Mostrar senha">
+                    <svg id="login-eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="cb-form-error" id="login-error"></div>
+
+              <button type="submit" class="cb-button cb-button--full" id="login-submit">Entrar</button>
+            </form>
+
+            <button type="button" class="cb-button cb-button--secondary cb-button--full" id="login-passkey" style="display:none;">
+              Entrar com biometria / Passkey
+            </button>
+            <p id="login-passkey-hint" style="display:none;font-size:12px;color:var(--text-muted);margin:0;text-align:center;">
+              A verificação biométrica acontece no seu dispositivo.
+            </p>
+            <p class="conta-digital-auth__soon" id="login-passkey-soon">Biometria · Em breve</p>
+
+            <div class="conta-digital-auth__links conta-digital-auth__links--row">
+              <a href="#/cadastro">Criar minha conta</a>
+              <a href="#/ativar">Ativar conta da máquina</a>
             </div>
 
-            <div class="cb-form-error" id="login-error"></div>
-
-            <button type="submit" class="cb-button cb-button--full" id="login-submit">Entrar</button>
-          </form>
-
-          <button type="button" class="cb-button cb-button--secondary cb-button--full" id="login-passkey" style="display:none;margin-top:12px;">
-            Entrar com biometria / Passkey
-          </button>
-          <p id="login-passkey-hint" style="display:none;font-size:12px;color:var(--text-muted);margin:8px 0 0;text-align:center;">
-            A verificação biométrica acontece no seu dispositivo.
-          </p>
-
-          <div class="conta-digital-auth__links">
-            <a href="#/cadastro" class="cb-button cb-button--secondary cb-button--full">Criar minha conta</a>
-            <a href="#/ativar" class="cb-button cb-button--secondary cb-button--full">Ativar conta da máquina</a>
-          </div>
-
-          <div class="conta-digital-auth__footer">
-            <a href="#/esqueci-senha">Esqueci minha senha</a>
+            <div class="conta-digital-auth__footer">
+              <a href="#/esqueci-senha">Esqueci minha senha</a>
+            </div>
           </div>
         </div>
       `;
@@ -76,6 +79,8 @@
       if (passkeyBtn && passkeysEnabled && CicloBem.webauthn && CicloBem.webauthn.isSupported()) {
         passkeyBtn.style.display = 'block';
         if (passkeyHint) passkeyHint.style.display = 'block';
+        const soon = document.getElementById('login-passkey-soon');
+        if (soon) soon.style.display = 'none';
         passkeyBtn.addEventListener('click', () => this.handlePasskeyLogin(passkeyBtn));
       }
     },

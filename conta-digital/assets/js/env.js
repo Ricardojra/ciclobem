@@ -27,7 +27,7 @@
     API_BASE_URL: getApiBaseUrl(),
     APP_NAME: 'Conta CicloBem',
     VERSION: '1.0.0',
-    PWA_CACHE_VERSION: 'ciclobem-conta-static-v4',
+    PWA_CACHE_VERSION: 'ciclobem-conta-static-v5',
     BUILD: 'canonical/conta-digital-01',
     FEATURES,
     debug: isLocalhost

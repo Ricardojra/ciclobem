@@ -55,6 +55,8 @@
     } else {
       root.innerHTML = `<p class="cb-error">${errorMsg}</p>`;
     }
+    // First real screen rendered → launch splash may retire (idempotent).
+    CicloBem.splash && CicloBem.splash.notifyFirstRender && CicloBem.splash.notifyFirstRender();
   }
 
   async function dispatch() {

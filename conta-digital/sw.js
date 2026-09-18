@@ -13,7 +13,7 @@
  * (ciclobem-conta-* / conta-ciclobem-*) are deleted — unrelated origin
  * caches are left untouched.
  */
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 const CACHE_PREFIXES = ['ciclobem-conta-', 'conta-ciclobem-'];
 const CACHE_NAME = `ciclobem-conta-static-${CACHE_VERSION}`;
 

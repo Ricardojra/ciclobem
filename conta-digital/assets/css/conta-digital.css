@@ -18,7 +18,10 @@ html, body {
   font-family: var(--font-family);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
+  /* svh = smallest viewport (dynamic browser chrome visible): the shell can
+   * never exceed the visible area, so no dead scroll appears on mobile. */
   min-height: 100vh;
+  min-height: 100svh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -38,6 +41,7 @@ img { max-width: 100%; }
  * ================================================================== */
 .conta-digital-app {
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
 }
@@ -48,22 +52,49 @@ img { max-width: 100%; }
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: var(--space-6) var(--space-6)
-    calc(var(--nav-height) + var(--space-8) + env(safe-area-inset-bottom, 0px));
+    calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+}
+/* Bottom-nav clearance is reserved only while the fixed nav is present
+ * (menu.js toggles the class); otherwise it is dead space that scrolls. */
+.conta-digital-root--nav {
+  padding-bottom: calc(var(--nav-height) + var(--space-8) + env(safe-area-inset-bottom, 0px));
 }
 
-/* Splash / boot loading (§33) */
+/* Splash / boot loading (§33) — branded launch screen covering bootstrap
+ * and session restore until the first route renders. */
 .conta-digital-loading {
-  flex: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
+  background: var(--color-bg-page);
   color: var(--color-text-secondary);
   padding: var(--space-10);
   text-align: center;
+  opacity: 1;
+  transition: opacity var(--motion-normal) var(--motion-ease);
+}
+.conta-digital-loading--hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 .conta-digital-loading__brand { height: 48px; width: auto; }
+.conta-digital-splash__title {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+  margin: var(--space-2) 0 0;
+}
+.conta-digital-splash__tagline {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
 .conta-digital-loading__spinner {
   width: 36px;
   height: 36px;
@@ -72,8 +103,18 @@ img { max-width: 100%; }
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
+.conta-digital-splash__spinner {
+  width: 24px;
+  height: 24px;
+  margin-top: var(--space-6);
+  border-width: 2px;
+}
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .conta-digital-loading { transition: none; }
+  .conta-digital-loading__spinner { animation: none; }
 }
 
 /* Toast */
@@ -150,6 +191,96 @@ img { max-width: 100%; }
 }
 .conta-digital-auth__footer a {
   color: var(--color-text-brand);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Login brand layout — top brand hero + functional card (§SUBGATE C2).
+ * The hero is prepared to host an approved brand image; until one exists
+ * it renders an abstract circular brand motif, never a stock photo. */
+.conta-digital-auth--login {
+  gap: 0;
+  padding-top: 0;
+  margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) 0;
+}
+.conta-digital-auth__hero {
+  position: relative;
+  height: clamp(88px, 20vh, 160px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 76% 28%, rgba(232, 164, 0, 0.16), transparent 36%),
+    radial-gradient(circle at 24% 72%, rgba(0, 178, 119, 0.18), transparent 44%),
+    linear-gradient(160deg, var(--color-brand-soft) 0%, #F0F7F3 55%, var(--color-bg-page) 100%);
+  border-bottom-left-radius: var(--radius-xl);
+  border-bottom-right-radius: var(--radius-xl);
+}
+.conta-digital-auth__hero::before,
+.conta-digital-auth__hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.conta-digital-auth__hero::before {
+  width: 148px;
+  height: 148px;
+  border: 2px solid rgba(0, 143, 95, 0.20);
+}
+.conta-digital-auth__hero::after {
+  width: 96px;
+  height: 96px;
+  border: 2px solid rgba(0, 178, 119, 0.28);
+  border-top-color: rgba(232, 164, 0, 0.55);
+}
+.conta-digital-auth__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: calc(-1 * var(--space-6)) var(--space-4) 0;
+  padding: var(--space-5) var(--space-5);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+.conta-digital-auth__card-logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  margin: 0 auto;
+}
+.conta-digital-auth__card h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin: 0;
+}
+.conta-digital-auth__card-subtitle {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin: calc(-1 * var(--space-2)) 0 0;
+}
+.conta-digital-auth__soon {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin: 0;
+}
+/* Compact inline link row — keeps secondary flows reachable without two
+ * full-width buttons pushing the card below the fold on small phones. */
+.conta-digital-auth__links--row {
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}
+.conta-digital-auth__links--row a {
+  color: var(--color-text-brand);
+  font-size: var(--font-size-small);
   font-weight: var(--font-weight-medium);
 }
 
@@ -301,6 +432,10 @@ img { max-width: 100%; }
     padding-right: var(--space-5);
   }
   .conta-digital-auth { padding-top: var(--space-6); }
+  .conta-digital-auth--login {
+    padding-top: 0;
+    margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) 0;
+  }
 }
 
 @media (min-width: 768px) {
