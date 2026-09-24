@@ -1,89 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Conta CicloBem — Carteira de Créditos Operacionais</title>
-  <meta name="description" content="A Conta CicloBem é a interface do cidadão para acompanhar coletas, acessar QR Code, consultar histórico e visualizar saldo de créditos operacionais. Não é conta bancária ou serviço financeiro independente.">
-  <meta name="keywords" content="conta digital, cidadão, reciclagem, economia circular, QR Code, saldo operacional, coletas, CicloBem">
-  <meta name="author" content="CicloBem">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.ciclobem.com.br/conta-digital/">
-  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.ciclobem.com.br/conta-digital/">
-  <meta property="og:title" content="Conta CicloBem — Carteira de Créditos Operacionais">
-  <meta property="og:description" content="Interface do cidadão para acompanhar coletas, QR Code, histórico e saldo de créditos operacionais. Não é conta bancária.">
-  <meta property="og:image" content="https://www.ciclobem.com.br/og-ciclobem.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:site_name" content="CicloBem">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://www.ciclobem.com.br/conta-digital/">
-  <meta name="twitter:title" content="Conta CicloBem — Carteira de Créditos Operacionais">
-  <meta name="twitter:description" content="Acompanhe coletas, QR Code, histórico e saldo de créditos operacionais.">
-  <meta name="twitter:image" content="https://www.ciclobem.com.br/og-ciclobem.png">
-
-  <meta name="theme-color" content="#00B277">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Conta CicloBem">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F1F6F3'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='16' fill='%2300B277'%3ECB%3C/text%3E%3Ccircle cx='22' cy='20' r='3.5' fill='%23E8A400'/%3E%3C/svg%3E">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/tokens.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/conta-digital.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conta CicloBem — Redirecionando</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://conta.ciclobem.com.br/">
+<meta http-equiv="refresh" content="0;url=https://conta.ciclobem.com.br/">
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#060e1c;color:#fff;font-family:system-ui,-apple-system,sans-serif;text-align:center;padding:24px}
+  a{color:#aaff00}
+</style>
 </head>
 <body>
-  <div id="conta-digital-app" class="conta-digital-app">
-    <div class="conta-digital-loading conta-digital-splash" id="conta-digital-loading">
-      <img class="conta-digital-loading__brand" src="assets/brand/ciclobem-logo-dark.png" alt="CicloBem" width="198" height="48">
-      <h1 class="conta-digital-splash__title">Conta CicloBem</h1>
-      <p class="conta-digital-splash__tagline">Sua conta digital de créditos da reciclagem.</p>
-      <div class="conta-digital-loading__spinner conta-digital-splash__spinner" aria-hidden="true"></div>
-    </div>
-    <div id="conta-digital-root" class="conta-digital-root" style="display: none;"></div>
-    <div id="conta-digital-toast" class="conta-digital-toast" style="display: none;"></div>
-  </div>
-
-  <script src="assets/js/env.js"></script>
-  <script src="assets/js/storage.js"></script>
-  <script src="assets/js/logger.js"></script>
-  <script src="assets/js/money.js"></script>
-  <script src="assets/js/apiClient.js"></script>
-  <script src="assets/js/webauthn.js"></script>
-  <script src="assets/js/auth.js"></script>
-  <script src="assets/js/router.js"></script>
-  <script src="assets/js/ajuda.js"></script>
-  <script src="assets/js/ativar.js"></script>
-  <script src="assets/js/login.js"></script>
-  <script src="assets/js/cadastro.js"></script>
-  <script src="assets/js/dashboard.js"></script>
-  <script src="assets/js/atividades.js"></script>
-  <script src="assets/js/impacto.js"></script>
-  <script src="assets/js/qrcode.js"></script>
-  <script src="assets/js/seguranca.js"></script>
-  <script src="assets/js/perfil.js"></script>
-  <script src="assets/js/qrcode-generator.js"></script>
-  <script src="assets/js/resgatar.js"></script>
-  <script src="assets/js/esqueci-senha.js"></script>
-  <script src="assets/js/redefinir-senha.js"></script>
-  <script src="assets/js/menu.js"></script>
-  <script src="assets/js/bootstrap.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    }
-  </script>
+<div>
+  <p>A Conta CicloBem agora está em <strong>conta.ciclobem.com.br</strong>.</p>
+  <p><a href="https://conta.ciclobem.com.br/">Acessar Conta</a></p>
+</div>
+<script>
+  (function(){
+    var target='https://conta.ciclobem.com.br/'+window.location.search+window.location.hash;
+    window.location.replace(target);
+  })();
+</script>
 </body>
 </html>
