@@ -4,14 +4,15 @@
 **Número designado:** +55 21 99550-0927 (`5521995500927`)  
 **Origem confirmada pelo CTO (09/11/2026):** WhatsApp Messenger (aplicativo comum)  
 **Destino:** WhatsApp Business Platform — Cloud API oficial da Meta  
-**Estado:** **NO-GO para cutover** até aprovação adicional, independente da aprovação do projeto.  
+**Estado:** **GO apenas para preparação e testes**; **NO-GO para excluir conta, registrar número definitivo ou fazer cutover** até autorização adicional, independente da aprovação do projeto.
+**Decisão do CTO 09/11/2026:** informou que **não precisa preservar o histórico anterior**. A rota B (conta Messenger → Cloud API) será seguida, mas a exclusão continua bloqueada até autorização específica.  
 **Responsável técnico:** CTO; atendimento comercial: Alexandre Lemos (ou equipe autorizada).
 
 > Nunca confundir **desinstalar aplicativo** com **excluir conta**. A exclusão da conta é irreversível e pode destruir histórico, grupos e backup associado. Não executar durante a preparação.
 
-## 0. Escolher estratégia de preservação do histórico
+## 0. Estratégia de dados definida pelo CTO: histórico dispensado
 
-### Rota A (preferível caso existam conversas pessoais/importantes)
+### Rota A (alternativa não selecionada, manter como contingência)
 - Disponibilizar **outro número** para continuar usando o WhatsApp Messenger pessoal.
 - Fazer backup atualizado e exportar **individualmente** os diálogos/documentos que precisam ser arquivados fora do aplicativo, com proteção de dados e base legal adequada.
 - No WhatsApp Messenger atual, usar **Configurações → Conta → Mudar número** para transferir a identidade e o histórico do aplicativo para a nova linha pessoal, seguindo a confirmação do WhatsApp.
@@ -19,8 +20,8 @@
 - Confirmar que **+55 21 99550-0927** deixou de ser usado pelo WhatsApp Messenger antes de tentar registrá-lo na Cloud API.
 - **Importante:** a migração por "Mudar número" atualiza a identidade dos contatos/grupos e pode notificar interlocutores. Não é um método de restaurar histórico no CRM ou na API.
 
-### Rota B (se o histórico anterior não precisar continuar no app)
-- Fazer backup como medida prudencial e **exportar os diálogos/arquivos críticos separadamente**; verificar exportações antes de qualquer exclusão.
+### Rota B (SELECIONADA — sem autorização para apagar a conta)
+- O CTO declarou que não necessita preservar o histórico anterior. Backup/exportação ficam opcionais, mas a decisão deve ser reconfirmada imediatamente antes do ponto de não retorno; nenhum histórico anterior será importado à Cloud API.
 - A conta do WhatsApp Messenger existente precisará ser **excluída pelo próprio aplicativo** para liberar o número para a Cloud API.
 - **Ponto de não retorno:** "Configurações → Conta → Apagar/Excluir minha conta" só após autorização explícita do CTO para esse passo e confirmação de prontidão técnica, comunicação e janela de migração.
 - **Não considerar o backup do WhatsApp como rollback:** excluir a conta pode remover o backup e impedir a recuperação das conversas; o histórico não é importado para a API.
@@ -32,7 +33,8 @@ Transferir Messenger → WhatsApp Business App e avaliar coexistência via prove
 
 - [ ] Identificar titular e controle operacional do chip/eSIM +55 21 99550-0927.
 - [ ] Testar recebimento de SMS **e/ou** ligação no número, sem divulgar código OTP.
-- [ ] Definir onde ficarão os diálogos pessoais e grupos anteriores (Rota A ou B).
+- [x] Definir estratégia para o histórico: **Rota B**, sem necessidade de preservar histórico, conforme decisão do CTO.
+- [ ] Reconfirmar a decisão imediatamente antes da exclusão, inclusive efeitos sobre grupos, backups e mensagens ainda pendentes.
 - [ ] Identificar conversas comerciais pendentes e responsável por respostas durante o corte.
 - [ ] Confirmar controle do Business Portfolio/Business Manager na Meta sob titularidade da pessoa jurídica apropriada à CicloBem e permissões de administrador.
 - [ ] Criar app Meta com caso de uso WhatsApp; vincular WhatsApp Business Account (WABA).
