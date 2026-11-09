@@ -94,11 +94,11 @@ async function persistInbound(msg) {
     await client.query(
       "UPDATE commercial_leads SET source=CASE WHEN source='whatsapp-organico' THEN $2 ELSE source END, " +
       "stage=$3,status=$4,profile=$5,contact_name=$6,organization=$7,email=$8,city_state=$9," +
-      "installation=$10,daily_flow=$11,commercial_model=$12,last_inbound_at=NOW(),updated_at=NOW() " +
+      "installation=$10,daily_flow=$11,commercial_model=$12,last_customer_message=$13,last_inbound_at=NOW(),updated_at=NOW() " +
       "WHERE wa_id=$1",
       [wa, origin, l.stage, l.status, l.profile || null, l.contact_name || null,
         l.organization || null, l.email || null, l.city_state || null,
-        l.installation || null, l.daily_flow || null, l.commercial_model || null]
+        l.installation || null, l.daily_flow || null, l.commercial_model || null, text.slice(0, 1000)]
     );
     await client.query(
       "INSERT INTO commercial_outbox (message_id,wa_id,text_body,origin) VALUES ($1,$2,$3,'bot')",
@@ -117,8 +117,9 @@ let workerBusy = false;
 async function processOutbox() {
   if (workerBusy) return;
   workerBusy = true;
-  const client = await pool.connect();
+  let client;
   try {
+    client = await pool.connect();
     await client.query("BEGIN");
     const { rows } = await client.query(
       "SELECT id,wa_id,text_body,attempts FROM commercial_outbox " +
@@ -162,10 +163,10 @@ async function processOutbox() {
     await client.query("COMMIT");
     if (errorText) console.error("Commercial outbound delivery failure (no PII):", errorText);
   } catch (error) {
-    try { await client.query("ROLLBACK"); } catch {}
+    if (client) { try { await client.query("ROLLBACK"); } catch {} }
     console.error("Commercial outbox worker error:", error.message);
   } finally {
-    client.release();
+    if (client) client.release();
     workerBusy = false;
   }
 }
@@ -227,7 +228,7 @@ const adminServer = http.createServer(async (req, res) => {
     if (req.method === "GET" && path.pathname === "/leads") {
       const { rows } = await pool.query(
         "SELECT id,wa_id,source,status,stage,profile,contact_name,organization,email," +
-        "city_state,installation,daily_flow,commercial_model,last_inbound_at,updated_at " +
+        "city_state,installation,daily_flow,commercial_model,last_customer_message,last_inbound_at,updated_at " +
         "FROM commercial_leads ORDER BY updated_at DESC LIMIT 100"
       );
       return respond(res, 200, { leads: rows });
