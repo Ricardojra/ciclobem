@@ -1,7 +1,8 @@
 # CicloBem — WhatsApp comercial exclusivo (MVP técnico)
 
 **Situação:** código preparatório em branch de revisão. **NÃO está ativado em produção.**
-O WhatsApp antigo continua nas páginas enquanto `NEW_COMMERCIAL_NUMBER` estiver vazio.
+**Número designado pelo CTO:** +55 21 99550-0927 (`5521995500927`), o mesmo atualmente publicado no site.
+Não contratar outro número nem trocar links sem necessidade. Os links atuais continuam ativos e o fluxo automatizado está bloqueado por `ACTIVATION_APPROVED = false` até registro Meta, homologação e autorização explícita.
 
 ## Escopo
 
@@ -15,7 +16,7 @@ O WhatsApp antigo continua nas páginas enquanto `NEW_COMMERCIAL_NUMBER` estiver
 
 ## Pré-requisitos externos (ainda NÃO executados)
 
-1. Adquirir um número exclusivamente corporativo que receba SMS/ligação, sob titularidade e gestão definidas.
+1. Verificar sob qual aplicativo/provedor está registrado o número **(21) 99550-0927**, confirmar acesso à linha (SMS/chamada) e sua titularidade/gestão. Se já usa WhatsApp Business App, decidir formalmente entre migração para Cloud API exclusiva ou modalidade de coexistência (via Embedded Signup de parceiro elegível). Não desinstalar o aplicativo antes de verificar elegibilidade, backup e estratégia de transição.
 2. Dispor de portfólio empresarial Meta, WhatsApp Business Account (WABA) e aplicativo Meta com WhatsApp Cloud API. Registrar o número e configurar PIN/2FA.
 3. Criar usuário de sistema com permissões mínimas e token adequado à produção, guardado fora do repositório.
 4. Obter `META_PHONE_NUMBER_ID`, `META_APP_SECRET`, versão Graph API suportada e configurar `META_VERIFY_TOKEN`.
@@ -54,13 +55,13 @@ Painel local `http://127.0.0.1:3018/`:
 
 ## Ativar número no site — SOMENTE após homologação
 
-Preencher `NEW_COMMERCIAL_NUMBER` em `/commercial-whatsapp.js` no formato `55DDDNÚMERO` sem sinais ou espaços. Atualizar **também** número público em dados estruturados (`ContactPoint`), textos e páginas externas/termos quando aplicável. Fazer testes de envio real antes de publicar, e preservar rollback para o número antigo.
+**O número já está preenchido.** Somente depois dos testes, alterar `ACTIVATION_APPROVED` de `false` para `true` em `/commercial-whatsapp.js` e confirmar que o número é `5521995500927`. Atualizar **também** número público em dados estruturados (`ContactPoint`), textos e páginas externas/termos quando aplicável. Fazer testes de envio real antes de publicar, e preservar rollback para o número antigo.
 
 Não alterar a configuração do domínio Pix nem usar o tunnel, a porta ou os tokens financeiros para o serviço comercial.
 
 ## Testes de aceite obrigatórios
 
-- Número corporativo registrado, identidade CicloBem confirmada, token de produção e faturamento configurados.
+- Número **(21) 99550-0927** registrado sob identidade CicloBem, com modalidade de migração/coexistência documentada, token de produção e faturamento configurados.
 - Fluxo do site (ícone flutuante, contato direto, formulário, empresas e prefeituras) abre o número correto e mensagem de origem; envio pelo visitante confirmado.
 - Webhook GET de validação e POST com assinatura válida; assinatura ausente/incorreta rejeitada; outros números descartados.
 - Mensagem inicial, múltiplos perfis, texto inválido, dados do formulário, `0` humano, `PARAR` e retomada `INICIAR`.
