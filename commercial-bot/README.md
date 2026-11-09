@@ -14,6 +14,15 @@ Não contratar outro número nem trocar links sem necessidade. Os links atuais c
 - Interface administrativa local para consulta e resposta humana: `http://127.0.0.1:3018/`.
 - Processamento idempotente por `message_id` e fila persistente de respostas.
 
+## Migração do número atualmente no WhatsApp Messenger
+
+O CTO confirmou que o número (21) 99550-0927 está **no WhatsApp comum**, e não no WhatsApp Business. Para cutover seguro, seguir o documento [MIGRACAO-WHATSAPP-MESSENGER.md](MIGRACAO-WHATSAPP-MESSENGER.md).
+
+- Preservar o histórico antes de agir. Se houver conversas pessoais, avaliar a função **Mudar número** para outra linha; isso pode preservar a conta pessoal enquanto libera o número destinado à API.
+- A migração direta para a Cloud API pode exigir **exclusão da conta Messenger anterior**. Isso é irreversível: backups não são importáveis para o CRM/API e podem ser apagados.
+- Não excluir conta, não desinstalar app, não mexer em chip, Meta, DNS ou serviços sem gates de prontidão e autorização adicional expressa.
+- Existe diferença entre **GO para preparar** a solução e **GO para liberar** o número. Este PR contempla apenas a preparação.
+
 ## Pré-requisitos externos (ainda NÃO executados)
 
 1. Verificar sob qual aplicativo/provedor está registrado o número **(21) 99550-0927**, confirmar acesso à linha (SMS/chamada) e sua titularidade/gestão. Se já usa WhatsApp Business App, decidir formalmente entre migração para Cloud API exclusiva ou modalidade de coexistência (via Embedded Signup de parceiro elegível). Não desinstalar o aplicativo antes de verificar elegibilidade, backup e estratégia de transição.
