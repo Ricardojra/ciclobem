@@ -40,3 +40,13 @@ test("opt-out interrompe automação", () => {
   assert.equal(result.lead.stage, "opt_out");
   assert.equal(result.lead.status, "OPT_OUT");
 });
+
+test("após handoff, nova mensagem não provoca resposta automática", () => {
+  const result = processLead({ stage: "human", status: "EM_ATENDIMENTO" }, "Tenho outra pergunta");
+  assert.equal(result.reply, null);
+  assert.equal(result.lead.status, "EM_ATENDIMENTO");
+});
+test("após opt-out, não envia automaticamente, salvo comando INICIAR", () => {
+  assert.equal(processLead({ stage: "opt_out" }, "Obrigado").reply, null);
+  assert.equal(processLead({ stage: "opt_out" }, "INICIAR").lead.stage, "profile");
+});
