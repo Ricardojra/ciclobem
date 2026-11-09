@@ -55,7 +55,8 @@ export function processLead(inputLead, incoming) {
     return { lead: { ...lead, stage: "profile", status: "NOVO" }, reply: QUESTIONS.profile };
   }
   if (lead.stage === "opt_out" || lead.stage === "human" || lead.stage === "done") {
-    return { lead, reply: lead.stage === "opt_out" ? QUESTIONS.opt_out : lead.stage === "human" ? QUESTIONS.human : QUESTIONS.done };
+    // Não interromper atendente e não enviar respostas recorrentes após conclusão/opt-out.
+    return { lead, reply: null };
   }
   if (lead.stage === "profile") {
     const fields = readSiteForm(String(incoming));
