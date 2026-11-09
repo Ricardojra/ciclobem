@@ -4,6 +4,7 @@
  * Credenciais somente via environment. Público: webhook. Administração: localhost.
  */
 import http from "node:http";
+import { readFile } from "node:fs/promises";
 import { createHmac, timingSafeEqual, randomUUID } from "node:crypto";
 import pg from "pg";
 import { processLead } from "./flow.mjs";
@@ -21,6 +22,7 @@ if (!/^v\d+\.\d+$/.test(env.META_GRAPH_VERSION)) throw new Error("Invalid META_G
 const pool = new pg.Pool({ connectionString: env.DATABASE_URL, max: 5 });
 const webhookPort = Number(env.WEBHOOK_PORT || 3017);
 const adminPort = Number(env.ADMIN_PORT || 3018);
+const adminHTML = await readFile(new URL("./admin.html", import.meta.url), "utf8");
 
 function respond(res, status, body, contentType = "application/json") {
   res.writeHead(status, { "Content-Type": contentType, "Cache-Control": "no-store" });
@@ -215,6 +217,9 @@ const publicServer = http.createServer(async (req, res) => {
 // Porta administrativa restrita a localhost. Expor somente por Tailscale + controle adicional.
 const adminServer = http.createServer(async (req, res) => {
   try {
+    if (req.method === "GET" && req.url === "/") {
+      return respond(res, 200, adminHTML, "text/html; charset=utf-8");
+    }
     if (!matchesSecret(req.headers.authorization, "Bearer " + env.COMMERCIAL_ADMIN_TOKEN)) {
       return respond(res, 401, { error: "UNAUTHORIZED" });
     }
