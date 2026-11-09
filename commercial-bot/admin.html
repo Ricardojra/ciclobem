@@ -71,6 +71,7 @@ $("load").addEventListener("click",async()=>{
       const b=text(c,"span"," "+item.status);b.className="badge";
       text(c,"p","Perfil: "+(item.profile||"—")+" | Organização: "+(item.organization||"—")+
         " | Cidade/UF: "+(item.city_state||"—"));
+      text(c,"p","Última mensagem: "+(item.last_customer_message||"—"));
       text(c,"p","Instalação: "+(item.installation||"—")+
         " | Fluxo: "+(item.daily_flow||"—")+" | Modalidade: "+(item.commercial_model||"—"));
       const reply=document.createElement("textarea");
