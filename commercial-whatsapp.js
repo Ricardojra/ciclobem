@@ -3,12 +3,13 @@
  */
 (function () {
   "use strict";
-  // Número reservado para implantação: preencher após registro e teste na Meta.
-  // Apenas dígitos com DDI: 55 + DDD + telefone.
-  const NEW_COMMERCIAL_NUMBER = "";
+  // Número designado pelo CTO: +55 21 99550-0927; já é o número público atual.
+  // A ativação comercial depende de registro Meta e homologação end-to-end.
+  const TARGET_COMMERCIAL_NUMBER = "5521995500927";
   const CURRENT_WHATSAPP_NUMBER = "5521995500927";
-  const enabled = /^55\d{10,11}$/.test(NEW_COMMERCIAL_NUMBER);
-  const phone = enabled ? NEW_COMMERCIAL_NUMBER : CURRENT_WHATSAPP_NUMBER;
+  const ACTIVATION_APPROVED = false; // SOMENTE alterar após GO explícito do CTO.
+  const enabled = ACTIVATION_APPROVED && /^55\d{10,11}$/.test(TARGET_COMMERCIAL_NUMBER);
+  const phone = enabled ? TARGET_COMMERCIAL_NUMBER : CURRENT_WHATSAPP_NUMBER;
 
   function origin() {
     const path = window.location.pathname.toLowerCase();
