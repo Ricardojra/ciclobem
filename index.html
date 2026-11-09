@@ -406,6 +406,7 @@ footer{background:#060e1c;border-top:1px solid rgba(255,255,255,0.05);padding:48
   .hero-metric-num{font-size:20px}
 }
 </style>
+<script defer src="/commercial-whatsapp.js"></script>
 </head>
 <body>
 
@@ -1203,7 +1204,9 @@ function enviarForm(){
 
   // Send via WhatsApp
   const text=`[Contato Site CicloBem]\nPerfil: ${perfil}\nNome: ${nome}\nOrganização: ${org}\nE-mail: ${email}\nTelefone: ${tel}\nMensagem: ${msg}`;
-  const url=`https://wa.me/5521995500927?text=${encodeURIComponent(text)}`;
+  const url = window.CicloBemWhatsApp
+    ? window.CicloBemWhatsApp.url(text, "formulario-contato")
+    : `https://wa.me/5521995500927?text=${encodeURIComponent(text)}`;
   window.open(url,'_blank','noopener,noreferrer');
 
   document.getElementById('form-ok').style.display='block';
