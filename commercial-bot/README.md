@@ -18,6 +18,8 @@ Não contratar outro número nem trocar links sem necessidade. Os links atuais c
 
 O CTO confirmou que o número (21) 99550-0927 está **no WhatsApp comum**, e não no WhatsApp Business. Para cutover seguro, seguir o documento [MIGRACAO-WHATSAPP-MESSENGER.md](MIGRACAO-WHATSAPP-MESSENGER.md).
 
+**Decisão posterior (09/11/2026):** o CTO dispensou a preservação do histórico anterior, mas NÃO autorizou a exclusão da conta. Status dos gates e evidências: [CHECKLIST-CLOUD-API-READINESS.md](CHECKLIST-CLOUD-API-READINESS.md).
+
 - Preservar o histórico antes de agir. Se houver conversas pessoais, avaliar a função **Mudar número** para outra linha; isso pode preservar a conta pessoal enquanto libera o número destinado à API.
 - A migração direta para a Cloud API pode exigir **exclusão da conta Messenger anterior**. Isso é irreversível: backups não são importáveis para o CRM/API e podem ser apagados.
 - Não excluir conta, não desinstalar app, não mexer em chip, Meta, DNS ou serviços sem gates de prontidão e autorização adicional expressa.
