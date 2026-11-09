@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CicloBem — Atendimento Comercial Interno</title>
+<style>
+:root{font-family:system-ui,Arial,sans-serif;color:#f6f9f4;background:#0a1628}
+*{box-sizing:border-box}
+body{max-width:1100px;margin:auto;padding:24px}
+h1{font-size:1.4rem;color:#aaff00;margin:0 0 8px}
+p{color:#c3c8d2}
+header{margin-bottom:24px}
+section{background:#12223a;border:1px solid #28405b;border-radius:12px;padding:16px;margin:14px 0}
+input,textarea{background:#071324;color:#fff;border:1px solid #506075;border-radius:8px;padding:11px;font:inherit;width:100%;margin:6px 0}
+button{background:#aaff00;color:#081428;border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.45;cursor:wait}
+.controls{display:grid;grid-template-columns:1fr auto;gap:8px}
+small{color:#afbbcb} .lead{border-bottom:1px solid #33465d;padding:14px 0}
+.lead:last-child{border-bottom:0}
+.lead strong{color:#aaff00}
+.badge{color:#fff;background:#384e67;border-radius:10px;padding:3px 8px;font-size:.8rem}
+@media(max-width:650px){.controls{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Atendimento Comercial — CicloBem</h1>
+  <p>Área interna. Acesso somente por rede privada/Tailscale. Não compartilhar credenciais ou dados dos interessados.</p>
+</header>
+<section>
+  <label for="token">Token administrativo</label>
+  <div class="controls">
+    <input type="password" id="token" autocomplete="off" placeholder="Cole o token administrativo temporariamente">
+    <button id="load">Carregar leads</button>
+  </div>
+  <small>O token permanece somente na memória desta página; não é armazenado no navegador.</small>
+  <p id="status" role="status" aria-live="polite"></p>
+</section>
+<section id="list" aria-label="Leads comerciais"></section>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+function text(parent,tag,value) {
+  const el=document.createElement(tag);
+  el.textContent=String(value ?? "");
+  parent.appendChild(el);
+  return el;
+}
+async function api(path,options={}) {
+  const token=$("token").value.trim();
+  if(!token) throw new Error("Informe o token administrativo");
+  const res=await fetch(path,{
+    ...options,
+    headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"}
+  });
+  const payload=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(payload.error || "HTTP "+res.status);
+  return payload;
+}
+$("load").addEventListener("click",async()=>{
+  $("status").textContent="Carregando...";
+  $("list").replaceChildren();
+  try{
+    const data=await api("/leads");
+    $("status").textContent=String(data.leads.length)+" lead(s) exibido(s).";
+    for(const item of data.leads){
+      const c=document.createElement("div");c.className="lead";
+      const h=text(c,"strong",(item.contact_name || "Sem nome")+" · "+item.wa_id);
+      const b=text(c,"span"," "+item.status);b.className="badge";
+      text(c,"p","Perfil: "+(item.profile||"—")+" | Organização: "+(item.organization||"—")+
+        " | Cidade/UF: "+(item.city_state||"—"));
+      text(c,"p","Última mensagem: "+(item.last_customer_message||"—"));
+      text(c,"p","Instalação: "+(item.installation||"—")+
+        " | Fluxo: "+(item.daily_flow||"—")+" | Modalidade: "+(item.commercial_model||"—"));
+      const reply=document.createElement("textarea");
+      reply.placeholder="Resposta humana ao lead (válida apenas na janela de 24 horas)";
+      reply.rows=2;c.appendChild(reply);
+      const btn=document.createElement("button");btn.textContent="Responder pelo WhatsApp";
+      btn.addEventListener("click",async()=>{
+        btn.disabled=true;
+        try{
+          await api("/leads/"+item.id+"/reply",{method:"POST",body:JSON.stringify({text:reply.value})});
+          $("status").textContent="Resposta colocada na fila. Verifique a entrega no monitoramento.";
+          reply.value="";
+        }catch(e){$("status").textContent="Falha ao enviar: "+e.message;}
+        finally{btn.disabled=false;}
+      });
+      c.appendChild(btn);$("list").appendChild(c);
+    }
+  }catch(e){$("status").textContent="Não foi possível carregar: "+e.message;}
+});
+</script>
+</body>
+</html>
