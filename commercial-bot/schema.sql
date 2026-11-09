@@ -29,9 +29,10 @@ CREATE INDEX IF NOT EXISTS idx_commercial_inbound_received ON commercial_inbound
 
 CREATE TABLE IF NOT EXISTS commercial_outbox (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  message_id TEXT NOT NULL UNIQUE REFERENCES commercial_inbound(message_id),
+  message_id TEXT NOT NULL UNIQUE, -- wamid recebido ou identificador administrativo único
   wa_id TEXT NOT NULL,
   text_body TEXT NOT NULL,
+  origin TEXT NOT NULL DEFAULT 'bot',
   attempts INTEGER NOT NULL DEFAULT 0,
   next_attempt_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   delivered_to_api_at TIMESTAMPTZ,
