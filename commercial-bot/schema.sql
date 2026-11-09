@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS commercial_leads (
   installation TEXT,
   daily_flow TEXT,
   commercial_model TEXT,
+  last_customer_message TEXT,
   last_inbound_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
