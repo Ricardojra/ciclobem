@@ -100,10 +100,12 @@ async function persistInbound(msg) {
         l.organization || null, l.email || null, l.city_state || null,
         l.installation || null, l.daily_flow || null, l.commercial_model || null, text.slice(0, 1000)]
     );
-    await client.query(
-      "INSERT INTO commercial_outbox (message_id,wa_id,text_body,origin) VALUES ($1,$2,$3,'bot')",
-      [id, wa, next.reply]
-    );
+    if (next.reply) {
+      await client.query(
+        "INSERT INTO commercial_outbox (message_id,wa_id,text_body,origin) VALUES ($1,$2,$3,'bot')",
+        [id, wa, next.reply]
+      );
+    }
     await client.query("COMMIT");
   } catch (error) {
     await client.query("ROLLBACK");
